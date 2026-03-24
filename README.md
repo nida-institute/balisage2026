@@ -1,9 +1,18 @@
 # Scripture Pipelines — Balisage 2026 Paper
 
-**"Scripture Pipelines: Declarative AI Pipelines for Biblical and Linguistic Scholarship"**
-Jonathan Robie — Balisage 2026 submission
+> **Work in progress** — this paper is not yet complete.
 
----
+**"Scripture Pipelines: Declarative AI Pipelines for Biblical and Linguistic Scholarship"**
+Jonathan Robie — submitted to [Balisage: The Markup Conference 2026](https://www.balisage.net/)
+
+[Balisage](https://www.balisage.net/) is a peer-reviewed technical conference focused on markup languages, XML, and document engineering. It brings together researchers and practitioners who care deeply about the design and use of structured markup.
+
+## Read the Paper
+
+| Format | File | Notes |
+|--------|------|-------|
+| Markdown | [md/robie-llmflow.md](md/robie-llmflow.md) | Readable on GitHub; generated from XML source |
+| DocBook XML | [xml/robie-llmflow.xml](xml/robie-llmflow.xml) | Authoritative source (Balisage-1.5 DocBook subset) |
 
 ## What This Paper Argues
 
@@ -43,18 +52,7 @@ This does not mean the Kairos Project is anti-scholarly. It also builds resource
 
 The West does not have a monopoly on wisdom about these texts. Perpetuating the status gap between Western scholarship and the rest of the world's readers is a choice; the Kairos Project refuses to make it. Everything produced is freely licensed.
 
-## Repository Structure
-
-```
-xml/
-  robie-llmflow.xml         — DocBook 5.0 source (Balisage-1.5 subset)
-  rng/balisage-1-5.rng      — RelaxNG schema
-md/
-  robie-llmflow.md          — Markdown for review (generated from XML)
-flatten-figures.lua         — Pandoc Lua filter used in conversion
-```
-
-### Regenerating the Markdown
+## Regenerating the Markdown
 
 After editing the XML source:
 
@@ -67,6 +65,5 @@ pandoc -f docbook -t gfm --no-highlight \
 
 ## Related
 
-- [NIDA Institute](https://nida.org)
 - [Scripture Pipelines engine](https://github.com/nida-institute/LLMFlow)
 - [awesome-biblical-data](https://github.com/nida-institute/awesome-biblical-data) — catalog of open biblical datasets
