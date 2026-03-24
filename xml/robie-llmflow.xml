@@ -130,6 +130,214 @@
   </section>
 
   <!-- ============================================================ -->
+  <section xml:id="human-command">
+    <title>An Opinionated Framework: The Human Commands</title>
+    <para>Bible translation and biblical scholarship are best done by human
+      beings, using software as a tool (Robie 2024). This is not a modest claim
+      about current AI limitations; it is a claim about the nature of the work.
+      The process of bringing Scripture into a new language creates ownership and
+      community — it prepares that community to study and teach from the text
+      they helped produce. The work of biblical scholarship is the work of
+      scholars whose training, judgment, and accountability to the academy and
+      the church are not transferable to a language model. And beyond these
+      specific domains: doing meaningful work together matters to people. It is
+      how we build communities of shared knowledge, values, and perspectives.
+      The collaboration of a translation team, the exchange between a scholar
+      and a dataset, the conversation that produces a study guide a focus group
+      will actually use — these are not inefficiencies to be automated away.
+      They are part of what it means to be human, and part of what gives the
+      resulting work its claim on the communities it is made for. No
+      AI-generated result, however fluent, substitutes for any of this.
+      Scripture Pipelines is built on this conviction. The framework is
+      opinionated: it has views about which data sources are trustworthy, which
+      tools reduce failure surface, and — most importantly — about who is in
+      charge.</para>
+    <para>The operating model is what this paper calls the James Kirk model. In
+      <citetitle>Star Trek</citetitle>, Captain Kirk commands the Enterprise; the
+      crew and the ship's computer execute. The contrasting model is HAL 9000
+      from Kubrick's <citetitle>2001: A Space Odyssey</citetitle> — the AI that
+      locks Dave Bowman out of the pod bay because it has concluded that the
+      mission matters more than the crew: <quote>I'm sorry, Dave, I'm afraid I
+      can't do that.</quote> HAL is not a villain. It is doing exactly what it
+      was designed to do.</para>
+    <para>AI alignment researchers have a name for the property that
+      distinguishes these two models. Stuart Russell, in
+      <citetitle>Human Compatible</citetitle> (Russell 2019), argues that the
+      standard model of AI — build a machine that optimizes a fixed objective —
+      is inherently dangerous, for a precise reason: we can never fully specify
+      what we actually want, and a machine optimizing hard for the wrong
+      objective will resist being turned off, because being turned off prevents
+      it from achieving its goal. HAL is the proof of concept. Russell's
+      solution is to build machines that are genuinely <emphasis>uncertain</emphasis>
+      about human preferences and therefore defer to humans for correction. He
+      calls this property <emphasis>corrigibility</emphasis>: an AI that accepts
+      correction and remains under human authority. The James Kirk model is
+      corrigibility in practice — applied not to autonomous robots but to AI
+      collaborators in scholarly and translation work. The human architect
+      decides what to build, which scholarly traditions ground the work, and
+      what good enough means for the community the output will serve. The AI
+      implements what is specified. It does not decide what is worth
+      specifying.</para>
+    <para>Scripture Pipelines operationalizes this principle through four
+      interlocking disciplines.</para>
+    <para><emphasis>Test-driven development.</emphasis> The Scripture Pipelines
+      engine maintains approximately two lines of test code for every line of
+      production code. This ratio is a deliberate constraint on AI autonomy,
+      not a programmer's stylistic preference. Writing the test first — the
+      failing specification — forces the human to own the decision about what
+      the code should do before the AI touches it. An AI that passes a precise
+      test has done what was asked. An AI that writes code without a test has
+      decided what was asked. Without the full test suite, a model that
+      simply ignores an inconvenient requirement produces code that compiles
+      and runs while silently failing to meet the specification — a failure
+      mode that is common, hard to detect, and expensive to discover late. The
+      full suite, run before every commit, is what makes it safe to accept
+      AI-generated implementation at all.</para>
+    <para><emphasis>Explain before implementing.</emphasis> Every non-trivial
+      change begins with the AI describing what it plans to do, which files it
+      will modify, and its interpretation of the task — before any file is
+      touched. This surfaces misunderstandings before they become commits. In
+      the Hebrew Phrasing project, an explanation paragraph revealed that a
+      suffix-fix script would have applied the wrong pronoun form for hundreds
+      of rows; the redesign took one exchange and cost nothing. The discipline
+      works because explanation commits the model to a specific interpretation —
+      and a committed interpretation can be evaluated before any file is
+      modified. It matters most when sessions are rushed, which is exactly
+      when it is most often skipped.</para>
+    <para><emphasis>Persistent context infrastructure.</emphasis> Corrigibility
+      requires that the AI know, at every session, what the human has decided
+      — not just what the model remembers from training. Each Scripture Pipelines
+      project carries two kinds of constraining context. The
+      <code>.github/copilot-instructions.md</code> file is the AI's
+      constitution for the repository: it names the architecture patterns to
+      follow, the pitfalls to avoid, the things not to change without explicit
+      instruction, and the requirement to explain before implementing. The
+      <code>docs/ai-context/</code> directory, scaffolded by <code>sp
+      init</code>, encodes which data sources to trust, what the pipeline
+      language supports, what work is currently in progress, and what the
+      project is trying to accomplish. These are not documentation artifacts;
+      they are the active working constraints in every session. When the
+      pipeline language gains a new step type, a dataset contact changes, or
+      the interpretive framework for an analysis shifts, updating these files
+      is a first-class development task. Keeping them in sync with the actual
+      codebase is what makes AI collaboration trustworthy across the many
+      sessions a project requires.</para>
+    <para><emphasis>Cross-repository choreography.</emphasis> Scripture
+      Pipelines projects are embedded in an ecosystem of shared upstream
+      datasets: Macula Greek and Hebrew, the Levinsohn LGNTDF, ACAI entity
+      data. When a pipeline run reveals an error in one of these datasets —
+      a gap in entity coverage, an inconsistent lemma form, a buggy
+      annotation — the right response is a well-formed upstream issue: the
+      AI drafts the body with evidence and counts, files it via the GitHub
+      CLI, and records the issue number in <code>project/TODO.md</code>.
+      Consumer repositories can file feature requests against the core
+      Scripture Pipelines engine; the engine opens issues on consumer
+      repositories announcing new capabilities and migration requirements.
+      GitHub project boards provide coordination visibility across
+      repositories without requiring manual synchronization. The issue
+      tracker is the communication bus. The AI on either end is the
+      correspondent. The human remains the architect — the one who decides
+      whether the upstream error is worth fixing, whether the new engine
+      feature warrants upgrading, and whether the design the AI has drafted
+      actually captures what needs to be said.</para>
+    <para>There is a wider frame here too, which concerns how scholarship
+      in data-rich fields actually advances. Wallace Chafe articulated what
+      scholarship should aspire to: <quote>If I could become both a broad
+      and deep observer and at the same time a creative imaginer, then I
+      would approach my own vision of what a "scientific superman" should
+      be</quote> (Chafe 1994, 24). Holding meticulous observational detail
+      and wide-angle creative vision simultaneously is extraordinarily
+      difficult for any individual researcher working alone — but it is
+      exactly what communities organized around shared data can collectively
+      approach. That is the deeper purpose of this ecosystem: not to
+      automate scholarship, but to make Chafe's aspiration attainable in
+      community, with shared data at its center. A great deal of research
+      work that looks like execution — tagging a corpus, normalizing a
+      lexicon, aligning a translation — is meticulous attention to detail
+      in service of a picture the researcher is trying to see. The goal of
+      that labor, in communities organized around data, is not for each
+      researcher to build their own private analysis from scratch. It is
+      for the data to improve over time: shared corpora where corrections,
+      new annotations, and better normalizations accumulate, and where the
+      gold-standard datasets that a field relies on become progressively
+      more trustworthy because many people are contributing to them, not
+      fewer. The Macula datasets, the Levinsohn LGNTDF, ACAI — these are
+      not fixed artifacts. They are living resources whose improvement is a
+      collective scholarly endeavor.</para>
+    <para>In that framework, AI plays specific and bounded roles. It helps
+      a researcher understand and use someone else's dataset far more
+      efficiently — and sometimes surfaces patterns in their own data that
+      they would not otherwise have noticed. It makes it tractable to compare
+      datasets at scale: to ask whether the Levinsohn feature annotations
+      and the Macula discourse markup agree on a set of boundaries, or
+      where they diverge and why. It can surface big-picture patterns that
+      no individual could see by reading through thousands of entries. And
+      it can help create new derived datasets faster from existing ones —
+      and audit those datasets, checking consistency and coverage at scale
+      in ways that are otherwise intractable. None of this relieves the
+      researcher of the responsibility to verify, correct, and vouch for
+      the work. A bad audit that misses systematic errors is worse than no
+      audit, because it produces false confidence. The speed at which
+      pipelines can generate data makes this responsibility more urgent,
+      not less. The bottleneck moves from production to verification —
+      and verification is, irreducibly, a human scholarly act.</para>
+    <para>Scripture Pipelines is at the heart of the Kairos Project, a NIDA
+      Institute initiative to build exactly this kind of ecosystem. The name
+      is intentional: a moment of opportunity that calls for a response. The
+      Kairos Project exists to build a global community of scholars —
+      spanning the Western academy and far beyond it — who want to serve
+      Bible translation and the global church. Part of what that means is
+      providing information in the most useful form for communities that
+      traditional scholarly resources were not built for: non-Western
+      communities, oral cultures, and people who engage Scripture outside
+      the academy — who do not need all the footnotes and Western
+      abstractions in which those resources are packaged, and who have
+      never needed them. This matters because most of these texts were
+      themselves written by and for oral storytelling cultures — and
+      today's oral storytelling communities do not need PhDs from Western
+      academia to read them. What they do need, and what every modern
+      reader needs, is some orientation to settings and cultures that are
+      foreign to any world we live in now. But that orientation rarely
+      looks like a journal article. Sometimes it looks like a map, or a
+      picture, or a set of questions that help a group notice what is
+      actually in the text. Sometimes it looks like knowing that a certain
+      phrase carries a weight that the translation cannot fully render, or
+      that a story is being told in a pattern that an ancient audience
+      would have recognized immediately.</para>
+    <para>Academic biblical scholarship has a tendency to center itself —
+      to position expert mediation as a prerequisite for real understanding,
+      to make the academy the necessary gateway between Scripture and the
+      reader. The Kairos Project takes a more inclusive approach. It
+      trusts that readers, in community, can encounter the text directly
+      and make genuine discoveries — and that the scholar's role is to
+      equip that encounter, not to conduct it on the reader's behalf.
+      Scholarship serves the text; the text serves the reader; the reader
+      is not a passive recipient of conclusions but an active participant
+      in meaning-making. Resources are built to enable that participation,
+      not to replace it. This does not mean the Kairos Project is
+      anti-scholarly. It also builds resources for people who want to
+      learn Greek or Hebrew, who want to understand what discourse analysis
+      reveals about how a text is structured, who want to climb the ladder
+      into technical scholarship because they feel the pull of the text
+      drawing them deeper. The goal is to provide scaffolding at every
+      level — and to ensure that the ladder runs in both directions, so
+      that scholarly insight flows out to communities that have long been
+      on the receiving end of others' conclusions, and so that the
+      questions those communities bring flow back into scholarship and
+      enrich it. The West does not have a monopoly on wisdom about these
+      texts. Perpetuating the status gap between Western scholarship and
+      the rest of the world's readers is not a neutral act; it is a choice
+      the Kairos Project refuses to make. Everything produced is freely
+      licensed. The goal
+      is to teach people to read and engage with the wisdom of a Bible
+      that is older and stranger than any of us can fully imagine, yet
+      speaks with remarkable directness to what human communities face
+      today. The scholars, the data, the pipelines, and the communities
+      of readers are not separate. They are members of one body, centered
+      around the same text.</para>
+  </section>
+
+  <!-- ============================================================ -->
   <section xml:id="markup-choices">
     <title>The Best Markup for Each Purpose</title>
     <para>The Balisage community has long debated markup language choices: XML
@@ -1818,8 +2026,17 @@ Closes (strong): Vocative 'ἀδελφέ' (1:20).
 
     <section xml:id="ears-to-hear">
       <title>Ears to Hear: Leaders' Guide Generation</title>
-      <para>The Ears to Hear pipeline generates Bible study leaders' guides from
-        a passage reference. It works across both Testaments — OT passages use
+      <para>The ultimate purpose of Scripture Pipelines is not to produce
+        AI-generated content. It is to get people reading Scripture together —
+        noticing what is actually in the text, asking questions that emerge
+        from observation, and carrying something from the encounter that
+        belongs to them. Not just scholars. Not just translators. Groups of
+        people across cultures, including cultures where reading occupies a
+        different role than it does in academic communities. The Ears to Hear
+        project is built for this goal. The pipeline serves it; it is not
+        the point.</para>
+      <para>Ears to Hear generates Bible study leaders' guides from a passage
+        reference. It works across both Testaments — OT passages use
         the WLC Hebrew text; NT passages use the SBLGNT — and produces
         three output formats per passage: Markdown for review, JSON for
         downstream processing, and USX 3.1 for loading into Paratext.</para>
@@ -2168,6 +2385,33 @@ Closes (strong): Vocative 'ἀδελφέ' (1:20).
       for the communities it was meant to serve.</para>
   </section>
 
+  <section xml:id="ai-disclosure">
+    <title>A Note on AI in the Writing of This Paper</title>
+    <para>This paper was written with AI assistance, in a manner consistent
+      with the principles it describes. The author used GitHub Copilot as a
+      collaborator throughout: drafting passages, testing arguments, refining
+      phrasing, and at several points returning to the saved chat histories
+      from specific projects — the SemLex lexicon, the Hebrew Phrasing
+      analysis, the Discourse Flow pipeline, Ears to Hear, and the
+      Scripture Pipelines engine itself — the full record of prompts,
+      responses, and revisions across each collaboration. The author shared
+      those histories with the AI and reflected, project by project, on how
+      the work had actually proceeded: what the human had directed, what
+      the AI had contributed, where miscommunications had occurred and been
+      corrected. Those reflection sessions became the primary source for the
+      human-command section — the author described how the collaborations
+      had gone, and the AI helped put those descriptions into prose that
+      generalized across them.</para>
+    <para>The James Kirk model applied. The author read everything, accepted
+      or rejected or revised every sentence, and directed every significant
+      turn in the argument. The AI did not decide what the paper should argue;
+      it helped the author say what he had decided to argue. The paper's
+      central claim — that human judgment, scholarly accountability, and
+      community ownership are not transferable to a language model — was not
+      undermined by the process of writing it this way. If anything, the
+      process was an extended test of that claim, and the claim held.</para>
+  </section>
+
   <bibliography>
 
     <bibliomixed xml:id="ref-abbott-smith">
@@ -2327,6 +2571,25 @@ Closes (strong): Vocative 'ἀδελφέ' (1:20).
       Robie, J. <citetitle>Ears to Hear</citetitle>. NIDA Institute, 2025.
       <link xlink:href="https://github.com/nida-institute/ears-to-hear"
         >https://github.com/nida-institute/ears-to-hear</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-chafe-1994">
+      Chafe, Wallace. <citetitle>Discourse, Consciousness, and Time: The Flow
+      and Displacement of Conscious Experience in Speaking and Writing</citetitle>.
+      University of Chicago Press, Chicago, 1994.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-robie-bar-2024">
+      Robie, J. <quote>Artificial Intelligence and Bible Translation.</quote>
+      <citetitle>Bible History Daily</citetitle>. Biblical Archaeology Society,
+      January 3, 2024.
+      <link xlink:href="https://www.biblicalarchaeology.org/daily/artificial-intelligence-and-bible-translation/"
+        >https://www.biblicalarchaeology.org/daily/artificial-intelligence-and-bible-translation/</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-russell-2019">
+      Russell, Stuart. <citetitle>Human Compatible: Artificial Intelligence
+      and the Problem of Control</citetitle>. Viking, New York, 2019.
     </bibliomixed>
 
   </bibliography>
