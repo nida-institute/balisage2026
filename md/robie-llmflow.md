@@ -456,29 +456,29 @@ The engine maintains a *context* — a key-value map — that evolves as
 steps execute. Steps read from it via `${variable}` references and write
 to it by declaring their `outputs`.
 
-<figure id="fig-pipeline-example">
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> semlex-singlepass</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">variables</span><span class="kw">:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">lemma</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;ἀγαπάω&quot;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output_dir</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output/agapao&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">llm_config</span><span class="kw">:</span><span class="co">            # defaults for all llm steps</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">model</span><span class="kw">:</span><span class="at"> gpt-4o</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">max_tokens</span><span class="kw">:</span><span class="at"> </span><span class="dv">4096</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">temperature</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.4</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">timeout_seconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">60</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">linter_config</span><span class="kw">:</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">enabled</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">treat_warnings_as_errors</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span><span class="co">                 # ordered list of step declarations</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> ...</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span></span></code></pre></div>
-<figcaption>Top-level pipeline structure</figcaption>
-</figure>
+Top-level pipeline structure
+
+``` yaml
+name: semlex-singlepass
+
+variables:
+  lemma: "ἀγαπάω"
+  output_dir: "output/agapao"
+
+llm_config:            # defaults for all llm steps
+  model: gpt-4o
+  max_tokens: 4096
+  temperature: 0.4
+  timeout_seconds: 60
+
+linter_config:
+  enabled: true
+  treat_warnings_as_errors: true
+
+steps:                 # ordered list of step declarations
+  - ...
+      
+```
 
 Variables may also be supplied at the command line
 (`sp run --var passage="Ruth 1"`), overriding any pipeline-level
@@ -625,25 +625,24 @@ that the pipeline supplies every required variable before execution
 begins, preventing runtime failures that would otherwise surface only
 after expensive preceding steps have already run.
 
-<figure id="fig-prompt-contract">
-<pre><code>---
-requires:
-  - lemma
-  - evidence
-optional:
-  - prior_senses
----
-For the lemma {{lemma}}, using the following evidence:
+Prompt file with contract header
 
-{{evidence}}
+    ---
+    requires:
+      - lemma
+      - evidence
+    optional:
+      - prior_senses
+    ---
+    For the lemma {{lemma}}, using the following evidence:
 
-Produce a JSON sense inventory. For each sense, include an
-&quot;abbott_smith_audit&quot; field listing every Abbott-Smith entry you
-were given, recording whether you retained, transformed, or could
-not support it with corpus evidence.
-        </code></pre>
-<figcaption>Prompt file with contract header</figcaption>
-</figure>
+    {{evidence}}
+
+    Produce a JSON sense inventory. For each sense, include an
+    "abbott_smith_audit" field listing every Abbott-Smith entry you
+    were given, recording whether you retained, transformed, or could
+    not support it with corpus evidence.
+            
 
 The audit field in the last example above is a prompt-level
 accountability contract: by requiring the LLM to enumerate its sources
@@ -1513,29 +1512,27 @@ senses with an `abbott_smith_audit` accountability field in the
 intermediate JSON; `verify-citations` confirmed each reference; and
 `format-entry` rendered the final Markdown article:
 
-<figure id="fig-semlex-legw">
-<pre><code># λέγω — to say, speak, mean, call
+SemLex Greek entry for λέγω (excerpt from format-entry output)
 
-Core Meaning: To say or speak, conveying the act of verbal communication.
+    # λέγω — to say, speak, mean, call
 
-## I. To Say or Speak
-Used to convey speech or verbal communication, both directly and indirectly.
-  Acts 13:15  λέγοντες· Ἄνδρες ἀδελφοί  &quot;saying, &#39;Men and brethren&#39;&quot;
-  John 1:29   λέγει· Ἴδε ὁ ἀμνός        &quot;says, &#39;Behold the Lamb&#39;&quot;
+    Core Meaning: To say or speak, conveying the act of verbal communication.
 
-## II. To Mean or Imply
-Extended use indicating meaning or implication beyond the literal statement.
-  Mark 14:71   ὃν λέγετε              &quot;whom you say&quot;
-  1 Cor 10:29  λέγω οὐχὶ τὴν ἑαυτοῦ  &quot;I do not mean your own&quot;
+    ## I. To Say or Speak
+    Used to convey speech or verbal communication, both directly and indirectly.
+      Acts 13:15  λέγοντες· Ἄνδρες ἀδελφοί  "saying, 'Men and brethren'"
+      John 1:29   λέγει· Ἴδε ὁ ἀμνός        "says, 'Behold the Lamb'"
 
-## III. To Call or Name
-Used to denote naming or designating someone or something.
-  Mark 10:18   Τί με λέγεις ἀγαθόν   &quot;you call me good&quot;
-  Matthew 9:9  Μαθθαῖον λεγόμενον    &quot;called Matthew&quot;
-        </code></pre>
-<figcaption>SemLex Greek entry for λέγω (excerpt from format-entry
-output)</figcaption>
-</figure>
+    ## II. To Mean or Imply
+    Extended use indicating meaning or implication beyond the literal statement.
+      Mark 14:71   ὃν λέγετε              "whom you say"
+      1 Cor 10:29  λέγω οὐχὶ τὴν ἑαυτοῦ  "I do not mean your own"
+
+    ## III. To Call or Name
+    Used to denote naming or designating someone or something.
+      Mark 10:18   Τί με λέγεις ἀγαθόν   "you call me good"
+      Matthew 9:9  Μαθθαῖον λεγόμενον    "called Matthew"
+            
 
 ## Macula Hebrew Grammatical Analysis
 
@@ -1579,26 +1576,24 @@ transliterations, and grammatical glosses — organizing what the data
 already encoded rather than re-deriving morphology from the consonantal
 text:
 
-<figure id="fig-hebrew-ruth">
-<pre><code>## Ruth 1:1 — Grammatical Analysis
+Phrase analysis of Ruth 1:1 (excerpt from analyze-chunk output)
 
-וַיְהִי בִּימֵי שְׁפֹט הַשֹּׁפְטִים
-And it happened in the days when the judges judged
+    ## Ruth 1:1 — Grammatical Analysis
 
-  וַיְהִי  wa-yəhiy  &quot;and it was&quot;
-    וַ      &quot;and&quot;    conjunction
-    הָיָה   &quot;it was&quot;  verb qal wayyiqtol 3ms
-  בִּימֵי  bi-ymê   &quot;in the days&quot;
-    בִּ     &quot;in&quot;     preposition
-    יוֹם    noun masculine plural construct
-  שְׁפֹט   šəp̄ōṭ   &quot;of the judging&quot; — verb qal infinitive construct
-  הַשֹּׁפְטִים  ha-ššōp̄əṭiym  &quot;of the judges&quot;
-    הַ      article
-    שָׁפַט  verb qal participle active masculine plural
-        </code></pre>
-<figcaption>Phrase analysis of Ruth 1:1 (excerpt from analyze-chunk
-output)</figcaption>
-</figure>
+    וַיְהִי בִּימֵי שְׁפֹט הַשֹּׁפְטִים
+    And it happened in the days when the judges judged
+
+      וַיְהִי  wa-yəhiy  "and it was"
+        וַ      "and"    conjunction
+        הָיָה   "it was"  verb qal wayyiqtol 3ms
+      בִּימֵי  bi-ymê   "in the days"
+        בִּ     "in"     preposition
+        יוֹם    noun masculine plural construct
+      שְׁפֹט   šəp̄ōṭ   "of the judging" — verb qal infinitive construct
+      הַשֹּׁפְטִים  ha-ššōp̄əṭiym  "of the judges"
+        הַ      article
+        שָׁפַט  verb qal participle active masculine plural
+            
 
 ### GitHub Copilot as Development Collaborator
 
@@ -1656,32 +1651,32 @@ the full Hebrew Bible. The heuristic combined morphological class, the
 construct-state indicator in the morph code, and membership in a known
 set of possessive glosses:
 
-<figure id="fig-gloss-heuristic">
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>PRON_GLOSSES <span class="op">=</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;his&quot;</span>, <span class="st">&quot;her&quot;</span>, <span class="st">&quot;their&quot;</span>, <span class="st">&quot;my&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;our&quot;</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;his/its&quot;</span>, <span class="st">&quot;its&quot;</span>, <span class="st">&quot;me&quot;</span>, <span class="st">&quot;him&quot;</span>, <span class="st">&quot;them&quot;</span>, <span class="st">&quot;us&quot;</span>, <span class="st">&quot;you&quot;</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Detect construct noun carrying a possessive gloss that belongs on</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># the following suffix token</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> cls <span class="op">==</span> <span class="st">&quot;noun&quot;</span> <span class="kw">and</span> morph.endswith(<span class="st">&quot;c&quot;</span>) <span class="op">\</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span> gloss.lower() <span class="kw">in</span> PRON_GLOSSES:</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    issues[<span class="st">&quot;gloss_swap_noun&quot;</span>].append(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        (xml_id, ref, text, gloss, lemma, morph))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Detect suffix token carrying a non-pronominal gloss that belongs</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># on the preceding construct noun</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> cls <span class="op">==</span> <span class="st">&quot;pron&quot;</span> <span class="kw">and</span> pos <span class="op">==</span> <span class="st">&quot;suffix&quot;</span>:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gloss <span class="kw">and</span> gloss.lower() <span class="kw">not</span> <span class="kw">in</span> PRON_GLOSSES <span class="op">\</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> gloss.lower() <span class="kw">not</span> <span class="kw">in</span> (</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;of&quot;</span>, <span class="st">&quot;for&quot;</span>, <span class="st">&quot;to&quot;</span>, <span class="st">&quot;from&quot;</span>, <span class="st">&quot;with&quot;</span>):</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        issues[<span class="st">&quot;gloss_swap_suffix&quot;</span>].append(</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            (xml_id, ref, text, gloss, lemma, morph))</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            </span></code></pre></div>
-<figcaption>Gloss-swap detection heuristic from
-<code>audit_tsv.py</code> (drafted by GitHub Copilot)</figcaption>
-</figure>
+Gloss-swap detection heuristic from `audit_tsv.py` (drafted by GitHub
+Copilot)
+
+``` python
+PRON_GLOSSES = {
+    "his", "her", "their", "my", "your", "our",
+    "his/its", "its", "me", "him", "them", "us", "you",
+}
+
+# Detect construct noun carrying a possessive gloss that belongs on
+# the following suffix token
+if cls == "noun" and morph.endswith("c") \
+        and gloss.lower() in PRON_GLOSSES:
+    issues["gloss_swap_noun"].append(
+        (xml_id, ref, text, gloss, lemma, morph))
+
+# Detect suffix token carrying a non-pronominal gloss that belongs
+# on the preceding construct noun
+if cls == "pron" and pos == "suffix":
+    if gloss and gloss.lower() not in PRON_GLOSSES \
+            and gloss.lower() not in (
+                "of", "for", "to", "from", "with"):
+        issues["gloss_swap_suffix"].append(
+            (xml_id, ref, text, gloss, lemma, morph))
+            
+```
 
 Running this across the full Macula Hebrew TSV identified 12,872
 candidate rows. A subsequent analysis pass stratified candidates by the
@@ -1872,35 +1867,34 @@ LLM's interpretation of those pre-computed structural markers. Chapter
 or verse numbers appear only as fetch boundaries, not as analytical
 divisions:
 
-<figure id="fig-discourse-philemon">
-<pre><code>### Paul&#39;s Appeal for Onesimus (1:8–20)
-Cohesion: Sustained focus on reconciliation and appeal.
-Opens (strong):  Connective &#39;διό&#39; (1:8) — major transition to exhortation.
-Closes (strong): Vocative &#39;ἀδελφέ&#39; (1:20).
+Discourse Flow analysis of Philemon (excerpt from analyze-pericope
+output)
 
-  Pericope 2: Paul&#39;s Appeal — From Slave to Beloved Brother (1:8–20)
-  Key Themes: Reconciliation and Forgiveness, Appeal and Love
+    ### Paul's Appeal for Onesimus (1:8–20)
+    Cohesion: Sustained focus on reconciliation and appeal.
+    Opens (strong):  Connective 'διό' (1:8) — major transition to exhortation.
+    Closes (strong): Vocative 'ἀδελφέ' (1:20).
 
-  Segment 1: Paul&#39;s Gentle Appeal [1:8–10]
-    Διό πολλὴν ἐν Χριστῷ παρρησίαν ἔχων ἐπιτάσσειν σοι τὸ ἀνῆκον
-    διὰ τὴν ἀγάπην μᾶλλον παρακαλῶ...
+      Pericope 2: Paul's Appeal — From Slave to Beloved Brother (1:8–20)
+      Key Themes: Reconciliation and Forgiveness, Appeal and Love
 
-    Function:   exhortation (directive)
-    Focus:      Paul&#39;s choice to appeal rather than command
-    Incoming:   Transitions from thanksgiving to exhortation
-    Outgoing:   Sets stage for Onesimus&#39;s introduction
-    Feature:    Connective &#39;διὰ τὴν ἀγάπην&#39; (1:9) — basis of appeal stated
+      Segment 1: Paul's Gentle Appeal [1:8–10]
+        Διό πολλὴν ἐν Χριστῷ παρρησίαν ἔχων ἐπιτάσσειν σοι τὸ ἀνῆκον
+        διὰ τὴν ἀγάπην μᾶλλον παρακαλῶ...
 
-  Segment 2: Onesimus&#39;s Transformation [1:11–14]
-    τόν ποτέ σοι ἄχρηστον νυνὶ δὲ σοὶ καὶ ἐμοὶ εὔχρηστον...
+        Function:   exhortation (directive)
+        Focus:      Paul's choice to appeal rather than command
+        Incoming:   Transitions from thanksgiving to exhortation
+        Outgoing:   Sets stage for Onesimus's introduction
+        Feature:    Connective 'διὰ τὴν ἀγάπην' (1:9) — basis of appeal stated
 
-    Function:   elaboration (assertive)
-    Focus:      Transformation from useless to useful
-    Feature:    Contrast &#39;ποτέ&#39; vs. &#39;νυνὶ&#39; (1:11) — change emphasized
-        </code></pre>
-<figcaption>Discourse Flow analysis of Philemon (excerpt from
-analyze-pericope output)</figcaption>
-</figure>
+      Segment 2: Onesimus's Transformation [1:11–14]
+        τόν ποτέ σοι ἄχρηστον νυνὶ δὲ σοὶ καὶ ἐμοὶ εὔχρηστον...
+
+        Function:   elaboration (assertive)
+        Focus:      Transformation from useless to useful
+        Feature:    Contrast 'ποτέ' vs. 'νυνὶ' (1:11) — change emphasized
+            
 
 ## Ears to Hear: Leaders' Guide Generation
 
@@ -1970,125 +1964,124 @@ without moralizing; and how Naming invites participants to choose their
 own title. Both English (BSB) and Greek (SBLGNT) text appear at the head
 of each scene, fetched by the `enrich_passage` MCP step:
 
-<figure id="fig-ears-mark10">
-<pre><code># Leaders Guide: Mark 10:46-52
+Ears to Hear leaders' guide for Mark 10:46–52 (excerpt from
+render_markdown output)
 
-## Scene 1: Bartimaeus by the Roadside (Mark 10:46)
+    # Leaders Guide: Mark 10:46-52
 
-  BSB:    &quot;...a blind beggar named Bartimaeus, the son of Timaeus,
-           was sitting beside the road.&quot;
-  SBLGNT: ὁ υἱὸς Τιμαίου Βαρτιμαῖος τυφλὸς προσαίτης ἐκάθητο
-           παρὰ τὴν ὁδόν.
+    ## Scene 1: Bartimaeus by the Roadside (Mark 10:46)
 
-### 👣 Enter the Scene with Your Body (Mark 10:46)
+      BSB:    "...a blind beggar named Bartimaeus, the son of Timaeus,
+               was sitting beside the road."
+      SBLGNT: ὁ υἱὸς Τιμαίου Βαρτιμαῖος τυφλὸς προσαίτης ἐκάθητο
+               παρὰ τὴν ὁδόν.
 
-#### 👀 Notice
+    ### 👣 Enter the Scene with Your Body (Mark 10:46)
 
-  Perspective: crowd
-  - Where are Jesus, the disciples, and the crowd walking?
-  - As they leave Jericho, who is by the side of the road?
-  - What is Bartimaeus doing by the side of the road?
+    #### 👀 Notice
 
-#### 💭 Imagine
+      Perspective: crowd
+      - Where are Jesus, the disciples, and the crowd walking?
+      - As they leave Jericho, who is by the side of the road?
+      - What is Bartimaeus doing by the side of the road?
 
-  Perspective: Bartimaeus
-  - What is it like for Bartimaeus to sit by the road and beg?
-  - How would Bartimaeus know a large crowd is passing?
-  - What is it like when feet and animals move close by?
+    #### 💭 Imagine
 
-### 🫀 Enter the Scene with Your Whole Heart (Mark 10:46)
+      Perspective: Bartimaeus
+      - What is it like for Bartimaeus to sit by the road and beg?
+      - How would Bartimaeus know a large crowd is passing?
+      - What is it like when feet and animals move close by?
 
-#### 👀 Notice
+    ### 🫀 Enter the Scene with Your Whole Heart (Mark 10:46)
 
-  Perspective: Bartimaeus
-  - What did Bartimaeus want from passing travelers?
+    #### 👀 Notice
 
-  Perspective: crowd
-  - What did the crowd want to do as they left Jericho?
+      Perspective: Bartimaeus
+      - What did Bartimaeus want from passing travelers?
 
-#### 💭 Imagine
+      Perspective: crowd
+      - What did the crowd want to do as they left Jericho?
 
-  Perspective: Bartimaeus
-  - What might Bartimaeus hope for as the crowd passes by?
-  - What might Bartimaeus fear if the crowd ignores him?
+    #### 💭 Imagine
 
-  Perspective: crowd
-  - [Giving onto a beggar&#39;s cloak is visible; donors&#39; reputations
-    are shaped publicly.] What might travelers want to display
-    when giving publicly to Bartimaeus?
+      Perspective: Bartimaeus
+      - What might Bartimaeus hope for as the crowd passes by?
+      - What might Bartimaeus fear if the crowd ignores him?
 
-### 👂 Let the Scene Speak to Us (Mark 10:46)
+      Perspective: crowd
+      - [Giving onto a beggar's cloak is visible; donors' reputations
+        are shaped publicly.] What might travelers want to display
+        when giving publicly to Bartimaeus?
 
-  1. Have you or someone you know been ignored by a busy crowd?
-  2. Have you been part of a group moving quickly through a
-     public space?
-  3. Have you or someone you know ever had to ask for help
-     from strangers?
+    ### 👂 Let the Scene Speak to Us (Mark 10:46)
 
-### 🏷️ Step 4: Name the Scene
-  - Bartimaeus by the Roadside
-  - The Beggar&#39;s Hopeful Waiting
-  - Dusty Jericho Road
+      1. Have you or someone you know been ignored by a busy crowd?
+      2. Have you been part of a group moving quickly through a
+         public space?
+      3. Have you or someone you know ever had to ask for help
+         from strangers?
 
-## Scene 2: Bartimaeus Cries for Mercy (Mark 10:47-48)
+    ### 🏷️ Step 4: Name the Scene
+      - Bartimaeus by the Roadside
+      - The Beggar's Hopeful Waiting
+      - Dusty Jericho Road
 
-  BSB:    &quot;Jesus, Son of David, have mercy on me!...he cried out
-           all the louder, &#39;Son of David, have mercy on me!&#39;&quot;
-  SBLGNT: Υἱὲ Δαυὶδ Ἰησοῦ, ἐλέησόν με...
-          ὁ δὲ πολλῷ μᾶλλον ἔκραζεν· Υἱὲ Δαυίδ, ἐλέησόν με.
+    ## Scene 2: Bartimaeus Cries for Mercy (Mark 10:47-48)
 
-### 👣 Enter the Scene with Your Body (Mark 10:47-48)
+      BSB:    "Jesus, Son of David, have mercy on me!...he cried out
+               all the louder, 'Son of David, have mercy on me!'"
+      SBLGNT: Υἱὲ Δαυὶδ Ἰησοῦ, ἐλέησόν με...
+              ὁ δὲ πολλῷ μᾶλλον ἔκραζεν· Υἱὲ Δαυίδ, ἐλέησόν με.
 
-#### 👀 Notice
+    ### 👣 Enter the Scene with Your Body (Mark 10:47-48)
 
-  Perspective: crowd
-  - When Bartimaeus hears Jesus, what does he shout?
-  - How does the crowd respond to his shouting?
-  - After the rebuke, what does Bartimaeus do?
+    #### 👀 Notice
 
-#### 💭 Imagine
+      Perspective: crowd
+      - When Bartimaeus hears Jesus, what does he shout?
+      - How does the crowd respond to his shouting?
+      - After the rebuke, what does Bartimaeus do?
 
-  Perspective: Bartimaeus
-  - What is it like to keep shouting for mercy over a crowd?
-  - What is it like when many people tell him to be silent?
-  - How would Bartimaeus aim his voice toward Jesus he cannot see?
+    #### 💭 Imagine
 
-### 🫀 Enter the Scene with Your Whole Heart (Mark 10:47-48)
+      Perspective: Bartimaeus
+      - What is it like to keep shouting for mercy over a crowd?
+      - What is it like when many people tell him to be silent?
+      - How would Bartimaeus aim his voice toward Jesus he cannot see?
 
-#### 👀 Notice
+    ### 🫀 Enter the Scene with Your Whole Heart (Mark 10:47-48)
 
-  Perspective: Bartimaeus
-  - What did Bartimaeus ask Jesus for?
+    #### 👀 Notice
 
-  Perspective: crowd
-  - What did many in the crowd want Bartimaeus to do?
+      Perspective: Bartimaeus
+      - What did Bartimaeus ask Jesus for?
 
-#### 💭 Imagine
+      Perspective: crowd
+      - What did many in the crowd want Bartimaeus to do?
 
-  Perspective: Bartimaeus
-  - What might Bartimaeus hope for despite the rebukes?
-  - What might Bartimaeus trust about Jesus as he cries
-    &#39;Son of David&#39;?
+    #### 💭 Imagine
 
-  Perspective: crowd
-  - What might the crowd fear if he keeps shouting?
-  - What might the crowd want to protect by silencing him?
+      Perspective: Bartimaeus
+      - What might Bartimaeus hope for despite the rebukes?
+      - What might Bartimaeus trust about Jesus as he cries
+        'Son of David'?
 
-### 👂 Let the Scene Speak to Us (Mark 10:47-48)
+      Perspective: crowd
+      - What might the crowd fear if he keeps shouting?
+      - What might the crowd want to protect by silencing him?
 
-  1. Have you heard someone cry out for help in a public place?
-     What did you notice or feel?
-  2. Have you tried to quiet someone who was disrupting a gathering?
-  3. Have you seen someone persist despite being told to stop?
+    ### 👂 Let the Scene Speak to Us (Mark 10:47-48)
 
-### 🏷️ Step 4: Name the Scene
-  - Bartimaeus Cries for Mercy
-  - Son of David, Have Mercy
-  - Silenced by the Crowd
-        </code></pre>
-<figcaption>Ears to Hear leaders' guide for Mark 10:46–52 (excerpt from
-render_markdown output)</figcaption>
-</figure>
+      1. Have you heard someone cry out for help in a public place?
+         What did you notice or feel?
+      2. Have you tried to quiet someone who was disrupting a gathering?
+      3. Have you seen someone persist despite being told to stop?
+
+    ### 🏷️ Step 4: Name the Scene
+      - Bartimaeus Cries for Mercy
+      - Son of David, Have Mercy
+      - Silenced by the Crowd
+            
 
 # Related Work
 
