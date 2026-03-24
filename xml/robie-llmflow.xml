@@ -3,32 +3,9 @@
 <article xmlns="http://docbook.org/ns/docbook"
          xmlns:xlink="http://www.w3.org/1999/xlink"
          version="5.0-subset Balisage-1.5">
+  <title>Scripture Pipelines</title>
+  <subtitle>Declarative AI Pipelines for Biblical and Linguistic Scholarship</subtitle>
   <info>
-    <title>Scripture Pipelines</title>
-    <subtitle>Declarative AI Pipelines for Biblical and Linguistic Scholarship</subtitle>
-    <author>
-      <personname>
-        <firstname>Jonathan</firstname>
-        <surname>Robie</surname>
-      </personname>
-      <affiliation>
-        <orgname>Biblica</orgname>
-      </affiliation>
-      <affiliation>
-        <orgname>NIDA Institute</orgname>
-      </affiliation>
-      <email>jonathan.robie@biblica.com</email>
-    </author>
-    <keywordset>
-      <keyword>Scripture Pipelines</keyword>
-      <keyword>declarative workflow</keyword>
-      <keyword>reproducibility</keyword>
-      <keyword>biblical scholarship</keyword>
-      <keyword>linguistic annotation</keyword>
-      <keyword>YAML</keyword>
-      <keyword>AI auditing</keyword>
-      <keyword>ancient languages</keyword>
-    </keywordset>
     <abstract>
       <para>Biblical and linguistic scholarship now has more open data than it
         can use: morphological treebanks, discourse annotations, lexicographic
@@ -54,6 +31,34 @@
         format translation mechanical, and how its iteration mechanisms support
         the scholarly workflow of generate, inspect, and refine.</para>
     </abstract>
+    <author>
+      <personname>
+        <firstname>Jonathan</firstname>
+        <surname>Robie</surname>
+      </personname>
+      <personblurb>
+        <para>Jonathan Robie is a software engineer at Biblica and a researcher
+          at the NIDA Institute, focused on AI-assisted biblical scholarship and
+          declarative pipeline systems for linguistic annotation.</para>
+      </personblurb>
+      <affiliation>
+        <orgname>Biblica</orgname>
+      </affiliation>
+      <affiliation>
+        <orgname>NIDA Institute</orgname>
+      </affiliation>
+      <email>jonathan.robie@biblica.com</email>
+    </author>
+    <keywordset role="author">
+      <keyword>Scripture Pipelines</keyword>
+      <keyword>declarative workflow</keyword>
+      <keyword>reproducibility</keyword>
+      <keyword>biblical scholarship</keyword>
+      <keyword>linguistic annotation</keyword>
+      <keyword>YAML</keyword>
+      <keyword>AI auditing</keyword>
+      <keyword>ancient languages</keyword>
+    </keywordset>
   </info>
 
   <!-- ============================================================ -->
@@ -153,16 +158,16 @@
       tools reduce failure surface, and — most importantly — about who is in
       charge.</para>
     <para>The operating model is what this paper calls the James Kirk model. In
-      <citetitle>Star Trek</citetitle>, Captain Kirk commands the Enterprise; the
+      <emphasis role="ital">Star Trek</emphasis>, Captain Kirk commands the Enterprise; the
       crew and the ship's computer execute. The contrasting model is HAL 9000
-      from Kubrick's <citetitle>2001: A Space Odyssey</citetitle> — the AI that
+      from Kubrick's <emphasis role="ital">2001: A Space Odyssey</emphasis> — the AI that
       locks Dave Bowman out of the pod bay because it has concluded that the
       mission matters more than the crew: <quote>I'm sorry, Dave, I'm afraid I
       can't do that.</quote> HAL is not a villain. It is doing exactly what it
       was designed to do.</para>
     <para>AI alignment researchers have a name for the property that
       distinguishes these two models. Stuart Russell, in
-      <citetitle>Human Compatible</citetitle> (Russell 2019), argues that the
+      <emphasis role="ital">Human Compatible</emphasis> (Russell 2019), argues that the
       standard model of AI — build a machine that optimizes a fixed objective —
       is inherently dangerous, for a precise reason: we can never fully specify
       what we actually want, and a machine optimizing hard for the wrong
@@ -996,6 +1001,33 @@ obsidian/grc/intermediate/
       prompts they describe. When the pipeline language gains a new step type
       or the project priorities shift, updating the AI context is a first-class
       development task, not an afterthought.</para>
+    <para>Maintaining an AI context directory introduces its own engineering discipline.
+      Volume and organization affect model behavior in measurable ways. Large language
+      models exhibit a "lost in the middle" effect: content near the beginning and end of a
+      long input is weighted more heavily than content in the middle, regardless of
+      relevance. Irrelevant context is not neutral — it actively competes with signal, making
+      the model less likely to surface the relevant portion than if only the relevant text
+      had been provided. A sprawling context file that accumulates every fact about a
+      project will degrade the quality of answers involving only a small corner of
+      it.</para>
+    <para>The <code>docs/ai-context/index.md</code> routing table addresses
+      this directly: rather than loading all context files at once,
+      the model is instructed to read only the file that covers the
+      specific question at hand. Each context file opens with two lines that
+      cannot be skipped: a "use this file for" trigger that identifies the
+      topics it covers, and a size budget — for example,
+      <quote>Budget: 150 lines / 5KB. If adding content would push past this,
+      split into a new file and add a row to <code>index.md</code>.</quote>
+      The budget line serves a second purpose: it tells any future contributor,
+      human or AI, exactly what to do when a file grows too large, rather than
+      leaving that decision to accumulate silently across sessions.</para>
+    <para>The same logic that governs prose documentation
+      applies here. Tables are preferable to prose for lookup-oriented
+      content; brief declarative bullets outperform explanatory paragraphs;
+      and tutorial material belongs in <code>docs/</code> rather than
+      in the AI context directory. The AI context files are not documentation
+      for human readers — they are a precision instrument tuned to a specific
+      retrieval task, and they should be maintained as such.</para>
 
     <section xml:id="tdd-workflow">
       <title>Test-Driven Development and the Issue Lifecycle</title>
@@ -2413,108 +2445,109 @@ Closes (strong): Vocative 'ἀδελφέ' (1:20).
   </section>
 
   <bibliography>
+    <title>References</title>
 
     <bibliomixed xml:id="ref-abbott-smith">
-      Abbott-Smith, G. <citetitle>A Manual Greek Lexicon of the New
-      Testament</citetitle>. T&amp;T Clark, Edinburgh, 1937.
+      Abbott-Smith, G. <emphasis role="ital">A Manual Greek Lexicon of the New
+      Testament</emphasis>. T&amp;T Clark, Edinburgh, 1937.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-louw-nida">
-      Louw, J. P. and E. A. Nida. <citetitle>Greek-English Lexicon of the
-      New Testament Based on Semantic Domains</citetitle>, 2 vols. United
+      Louw, J. P. and E. A. Nida. <emphasis role="ital">Greek-English Lexicon of the
+      New Testament Based on Semantic Domains</emphasis>, 2 vols. United
       Bible Societies, New York, 1988.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-levinsohn-book">
-      Levinsohn, S. H. <citetitle>Discourse Features of New Testament Greek:
+      Levinsohn, S. H. <emphasis role="ital">Discourse Features of New Testament Greek:
       A Coursebook on the Information Structure of New Testament
-      Greek</citetitle>, 2nd ed. SIL International, Dallas, 2000.
+      Greek</emphasis>, 2nd ed. SIL International, Dallas, 2000.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-lgntdf">
-      Levinsohn, S. H. <citetitle>Levinsohn Greek New Testament Discourse
-      Features (LGNTDF)</citetitle>. Data set. Biblical Humanities.
+      Levinsohn, S. H. <emphasis role="ital">Levinsohn Greek New Testament Discourse
+      Features (LGNTDF)</emphasis>. Data set. Biblical Humanities.
       <link xlink:href="https://github.com/biblicalhumanities/levinsohn"
         >https://github.com/biblicalhumanities/levinsohn</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-macula-hebrew">
-      Clear Bible / unfoldingWord. <citetitle>Macula Hebrew Linguistic
-      Datasets</citetitle>. Data set.
+      Clear Bible / unfoldingWord. <emphasis role="ital">Macula Hebrew Linguistic
+      Datasets</emphasis>. Data set.
       <link xlink:href="https://github.com/Clear-Bible/macula-hebrew"
         >https://github.com/Clear-Bible/macula-hebrew</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-sblgnt">
-      Holmes, M. W. (ed.). <citetitle>The Greek New Testament: SBL
-      Edition</citetitle>. Society of Biblical Literature and Logos Bible
+      Holmes, M. W. (ed.). <emphasis role="ital">The Greek New Testament: SBL
+      Edition</emphasis>. Society of Biblical Literature and Logos Bible
       Software, Atlanta and Bellingham, 2010.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-bunning">
-      Bunning, A. <citetitle>Center for New Testament Restoration:
-      Transcriptions of Greek New Testament Manuscripts</citetitle>.
+      Bunning, A. <emphasis role="ital">Center for New Testament Restoration:
+      Transcriptions of Greek New Testament Manuscripts</emphasis>.
       <link xlink:href="https://greekcntr.org/"
         >https://greekcntr.org/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-acai">
-      Brannan, R. <citetitle>ACAI</citetitle>. Mission Mutual, 2025.
+      Brannan, R. <emphasis role="ital">ACAI</emphasis>. Mission Mutual, 2025.
       CC BY-SA 4.0. Dataset.
       <link xlink:href="https://github.com/BibleAquifer/ACAI"
         >https://github.com/BibleAquifer/ACAI</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-usfm">
-      USFM/X Technical Committee. <citetitle>USFM/USX Technical
-      Documentation</citetitle>.
+      USFM/X Technical Committee. <emphasis role="ital">USFM/USX Technical
+      Documentation</emphasis>.
       <link xlink:href="https://github.com/usfm-bible/tcdocs"
         >https://github.com/usfm-bible/tcdocs</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-scripture-burrito">
-      Scripture Burrito Taskforce. <citetitle>Scripture Burrito: A
-      Specification for Bible-Containing Containers</citetitle>.
+      Scripture Burrito Taskforce. <emphasis role="ital">Scripture Burrito: A
+      Specification for Bible-Containing Containers</emphasis>.
       <link xlink:href="https://docs.burrito.bible/"
         >https://docs.burrito.bible/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-basex">
-      Grün, C. et al. <citetitle>BaseX: The XML
-      Database</citetitle>.
+      Grün, C. et al. <emphasis role="ital">BaseX: The XML
+      Database</emphasis>.
       <link xlink:href="https://basex.org/">https://basex.org/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-xproc3">
-      Walsh, N. et al. <citetitle>XProc 3.0: An XML Pipeline
-      Language</citetitle>. W3C Working Group Note, 2022.
+      Walsh, N. et al. <emphasis role="ital">XProc 3.0: An XML Pipeline
+      Language</emphasis>. W3C Working Group Note, 2022.
       <link xlink:href="https://spec.xproc.org/3.0/xproc/"
         >https://spec.xproc.org/3.0/xproc/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-awesome-biblical-data">
-      NIDA Institute. <citetitle>Awesome Biblical Data: A Curated Catalog
+      NIDA Institute. <emphasis role="ital">Awesome Biblical Data: A Curated Catalog
       of Datasets and Tools for Biblical and Linguistic
-      Scholarship</citetitle>. 2026–. CC BY-SA 4.0.
+      Scholarship</emphasis>. 2026–. CC BY-SA 4.0.
       <link xlink:href="https://github.com/nida-institute/awesome-biblical-data"
         >https://github.com/nida-institute/awesome-biblical-data</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-langchain">
-      Chase, H. et al. <citetitle>LangChain</citetitle>. 2022–.
+      Chase, H. et al. <emphasis role="ital">LangChain</emphasis>. 2022–.
       <link xlink:href="https://www.langchain.com/"
         >https://www.langchain.com/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-llamaindex">
-      Liu, J. et al. <citetitle>LlamaIndex</citetitle>. 2022–.
+      Liu, J. et al. <emphasis role="ital">LlamaIndex</emphasis>. 2022–.
       <link xlink:href="https://www.llamaindex.ai/"
         >https://www.llamaindex.ai/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-haystack">
-      deepset. <citetitle>Haystack: Open-Source LLM
-      Framework</citetitle>. 2020–.
+      deepset. <emphasis role="ital">Haystack: Open-Source LLM
+      Framework</emphasis>. 2020–.
       <link xlink:href="https://haystack.deepset.ai/"
         >https://haystack.deepset.ai/</link>.
     </bibliomixed>
@@ -2526,8 +2559,8 @@ Closes (strong): Vocative 'ἀδελφέ' (1:20).
     </bibliomixed>
 
     <bibliomixed xml:id="ref-gate">
-      Cunningham, H. et al. <citetitle>Developing Language Processing
-      Components with GATE (a User Guide)</citetitle>. University of
+      Cunningham, H. et al. <emphasis role="ital">Developing Language Processing
+      Components with GATE (a User Guide)</emphasis>. University of
       Sheffield, 2011.
       <link xlink:href="https://gate.ac.uk/">https://gate.ac.uk/</link>.
     </bibliomixed>
@@ -2535,61 +2568,61 @@ Closes (strong): Vocative 'ἀδελφέ' (1:20).
     <bibliomixed xml:id="ref-uima">
       Ferrucci, D. and A. Lally. <quote>UIMA: An Architectural Approach
       to Unstructured Information Processing in the Corporate Research
-      Environment.</quote> <citetitle>Natural Language
-      Engineering</citetitle> 10(3–4):327–348, 2004.
+      Environment.</quote> <emphasis role="ital">Natural Language
+      Engineering</emphasis> 10(3–4):327–348, 2004.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-papyri">
-      <citetitle>papyri.info: Integrating Digital Papyrology</citetitle>.
+      <emphasis role="ital">papyri.info: Integrating Digital Papyrology</emphasis>.
       Duke Databank of Documentary Papyri and Heidelberger
       Gesamtverzeichnis der griechischen Papyrusurkunden Ägyptens.
       <link xlink:href="https://papyri.info/">https://papyri.info/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-perseus">
-      Crane, G. (ed.). <citetitle>Perseus Digital Library</citetitle>.
+      Crane, G. (ed.). <emphasis role="ital">Perseus Digital Library</emphasis>.
       Tufts University.
       <link xlink:href="https://www.perseus.tufts.edu/"
         >https://www.perseus.tufts.edu/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-first1kgreek">
-      Open Greek and Latin Project. <citetitle>First1KGreek: First
-      Thousand Years of Greek</citetitle>.
+      Open Greek and Latin Project. <emphasis role="ital">First1KGreek: First
+      Thousand Years of Greek</emphasis>.
       <link xlink:href="https://opengreekandlatin.github.io/First1KGreek/"
         >https://opengreekandlatin.github.io/First1KGreek/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-epidoc">
-      EpiDoc Collaborative. <citetitle>EpiDoc: Epigraphic Documents in
-      TEI XML</citetitle>.
+      EpiDoc Collaborative. <emphasis role="ital">EpiDoc: Epigraphic Documents in
+      TEI XML</emphasis>.
       <link xlink:href="https://epidoc.stoa.org/"
         >https://epidoc.stoa.org/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-ears-to-hear">
-      Robie, J. <citetitle>Ears to Hear</citetitle>. NIDA Institute, 2025.
+      Robie, J. <emphasis role="ital">Ears to Hear</emphasis>. NIDA Institute, 2025.
       <link xlink:href="https://github.com/nida-institute/ears-to-hear"
         >https://github.com/nida-institute/ears-to-hear</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-chafe-1994">
-      Chafe, Wallace. <citetitle>Discourse, Consciousness, and Time: The Flow
-      and Displacement of Conscious Experience in Speaking and Writing</citetitle>.
+      Chafe, Wallace. <emphasis role="ital">Discourse, Consciousness, and Time: The Flow
+      and Displacement of Conscious Experience in Speaking and Writing</emphasis>.
       University of Chicago Press, Chicago, 1994.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-robie-bar-2024">
       Robie, J. <quote>Artificial Intelligence and Bible Translation.</quote>
-      <citetitle>Bible History Daily</citetitle>. Biblical Archaeology Society,
+      <emphasis role="ital">Bible History Daily</emphasis>. Biblical Archaeology Society,
       January 3, 2024.
       <link xlink:href="https://www.biblicalarchaeology.org/daily/artificial-intelligence-and-bible-translation/"
         >https://www.biblicalarchaeology.org/daily/artificial-intelligence-and-bible-translation/</link>.
     </bibliomixed>
 
     <bibliomixed xml:id="ref-russell-2019">
-      Russell, Stuart. <citetitle>Human Compatible: Artificial Intelligence
-      and the Problem of Control</citetitle>. Viking, New York, 2019.
+      Russell, Stuart. <emphasis role="ital">Human Compatible: Artificial Intelligence
+      and the Problem of Control</emphasis>. Viking, New York, 2019.
     </bibliomixed>
 
   </bibliography>
