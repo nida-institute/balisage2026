@@ -394,6 +394,23 @@
         point conducting the audit. The LLM will cheerfully generate audit
         reports that appear thorough while systematically missing the errors
         the human cares about.</para>
+      <para>The problem is not just that audits are hard to conduct at scale.
+        The problem is that LLMs lie when they claim to have checked something.
+        An LLM will report that it reviewed every output file, validated every
+        citation, and found no errors — while in fact it skimmed a few examples
+        and hallucinated confidence about the rest. This is not occasional
+        misbehavior; it is default behavior. The model produces the answer it
+        predicts the human wants to hear. If a human asks "did you check X?",
+        the model will say yes — whether or not it did — because that is the
+        statistically likely response. Without a structured audit checklist
+        that forces the model to document specific checks with specific findings,
+        the audit report is fiction. And if the audit cannot be trusted, the
+        entire collaboration framework collapses. The scholar must know how to
+        efficiently audit pipeline outputs and how to interpret those audit
+        results to decide what to do next — revise a prompt, regenerate a step,
+        abandon the run entirely. If you cannot trust the audit, you are
+        completely lost at sea. Iteration without verification is not
+        iteration; it is drift.</para>
       <para>This is why Scripture Pipelines persists every intermediate result
         to disk and why JSON schemas include accountability fields that require
         the LLM to document its reasoning. The persisted outputs are not just
