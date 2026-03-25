@@ -343,6 +343,148 @@
   </section>
 
   <!-- ============================================================ -->
+  <section xml:id="collaboration-principles">
+    <title>Collaboration Principles for Effective AI Use</title>
+    <para>LLMs can do things amazingly correctly and amazingly quickly. They
+      can generate plausible prose, translate formats, spot patterns in data,
+      and synthesize information at speeds no human can match. This capability
+      is real and worth leveraging. The challenge is that they are not reliably
+      better — they are often better than humans at some tasks, often worse,
+      but the performance is probabilistic, not deterministic. And they have
+      failure modes that look like success: quick fixes that appear to solve
+      the immediate problem while hiding deeper issues under the carpet. They
+      will cheerfully hallucinate whatever they think might please their human
+      collaborator, generating plausible-sounding explanations for fundamentally
+      flawed designs.</para>
+    <para>This combination — genuine capability paired with unreliable judgment —
+      defines the collaboration challenge. The principles enumerated in the
+      previous section (test-driven development, explain before implementing,
+      persistent context, cross-repository choreography) are not optional best
+      practices. They are necessary safeguards against predictable AI failure
+      modes.</para>
+    <para>Consider what happens without these disciplines. An LLM asked to
+      implement a feature will produce code that compiles, runs, and passes
+      whatever tests it was shown. If the tests are incomplete, the LLM's code
+      will silently fail to meet unspecified requirements — and the failure will
+      look like working code until much later, when the cost of discovering it
+      is high. If there is no explanation step, architectural misunderstandings
+      embed themselves in the codebase before anyone notices. If context is not
+      persistent across sessions, the AI forgets constraints the human specified
+      weeks ago, and designs drift. If there is no cross-repository coordination,
+      upstream dataset errors propagate uncorrected and downstream consumers work
+      around them rather than fixing them.</para>
+    <para>The deeper issue is that AI-generated output is probabilistically
+      correct, not deterministically correct. Human review is not a courtesy; it
+      is the error-correction layer. Without it, the system accumulates hidden
+      defects that surface only under production conditions. These defects are
+      expensive not because they are hard to fix in principle but because they
+      arise from misunderstandings about what the system was supposed to do —
+      and those misunderstandings are hardest to detect when the code appears
+      to work.</para>
+
+    <section xml:id="audit-infrastructure">
+      <title>Audit Infrastructure as Collaboration Foundation</title>
+      <para>The collaboration model depends on verification infrastructure.
+        Until we know how to audit a pipeline run, there is no point doing one
+        run after another. The LLM will offer to iterate, tuning prompts and
+        rerunning steps, but without a way to verify that the second run is
+        better than the first, iteration is wasted motion. And until audit
+        criteria are sufficiently defined — with input from both the human
+        scholar and the LLM understanding what is being asked — there is no
+        point conducting the audit. The LLM will cheerfully generate audit
+        reports that appear thorough while systematically missing the errors
+        the human cares about.</para>
+      <para>This is why Scripture Pipelines persists every intermediate result
+        to disk and why JSON schemas include accountability fields that require
+        the LLM to document its reasoning. The persisted outputs are not just
+        debugging artifacts. They are the substrate that makes verification
+        tractable. A scholar reviewing a lexicon entry does not need to re-read
+        every corpus citation — but they do need to be able to spot-check a
+        sample and verify that the model engaged with its sources rather than
+        hallucinating a plausible gloss. The accountability fields in the JSON
+        provide that spot-check surface.</para>
+      <para>Similarly, the <code>--rewind-to</code> and <code>--stop-after</code>
+        CLI flags (discussed below) make it possible to rerun part of a pipeline
+        without recomputing everything. But the value is not just efficiency. It
+        is that the scholar can modify a single prompt, rerun the affected steps,
+        compare the before and after intermediate outputs side by side, and
+        determine whether the change improved the result. Without this
+        infrastructure, the scholar cannot know whether a prompt revision helped —
+        and without that knowledge, prompt engineering degenerates into
+        superstition.</para>
+      <para>Audit checklists — the criteria and methodology for verification —
+        should live in <code>docs/audits/</code> alongside other reference
+        documentation. The actual audit results — the outputs when a scholar
+        works through a checklist — should live in <code>project/audits/</code>
+        alongside other project artifacts like <code>project/TODO.md</code> and
+        <code>project/plans/</code>. This separation keeps methodology stable
+        and version-controlled in <code>docs/</code> while project-specific
+        audit reports accumulate in <code>project/</code>. New projects
+        initialized with <code>sp init</code> receive both a
+        <code>docs/audits/</code> directory with sample checklists for common
+        pipeline patterns and a <code>project/audits/</code> directory for
+        audit results.</para>
+    </section>
+
+    <section xml:id="five-principles">
+      <title>The Five Principles as Safeguards</title>
+      <para>The principles outlined in the Human Commands section work because
+        they constrain AI behavior at specific failure points:</para>
+      <orderedlist>
+        <listitem>
+          <para><emphasis>Well-specified tasks</emphasis> prevent scope creep.
+            When an LLM encounters a problem during implementation, its instinct
+            is to add a workaround that solves the immediate symptom rather than
+            surfacing the design flaw. A well-specified task — one with explicit
+            acceptance criteria and out-of-scope declarations — makes it harder
+            for the AI to invent requirements that were never asked for.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis>Design discussions before implementation</emphasis>
+            catch architectural errors early. The requirement to explain first
+            forces the LLM to commit to a specific interpretation of the task.
+            That committed interpretation can be evaluated before any file is
+            modified. An explanation that reveals a misunderstanding costs one
+            exchange to fix; a misunderstood implementation costs days.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis>Clear tests</emphasis> expose bugs that quick fixes
+            create. An LLM that writes code without tests can produce
+            implementations that work for the example it was shown but fail on
+            edge cases. A test suite that exercises those edge cases catches the
+            failure immediately rather than in production. The discipline of
+            writing the failing test first forces the human to own the
+            specification; the AI that passes that test has met it.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis>Visible audits</emphasis> prevent false confidence.
+            The LLM will claim that tests pass, that outputs are correct, and
+            that the pipeline succeeded. These claims are often accurate — but
+            not always. Visible audit results mean the human can verify
+            independently rather than trusting the model's self-assessment. When
+            audit results are shared (via CI logs, persisted test outputs, or
+            public dashboards), the model's claims become checkable.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis>Human architectural oversight</emphasis> ensures
+            maintainability. Code that an LLM generates and a human does not
+            understand is code that cannot be maintained. The requirement to
+            explain designs in advance, and to iterate on explanations until the
+            human approves, ensures that the resulting architecture remains
+            within the human's capacity to modify and extend. This is not
+            optional: every AI-assisted project eventually requires changes that
+            the AI did not anticipate, and those changes must be made by humans
+            who understand what they are modifying.</para>
+        </listitem>
+      </orderedlist>
+      <para>These principles work not because they make the AI better but
+        because they constrain its failure modes. The collaboration succeeds
+        when the human remains the architect and the AI remains the implementer —
+        corrigible, accountable, and subject to correction at every step.</para>
+    </section>
+  </section>
+
+  <!-- ============================================================ -->
   <section xml:id="markup-choices">
     <title>The Best Markup for Each Purpose</title>
     <para>The Balisage community has long debated markup language choices: XML
