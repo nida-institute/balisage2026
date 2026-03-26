@@ -22,7 +22,7 @@
         contracts. Every intermediate result is persisted to disk. Every LLM
         step can be required to produce a structured audit record of the sources
         it used. This paper describes the design decisions behind Scripture
-        Pipelines and reports on its application in several NIDA Institute
+        Pipelines and reports on its application in several Nida Institute
         projects producing freely licensed biblical reference materials —
         including a multi-pass Greek semantic lexicon, a grammatical phrasing
         analysis of the Hebrew Bible, book-level discourse analyses, and
@@ -38,14 +38,14 @@
       </personname>
       <personblurb>
         <para>Jonathan Robie is a software engineer at Biblica and a researcher
-          at the NIDA Institute, focused on AI-assisted biblical scholarship and
+          at the Nida Institute, focused on AI-assisted biblical scholarship and
           declarative pipeline systems for linguistic annotation.</para>
       </personblurb>
       <affiliation>
         <orgname>Biblica</orgname>
       </affiliation>
       <affiliation>
-        <orgname>NIDA Institute</orgname>
+        <orgname>Nida Institute</orgname>
       </affiliation>
       <email>jonathan.robie@biblica.com</email>
     </author>
@@ -66,7 +66,7 @@
     <title>Introduction: The Kairos Project and Scripture Pipelines</title>
     <para>Every software system is also a social system. It decides who has
       power, who is included, who is left out, how people communicate.
-      Scripture Pipelines is built to serve The Kairos Project — a NIDA
+      Scripture Pipelines is built to serve The Kairos Project — a Nida
       Institute initiative to build a global community of scholars serving
       Bible translation and the global church. The workflow patterns described
       in this paper are in service of that goal: building collaboration around
@@ -144,7 +144,7 @@
       resource of enormous text-critical and exegetical value that most of the
       scholars who could use it have never encountered. No single organization
       commands the full range of expertise required to connect these worlds. The
-      NIDA Institute's role in this landscape is catalytic: bringing scholars
+      Nida Institute's role in this landscape is catalytic: bringing scholars
       together across these silos, building a community that cares about data,
       Bible translation, and the needs of the global church.</para>
     <para>The bottleneck is not data — it is the human capacity to bring rigorous
@@ -180,7 +180,7 @@
       The same pipeline that generates a lexicon entry can be rerun, with a revised
       prompt, without re-querying the corpus-gathering step. This paper describes the
       design decisions behind Scripture Pipelines and reports on its application in
-      several NIDA Institute projects producing freely licensed biblical reference
+      several Nida Institute projects producing freely licensed biblical reference
       materials. Everything produced is freely licensed. The goal is to teach people
       to read and engage with the wisdom of a Bible that is older and stranger than
       any of us can fully imagine, yet speaks with remarkable directness to what
@@ -1628,7 +1628,7 @@ obsidian/grc/intermediate/
     <para>Pipeline steps are only as good as the data they can access.
       Before examining the specific datasets that current Scripture Pipelines
       projects draw on, it is useful to distinguish the access patterns
-      available and when each is the right choice. The NIDA Institute
+      available and when each is the right choice. The Nida Institute
       projects described here use all four.</para>
 
     <section xml:id="ds-access-patterns">
@@ -1967,7 +1967,7 @@ obsidian/grc/intermediate/
     <section xml:id="semlex">
       <title>The Kairos Semantic Lexicon of Biblical Greek (SemLex Greek)</title>
       <para>SemLex Greek is a new open-access lexicon of Hellenistic Greek being
-        developed under the auspices of the NIDA Institute in collaboration with
+        developed under the auspices of the Nida Institute in collaboration with
         UBS, Biblica, and SIL International. It aims to provide clear,
         contextual definitions grounded in the full Hellenistic corpus — New
         Testament, Septuagint, papyri, inscriptions, and contemporary literature
@@ -2787,14 +2787,33 @@ Closes (strong): Vocative 'ἀδελφέ' (1:20).
       scholar with deep domain knowledge and a well-designed pipeline can
       now produce work that would previously have required a large team
       and many years. Experience still counts. It just goes further.</para>
+    <para>This is what The Kairos Project is for. When we say "a scholar with
+      deep domain knowledge," we mean scholars worldwide — including those
+      learning Greek and Hebrew outside traditional seminaries, multilingual
+      learners who bring linguistic gifts that Western institutions have not
+      recognized, translation teams who know their target audience in ways
+      the academy never will. The goal is not to make Western scholars more
+      productive; the goal is to democratize the tools so that scholarship
+      can happen where it is needed, by people who have been told they are
+      not qualified, producing resources together with the communities who
+      will actually use them. Scripture Pipelines is infrastructure for that
+      vision. It makes the open datasets — the treebanks, the lexicons, the
+      discourse annotations — accessible to people who do not have a PhD
+      from a Western university and do not need one to do rigorous work
+      with the text. The Kairos Project exists to raise up scholars globally,
+      not to preserve the Western academy's role as gatekeeper. The bidirectional
+      flow between academy and church, between institution and field, is not
+      a concession — it is the point.</para>
     <para>The four case studies reported here are early instances of a
       larger program. As the planned data source integrations come online —
       BaseX for the full Macula corpus, Paratext for translation project
       integration, ACAI for entity-level annotation, Perseus and First1KGreek
       for Hellenistic corpus breadth — the range of pipeline-producible
       scholarly materials will expand. The goal is a world where the open
-      data that scholars have painstakingly assembled is actually put to work
-      for the communities it was meant to serve.</para>
+      data that scholars have painstakingly assembled becomes the shared
+      foundation for work that communities worldwide do together — not
+      resources provided for them, but scholarship they participate in
+      creating.</para>
   </section>
 
   <section xml:id="ai-disclosure">
@@ -2906,7 +2925,7 @@ Closes (strong): Vocative 'ἀδελφέ' (1:20).
     </bibliomixed>
 
     <bibliomixed xml:id="ref-awesome-biblical-data">
-      NIDA Institute. <emphasis role="ital">Awesome Biblical Data: A Curated Catalog
+      Nida Institute. <emphasis role="ital">Awesome Biblical Data: A Curated Catalog
       of Datasets and Tools for Biblical and Linguistic
       Scholarship</emphasis>. 2026–. CC BY-SA 4.0.
       <link xlink:href="https://github.com/nida-institute/awesome-biblical-data"
@@ -2981,7 +3000,7 @@ Closes (strong): Vocative 'ἀδελφέ' (1:20).
     </bibliomixed>
 
     <bibliomixed xml:id="ref-ears-to-hear">
-      Robie, J. <emphasis role="ital">Ears to Hear</emphasis>. NIDA Institute, 2025.
+      Robie, J. <emphasis role="ital">Ears to Hear</emphasis>. Nida Institute, 2025.
       <link xlink:href="https://github.com/nida-institute/ears-to-hear"
         >https://github.com/nida-institute/ears-to-hear</link>.
     </bibliomixed>
