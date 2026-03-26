@@ -178,20 +178,51 @@
       calls this property <emphasis>corrigibility</emphasis>: an AI that accepts
       correction and remains under human authority. The James Kirk model is
       corrigibility in practice — applied not to autonomous robots but to AI
-      collaborators in scholarly and translation work. The human architect
-      decides what to build, which scholarly traditions ground the work, and
-      what good enough means for the community the output will serve. The AI
-      implements what is specified. It does not decide what is worth
-      specifying.</para>
+      collaborators in scholarly and translation work. Humans decide what to
+      build, which scholarly traditions ground the work, and what good enough
+      means for the community the output will serve. The AI implements what is
+      specified. It does not decide what is worth specifying.</para>
+    <para>This collaborative model depends on clear role boundaries. Scripture
+      Pipelines enables collaboration across four distinct roles, each with
+      specific responsibilities:</para>
+    <para><emphasis role="bold">Scholars</emphasis> bring domain expertise:
+      exegetical judgment, linguistic analysis, translation experience,
+      understanding of oral cultures. They specify what insights are needed,
+      validate the scholarly accuracy of outputs, and vouch for results.
+      They do not need to write code, transform data formats, or design AI
+      workflows. Their authority comes from training, judgment, and
+      accountability to scholarly traditions and communities.</para>
+    <para><emphasis role="bold">Pipeline Data Architects</emphasis> bring
+      technical skills and data literacy. They curate data sources, build
+      infrastructure connecting data sources to formats scholars and end users
+      need, design AI workflows, write pipeline configurations, and remove
+      technical barriers between "data exists" and "users can access it."
+      Critically, they are embedded in the user community — they understand
+      translation teams, how Bible study groups work, what pedagogical
+      resources look like in practice. They do not validate scholarly accuracy.
+      That is the scholar's job.</para>
+    <para><emphasis role="bold">Scripture Pipelines Core Developers</emphasis>
+      build and evolve the framework itself: the engine that executes
+      pipeline YAML, the CLI interface, the test suite, the validation
+      logic, and the conventions that make cross-project collaboration
+      possible. They develop new step types, add format support, and design
+      framework architecture in response to feature requests from pipeline
+      architects. They do not build domain-specific pipelines; they build
+      the engine that makes those pipelines possible.</para>
+    <para><emphasis role="bold">End Users</emphasis> — translation teams,
+      Bible study leaders, focus groups, readers in community — use the
+      resources in practice. They provide feedback on whether outputs are
+      actually helpful. They are not passive recipients. Their encounter
+      with the text is the reason the work exists.</para>
     <para>Scripture Pipelines operationalizes this principle through four
       interlocking disciplines.</para>
     <para><emphasis>Test-driven development.</emphasis> The Scripture Pipelines
       engine maintains approximately two lines of test code for every line of
       production code. This ratio is a deliberate constraint on AI autonomy,
       not a programmer's stylistic preference. Writing the test first — the
-      failing specification — forces you to own the decision about what
-      the code should do before the AI touches it. An AI that passes a precise
-      test has done what was asked. An AI that writes code without a test has
+      failing specification — forces the core developer or pipeline architect
+      to own the decision about what the code should do before the AI touches
+      it. An AI that passes a precise test has done what was asked. An AI that writes code without a test has
       decided what was asked. Without the full test suite, a model that
       simply ignores an inconvenient requirement produces code that compiles
       and runs while silently failing to meet the specification — a failure
@@ -210,9 +241,9 @@
       modified. It matters most when sessions are rushed, which is exactly
       when it is most often skipped.</para>
     <para><emphasis>Persistent context infrastructure.</emphasis> Corrigibility
-      requires that the AI know, at every session, what you have decided
-      — not just what the model remembers from training. Each Scripture Pipelines
-      project carries two kinds of constraining context. The
+      requires that the AI know, at every session, what the scholar or pipeline
+      architect has decided — not just what the model remembers from training.
+      Each Scripture Pipelines project carries two kinds of constraining context. The
       <code>.github/copilot-instructions.md</code> file is the AI's
       constitution for the repository: it names the architecture patterns to
       follow, the pitfalls to avoid, the things not to change without explicit
@@ -340,64 +371,11 @@
       today. The scholars, the data, the pipelines, and the communities
       of readers are not separate. They are members of one body, centered
       around the same text.</para>
-    <section xml:id="roles-feedback">
-      <title>Roles and Feedback Loops</title>
-      <para>This collaborative model depends on clear role boundaries and
-        functioning feedback loops. Scripture Pipelines is infrastructure,
-        not a replacement for human judgment. It enables collaboration across
-        four distinct roles, each with specific responsibilities:</para>
-      <para><emphasis role="bold">Scholars</emphasis> bring domain expertise:
-        exegetical judgment, linguistic analysis, translation experience,
-        understanding of oral cultures. They specify what insights are needed,
-        validate the scholarly accuracy of outputs, and vouch for results.
-        They do not need to write code, transform data formats, or design AI
-        workflows. Their authority comes from training, judgment, and
-        accountability to scholarly traditions and communities. A lexicographer
-        reviewing a pipeline-generated entry does not need to re-query every
-        papyrus citation — but they must be able to verify that the model
-        engaged with its sources rather than hallucinating a plausible gloss.
-        A translation consultant evaluating a discourse analysis must be able
-        to confirm that Levinsohn features were applied accurately and that
-        the conclusions follow from the evidence. The scholar's validation is
-        what makes pipeline output trustworthy.</para>
-      <para><emphasis role="bold">Pipeline Data Architects</emphasis> bring
-        technical skills and data literacy. They curate data sources: knowing
-        what datasets exist, how to access them, what each is good for, and
-        where the gaps are. They build infrastructure connecting data sources
-        to formats scholars and end users need. They design AI workflows,
-        write pipeline configurations, and remove technical barriers between
-        "data exists" and "users can access it." Critically, they are embedded
-        in the user community — they understand translation teams, how Bible
-        study groups work, what pedagogical resources look like in practice.
-        They do not validate scholarly accuracy. That is the scholar's job.
-        The pipeline architect's credibility comes from building tools that
-        work: pipelines that run reliably, outputs that scholars can verify,
-        and infrastructure that serves real user needs.</para>
-      <para><emphasis role="bold">Scripture Pipelines Core Developers</emphasis>
-        build and evolve the framework itself: the engine that executes
-        pipeline YAML, the CLI interface, the test suite, the validation
-        logic, and the conventions that make cross-project collaboration
-        possible. They develop new step types, add format support, and design
-        framework architecture in response to feature requests from pipeline
-        architects. They ensure backward compatibility as the framework
-        evolves and decide what capabilities belong in core versus
-        project-specific code. They do not build domain-specific pipelines;
-        they build the engine that makes those pipelines possible. Their
-        accountability is to the community of pipeline architects and,
-        indirectly, to the scholars and users those architects serve. The
-        author is currently the sole core developer, but the role is designed
-        to scale as the community grows.</para>
-      <para><emphasis role="bold">End Users</emphasis> — translation teams,
-        Bible study leaders, focus groups, readers in community — use the
-        resources in practice. They provide feedback on whether outputs are
-        actually helpful: whether a lexicon entry clarifies or confuses,
-        whether a discourse map illuminates structure or adds noise, whether
-        study questions help a group engage the text or miss what matters.
-        They are not passive recipients. Their encounter with the text is
-        the reason the work exists. Their feedback is what keeps both
-        scholarship and infrastructure grounded in real needs rather than
-        abstract ideals.</para>
-      <para>The collaboration works when feedback loops are functioning:</para>
+    <section xml:id="feedback-loops">
+      <title>Feedback Loops</title>
+      <para>The four roles defined above — scholars, pipeline data architects,
+        core developers, and end users — collaborate through functioning feedback
+        loops:</para>
       <itemizedlist>
         <listitem>
           <para><emphasis role="bold">Scholar ↔ Pipeline Data Architect:</emphasis>
@@ -558,18 +536,18 @@
         run after another. The LLM will offer to iterate, tuning prompts and
         rerunning steps, but without a way to verify that the second run is
         better than the first, iteration is wasted motion. And until audit
-        criteria are sufficiently defined — with input from both you
-        and the LLM understanding what is being asked — there is no
+        criteria are sufficiently defined — with input from both the scholar
+        and the pipeline architect understanding what is being asked — there is no
         point conducting the audit. The LLM will cheerfully generate audit
         reports that appear thorough while systematically missing the errors
-        you care about.</para>
+        the scholar cares about.</para>
       <para>The problem is not just that audits are hard to conduct at scale.
         The problem is that LLMs lie when they claim to have checked something.
         An LLM will report that it reviewed every output file, validated every
         citation, and found no errors — while in fact it skimmed a few examples
         and hallucinated confidence about the rest. This is not occasional
         misbehavior; it is default behavior. The model produces the answer it
-        predicts you want to hear. If you ask "did you check X?",
+        predicts the scholar or architect wants to hear. If a scholar asks "did you check X?",
         the model will say yes — whether or not it did — because that is the
         statistically likely response. Without a structured audit checklist
         that forces the model to document specific checks with specific findings,
@@ -592,10 +570,10 @@
       <para>Similarly, the <code>--rewind-to</code> and <code>--stop-after</code>
         CLI flags (discussed below) make it possible to rerun part of a pipeline
         without recomputing everything. But the value is not just efficiency. It
-        is that you can modify a single prompt, rerun the affected steps,
+        is that the pipeline architect can modify a single prompt, rerun the affected steps,
         compare the before and after intermediate outputs side by side, and
         determine whether the change improved the result. Without this
-        infrastructure, you cannot know whether a prompt revision helped —
+        infrastructure, the architect cannot know whether a prompt revision helped —
         and without that knowledge, prompt engineering degenerates into
         superstition.</para>
       <para>Audit checklists — the criteria and methodology for verification —
@@ -639,34 +617,36 @@
             implementations that work for the example it was shown but fail on
             edge cases. A test suite that exercises those edge cases catches the
             failure immediately rather than in production. The discipline of
-            writing the failing test first forces you to own the
-            specification; the AI that passes that test has met it.</para>
+            writing the failing test first forces the core developer or pipeline
+            architect to own the specification; the AI that passes that test has
+            met it.</para>
         </listitem>
         <listitem>
           <para><emphasis>Visible audits</emphasis> prevent false confidence.
             The LLM will claim that tests pass, that outputs are correct, and
             that the pipeline succeeded. These claims are often accurate — but
-            not always. Visible audit results mean you can verify
-            independently rather than trusting the model's self-assessment. When
-            audit results are shared (via CI logs, persisted test outputs, or
+            not always. Visible audit results mean the scholar or pipeline architect
+            can verify independently rather than trusting the model's self-assessment.
+            When audit results are shared (via CI logs, persisted test outputs, or
             public dashboards), the model's claims become checkable.</para>
         </listitem>
         <listitem>
           <para><emphasis>Human architectural oversight</emphasis> ensures
-            maintainability. Code that an LLM generates and you don't
-            understand is code that cannot be maintained. The requirement to
-            explain designs in advance, and to iterate on explanations until you
-            approve, ensures that the resulting architecture remains
-            within your capacity to modify and extend. This is not
-            optional: every AI-assisted project eventually requires changes that
-            the AI did not anticipate, and those changes must be made by humans
+            maintainability. Code that an LLM generates and the core developer or
+            pipeline architect doesn't understand is code that cannot be maintained.
+            The requirement to explain designs in advance, and to iterate on
+            explanations until the architect approves, ensures that the resulting
+            architecture remains within the architect's capacity to modify and extend.
+            This is not optional: every AI-assisted project eventually requires changes
+            that the AI did not anticipate, and those changes must be made by humans
             who understand what they are modifying.</para>
         </listitem>
       </orderedlist>
       <para>These principles work not because they make the AI better but
         because they constrain its failure modes. The collaboration succeeds
-        when you remain the architect and the AI remains the implementer —
-        corrigible, accountable, and subject to correction at every step.</para>
+        when the core developer and pipeline architect remain the architects
+        and the AI remains the implementer — corrigible, accountable, and
+        subject to correction at every step.</para>
     </section>
   </section>
 
