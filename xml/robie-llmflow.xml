@@ -280,8 +280,8 @@
       constitution for the repository: it names the architecture patterns to
       follow, the pitfalls to avoid, the things not to change without explicit
       instruction, and the requirement to explain before implementing. The
-      <code>docs/ai-context/</code> directory, scaffolded by <code>sp
-      init</code>, encodes which data sources to trust, what the pipeline
+      <code>docs/ai-context/</code> directory, scaffolded by <code>sp init</code>,
+      encodes which data sources to trust, what the pipeline
       language supports, what work is currently in progress, and what the
       project is trying to accomplish. These are not documentation artifacts;
       they are the active working constraints in every session. When the
