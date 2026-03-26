@@ -32,7 +32,25 @@ This collaborative model depends on clear role boundaries. Scripture Pipelines e
 
 **End Users** --- translation teams, Bible study leaders, focus groups, readers in community --- use the resources in practice. They provide feedback on whether outputs are actually helpful. They are not passive recipients. Their encounter with the text is the reason the work exists.
 
-These collaborative workflows address fundamental challenges that arise whenever complex technical work spans multiple sessions and multiple contributors --- challenges that intensify when AI is involved. Work must be decomposed to manage cognitive load for both humans and AI. Individual components must coordinate with evolving plans; goals shift over time, and it is easy to work as though nothing has changed. AI outputs look confident even when wrong, with no intuitive signal to calibrate trust. Sessions have no memory without persistent context. Without verification checkpoints, small misunderstandings compound across sessions; scope creeps as AI suggests \"improvements\" not tied to project needs; both AIs and humans generate feature suggestions faster than they can be implemented, and without prioritization discipline, teams chase the newest idea rather than the most important work; AI reimplements existing patterns because it does not know the architecture. Measurable progress becomes invisible --- entire sessions can feel productive while merely refactoring in circles. Human time remains the scarce resource even with AI productivity gains; steering that time to what matters most requires explicit priority management. The disciplines that follow address these risks.
+These collaborative workflows address fundamental challenges that arise whenever complex technical work spans multiple sessions and multiple contributors --- challenges that intensify when AI is involved:
+
+-   *Cognitive overload.* Work must be decomposed to manage cognitive load for both humans and AI.
+
+-   *Architecture drift.* Individual components must coordinate with evolving plans; goals shift over time, and it is easy to work as though nothing has changed. AI reimplements existing patterns because it does not know the architecture.
+
+-   *False confidence.* AI outputs look confident even when wrong, with no intuitive signal to calibrate trust.
+
+-   *Session amnesia.* Sessions have no memory without persistent context infrastructure.
+
+-   *Error compounding.* Without verification checkpoints, small misunderstandings compound across sessions.
+
+-   *Scope creep.* AI suggests \"improvements\" not tied to project needs; both AIs and humans generate suggestions faster than they can be implemented.
+
+-   *Priority paralysis.* Without prioritization discipline, teams chase the newest idea rather than the most important work.
+
+-   *Progress invisibility.* Measurable progress becomes invisible --- entire sessions can feel productive while merely refactoring in circles. Human time remains the scarce resource even with AI productivity gains; steering that time to what matters most requires explicit priority management.
+
+The disciplines that follow address these risks.
 
 Scripture Pipelines operationalizes this principle through four interlocking disciplines.
 
