@@ -214,8 +214,40 @@
       resources in practice. They provide feedback on whether outputs are
       actually helpful. They are not passive recipients. Their encounter
       with the text is the reason the work exists.</para>
+    <para>These collaborative workflows address fundamental challenges that
+      arise whenever complex technical work spans multiple sessions and
+      multiple contributors — challenges that intensify when AI is involved.
+      Work must be decomposed to manage cognitive load for both humans and
+      AI. Individual components must coordinate with evolving plans; goals
+      shift over time, and it is easy to work as though nothing has changed.
+      AI outputs look confident even when wrong, with no intuitive signal to
+      calibrate trust. Sessions have no memory without persistent context.
+      Without verification checkpoints, small misunderstandings compound
+      across sessions; scope creeps as AI suggests "improvements" not tied to
+      project needs; both AIs and humans generate feature suggestions faster
+      than they can be implemented, and without prioritization discipline,
+      teams chase the newest idea rather than the most important work; AI
+      reimplements existing patterns because it does not know the architecture.
+      Measurable progress becomes invisible — entire sessions can feel
+      productive while merely refactoring in circles. Human time remains the
+      scarce resource even with AI productivity gains; steering that time to
+      what matters most requires explicit priority management. The disciplines
+      that follow address these risks.</para>
     <para>Scripture Pipelines operationalizes this principle through four
       interlocking disciplines.</para>
+    <para>These disciplines are not novel to AI-driven development.
+      Test-driven development, continuous integration, documentation
+      standards, and cross-repository coordination have been core software
+      engineering practices for decades. What is new is their accessibility.
+      In traditional development environments, these practices were so
+      resource-intensive that teams typically needed dedicated specialists —
+      one QA engineer per four to eight developers, separate DevOps teams,
+      dedicated technical writers. With AI collaboration, the disciplines
+      remain essential (perhaps even more so, given the need for
+      verifiability), but they are no longer burdensome. The AI can help
+      write tests, maintain documentation, draft issue bodies, and verify
+      adherence to patterns — making disciplined development practical for
+      small scholarly teams.</para>
     <para><emphasis>Test-driven development.</emphasis> The Scripture Pipelines
       engine maintains approximately two lines of test code for every line of
       production code. This ratio is a deliberate constraint on AI autonomy,
