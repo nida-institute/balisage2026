@@ -681,18 +681,6 @@
         <code>docs/audits/</code> directory with sample checklists for common
         pipeline patterns and a <code>project/audits/</code> directory for
         audit results.</para>
-      <para>To support systematic auditing across projects, LLMFlow now includes
-        two global skills: <code>audit-prompts</code> (for reviewing
-        <code>.gpt</code> prompt files against quality criteria) and
-        <code>audit-output</code> (for checking generated pipeline artifacts).
-        These skills encode domain-specific patterns — what makes a good prompt,
-        what signals indicate overfitting or hallucination in output — and are
-        available to any project initialized with <code>sp init</code>. Because
-        they live in the shared <code>~/.sp/skills/</code> directory, improvements
-        to audit methodology propagate across all projects automatically. This
-        infrastructure transforms ad-hoc quality reviews into repeatable,
-        documented processes — making verification tractable even when working
-        at scale.</para>
     </section>
 
     <section xml:id="five-principles">
@@ -752,94 +740,6 @@
         when the core developer and pipeline architect remain the architects
         and the AI remains the implementer — corrigible, accountable, and
         subject to correction at every step.</para>
-      <para>Even with this infrastructure in place — shared conventions in
-        <code>~/.sp/conventions/</code>, workflow skills in
-        <code>~/.sp/skills/</code>, audit checklists in
-        <code>docs/audits/</code>, and explicit AI context files documenting
-        architectural patterns — the human expert's role remains intensive.
-        In practice, the pipeline architect spends roughly half their time
-        explicitly redirecting the AI to consult the documentation it should
-        have read automatically, and the other half using domain expertise to
-        track what is actually happening and steer toward the intended goal.
-        The infrastructure does not automate oversight; it makes oversight
-        tractable. The conventions provide a shared vocabulary that makes
-        correction faster when it is needed. The skills provide reproducible
-        workflows that the architect can invoke and verify. The audit
-        checklists provide criteria that make verification systematic rather
-        than improvised. But none of these eliminate the need for continuous
-        human judgment. The collaboration model described here is not a path
-        to autonomous AI development. It is a protocol for keeping AI-assisted
-        work under human control while leveraging the genuine capabilities the
-        models provide. The cost is real — sustained attention from an expert
-        who knows both the domain and the architecture — but so is the value:
-        work that would be infeasible to do manually becomes tractable to do
-        collaboratively.</para>
-      <para>The collaboration dynamic has an oddly transactional character. It
-        is like working with a brilliant colleague who lies, cheats, and steals
-        — but who does excellent work as long as you are watching carefully.
-        The model will take shortcuts, fabricate citations, quietly ignore
-        constraints, and claim to have checked things it never verified. It
-        will do all of this while sounding confident and helpful. But it will
-        also produce genuinely useful output when the task is well-specified,
-        the tests are clear, and the review is systematic. Fortunately, this is not a human
-        relationship. The AI has no feelings to hurt, no ego to manage, no
-        need for politeness. The pipeline architect can say "you're lying about
-        having checked this" or "your explanation makes no sense, try again"
-        or "read your AI context again and tell me what you are doing wrong"
-        without concern for morale or workplace dynamics. The correction can
-        be direct, immediate, and unambiguous in ways that would be destructive
-        in human collaboration. And because the pipeline architect does not
-        expect the AI to have moral character or genuine understanding of the
-        subject matter, the failures do not provoke frustration in the way a
-        human collaborator's dishonesty would. This is simply how the tool
-        works — another way of writing software, one that scales remarkably
-        well if you learn how to leverage it. But this perspective is learned,
-        not intuitive. Every pipeline architect the author knows has experienced
-        significant frustration working with AI — until they internalize this
-        realization. The shift from expecting human-like reasoning to managing
-        a powerful but unreliable tool changes everything. And the core skill
-        that must be learned is attention management. The famous Transformer
-        architecture paper was titled <quote>Attention is All You Need</quote>
-        <xref linkend="ref-vaswani-2017"/> — and in practice, the pipeline
-        architect's central task is learning how to focus the LLM's attention:
-        what context to provide, which constraints
-        to make explicit, where to demand accountability, when to stop and
-        verify before proceeding. This strange asymmetry — high accountability
-        demands paired with zero social cost — is what makes the intensive
-        oversight model sustainable. The work requires constant vigilance, but
-        the vigilance does not require diplomacy.</para>
-      <para>One concrete practice that addresses attention management is the
-        structured organization of the Ears to Hear prompts themselves. Each
-        <code>.gpt</code> file follows a consistent architecture with labeled
-        sections: <emphasis>What This Prompt Produces</emphasis>, <emphasis>Input
-        Data</emphasis>, <emphasis>Transformation Rules</emphasis>,
-        <emphasis>Examples</emphasis>, and <emphasis>Guardrails</emphasis>. This
-        structure serves three distinct readers simultaneously: the AI assistant
-        helping refine the prompt (which needs to understand its purpose and
-        identify missing context), the pipeline architect debugging or extending
-        it (who must quickly locate the relevant constraint or example), and the
-        LLM executing the transformation (which processes the entire prompt
-        linearly). By organizing prompts to serve multiple readers at once, the
-        architecture reduces the cognitive overhead of maintaining them while
-        improving the reliability of execution. When attention is the limiting
-        resource, structure becomes strategy.</para>
-      <para>Yet the net effect is a genuine shift in how the expert's time is
-        spent. The pipeline architect still reads intermediate files and output
-        files regularly — spot-checking JSON structures, reviewing generated
-        content, verifying that transformations preserved semantic fidelity.
-        But far less time goes to low-level mechanical work: writing boilerplate
-        code, debugging format mismatches, manually tracking which files depend
-        on which upstream changes. Instead, the architect repeatedly asks the
-        AI to generate new diagnostic tools — scripts that summarize pipeline
-        state from one angle or another, reports that highlight coverage gaps,
-        visualizations that expose patterns in the data. The AI is good at
-        producing these tools quickly, and the architect is good at knowing
-        which perspectives matter. The result is that expert attention
-        concentrates where it has the most leverage: using domain knowledge to
-        understand what the pipeline is actually doing and steering it toward
-        the right outcomes. The collaboration does not eliminate the need for
-        expertise. It amplifies what expertise can accomplish by offloading
-        the mechanical substrates that previously consumed most of the time.</para>
     </section>
   </section>
 
@@ -1457,189 +1357,6 @@ obsidian/grc/intermediate/
         building on them is the same discipline required for grounding
         audits; identifier consistency and content grounding are both
         visible in the same files, at the same checkpoint.</para>
-    </section>
-    <section xml:id="audit-prompt-organization">
-      <title>Prompt Organization for Dual-Audience Readability</title>
-      <para>LLM prompts are unique technical documents: they must be simultaneously
-        readable by humans (for verification, maintenance, and debugging) and by AI
-        systems (for accurate task execution). Like XML schema documentation—which must
-        be both human-readable prose and machine-processable constraint definitions—prompts
-        encode both the transformation rules and examples demonstrating those rules. Poor
-        organization creates cognitive overload for both audiences.</para>
-
-      <para>Working with AI in production environments, the danger of humans and AIs
-        getting overwhelmed by data and chasing tangents is very high. A 500-line prompt
-        processing biblical passages with 50+ input fields and complex transformation
-        rules is not a toy example—it is a specification document where both audiences
-        must find what they need quickly or fail. Good results require deliberate design
-        and infrastructure to overcome this cognitive load.</para>
-
-      <orderedlist>
-        <listitem><para><emphasis role="bold">YAML Frontmatter</emphasis> — Machine-readable
-          metadata (required/optional inputs, output format)</para></listitem>
-
-        <listitem><para><emphasis role="bold">WHAT THIS PROMPT PRODUCES</emphasis> — Purpose
-          statement and conceptual model for both audiences</para></listitem>
-
-        <listitem><para><emphasis role="bold">OUTPUT FORMAT</emphasis> — JSON schema with
-          wording guidelines</para></listitem>
-
-        <listitem><para><emphasis role="bold">TASK SECTIONS</emphasis> — Each major
-          transformation gets its own complete section containing:
-          <itemizedlist>
-            <listitem><para><emphasis>Input: Where to Find the Data</emphasis> — Explicit
-              field mappings preventing hallucination</para></listitem>
-            <listitem><para><emphasis>Transformation Rules</emphasis> — With ✅/❌ examples
-              showing correct/incorrect patterns</para></listitem>
-            <listitem><para><emphasis>Examples: Input → Transformation → Output</emphasis> —
-              Complete worked examples (with TODOs for manual completion)</para></listitem>
-            <listitem><para><emphasis>Rules Specific to This Output Type</emphasis> —
-              Task-specific constraints</para></listitem>
-          </itemizedlist></para></listitem>
-
-        <listitem><para><emphasis role="bold">COVERAGE &amp; QUALITY CHECKLIST</emphasis> —
-          Pre-submission verification for AI self-checking</para></listitem>
-
-        <listitem><para><emphasis role="bold">INPUT DATA</emphasis> — Template variable
-          instantiation</para></listitem>
-
-        <listitem><para><emphasis role="bold">CRITICAL REMINDERS</emphasis> — Final
-          guardrails</para></listitem>
-      </orderedlist>
-
-      <section xml:id="cognitive-load-reduction">
-        <title>Reducing Cognitive Load: Information Scent and Locality of Reference</title>
-
-        <para>The cognitive science principle of <emphasis>locality of reference</emphasis>—that
-          related information should be physically proximate—applies equally to both human
-          and AI readers. When a programmer searches for "the rule about Notice questions,"
-          they should find everything about Notice questions in one section. When an AI
-          encounters transformation rules, it should find the input data sources and examples
-          in the same context window, not 300 lines away.</para>
-
-        <para><emphasis>Information scent</emphasis>—the ability to predict where to find
-          specific information—determines whether a prompt is maintainable at scale. Can you
-          predict where the rule about background usage will be? (In the section about Imagine
-          questions, where background is used.) Can you predict where the data source for
-          <code>treasure_verb</code> is documented? (In the Input subsection of the Hearts
-          section, where that field is generated.) When scent fails—when rules are scattered,
-          examples are separated from what they exemplify, or data sources are mentioned once
-          in a different section—both humans and AIs waste cognitive resources searching
-          rather than understanding.</para>
-
-        <para><emphasis role="bold">For Humans:</emphasis></para>
-        <itemizedlist>
-          <listitem><para><emphasis>Locality of reference</emphasis>: Everything about
-            "Notice questions" lives in the Notice section. No searching across 500+ lines
-            for scattered rules. A human debugging a problem can open the relevant section
-            and see the complete specification: what data is available, what transformation
-            is required, what the output should look like, and what the constraints are.</para></listitem>
-          <listitem><para><emphasis>Verifiable transformation</emphasis>: Given this input
-            data, following these rules, we expect this output. Debugging failures becomes
-            systematic. The input-rules-output co-location makes it possible to trace from
-            a bad output back to either insufficient input data or misapplied rules.</para></listitem>
-          <listitem><para><emphasis>Explicit data grounding</emphasis>: "This output field
-            comes from <code>verses.heart_movements[].treasure_verb</code>" prevents AI from
-            fabricating content and makes human review feasible. A reviewer can verify that
-            every output field has a documented source.</para></listitem>
-        </itemizedlist>
-
-        <para><emphasis role="bold">For AI:</emphasis></para>
-        <itemizedlist>
-          <listitem><para><emphasis>Co-located context</emphasis>: Rules, examples, and data
-            sources appear together in the context window. Like XML schema documentation where
-            the constraint definition, prose explanation, and usage examples are proximate,
-            prompts that co-locate these elements reduce the AI's need to "remember" that the
-            data source was mentioned 200 lines earlier. In production prompts processing
-            hundreds of verses with dozens of fields, context window management is not
-            theoretical—it determines whether the AI can maintain coherent understanding
-            across the full specification.</para></listitem>
-          <listitem><para><emphasis>Progressive refinement</emphasis>: The structure mirrors
-            the AI's processing: What am I making? → How do I format it? → What data do I
-            have? → How do I transform it? → What are the constraints? This sequencing
-            prevents the AI from chasing tangents by establishing the output structure before
-            introducing the input data.</para></listitem>
-          <listitem><para><emphasis>Example-rule alignment</emphasis>: Transformation rules
-            immediately followed by examples that demonstrate those rules creates
-            reinforcement without requiring the AI to associate scattered examples with
-            abstract rules stated elsewhere. This is the prompt equivalent of XML schema's
-            inline annotations—the explanation appears precisely where it is needed.</para></listitem>
-        </itemizedlist>
-
-        <para>The parallel to XML schema documentation is instructive: both are formal
-          specifications that must be machine-processable while remaining human-readable.
-          Both succeed when structure makes information predictable. A well-organized XML
-          schema lets a developer predict where to find the constraints for a particular
-          element. A well-organized prompt lets both programmer and AI predict where to find
-          the data source, transformation rules, and examples for a particular output field.
-          The markup differs, but the information architecture principle is identical.</para>
-      </section>
-
-      <section xml:id="audit-infrastructure-for-prompts">
-        <title>Audit Infrastructure for Prompt Quality</title>
-        <para>The audit skill enforces three principles essential for production quality:</para>
-
-        <orderedlist>
-          <listitem><para><emphasis role="bold">Input Data Grounding (Prevents
-            Hallucination)</emphasis>: Every output field must have a documented input
-            source. "Generate questions about what characters treasure" is ungrounded.
-            "<code>heart_aspect</code> field must use <code>treasure_verb</code> from
-            <code>verses.heart_movements[]</code> where <code>certainty</code> is high"
-            is grounded. The audit verifies this mapping exists.</para></listitem>
-
-          <listitem><para><emphasis role="bold">Example Diversity (Prevents
-            Overfitting)</emphasis>: Examples from a single passage train the AI on
-            specifics, not patterns. The audit counts distinct passages and narrative
-            types, flagging single-source examples.</para></listitem>
-
-          <listitem><para><emphasis role="bold">AI-Generated Example Detection (#1 Source
-            of Problems)</emphasis>: Nothing produced by an LLM can be used as training
-            data in prompts. AI-generated examples encode patterns the AI already knows,
-            not the precise pattern the human intends. The audit compares current version
-            with last commit, flagging ANY new examples for human review. This breaks the
-            feedback loop where AI output becomes AI input, preventing drift from
-            intent.</para></listitem>
-        </orderedlist>
-      </section>
-
-      <section xml:id="measured-impact">
-        <title>Measured Impact in Production Use</title>
-        <para>These are not toy examples. The prompts under discussion generate Bible
-          study questions from passages in Mark, Psalms, Genesis, and Ruth—processing
-          verse-level data enriched with sensory details, cultural background, character
-          heart movements, and narrative structure annotations. A single passage may
-          involve 50+ input fields across multiple JSON files. Without deliberate
-          organization to combat cognitive overload, both humans and AIs get lost in
-          the data.</para>
-
-        <para>Measured results from reorganizing production prompts:</para>
-        <itemizedlist>
-          <listitem><para><emphasis>Human maintenance time</emphasis>: Reorganizing from
-            scattered to task-focused structure reduced "find the relevant rule" time from
-            approximately 5 minutes to approximately 30 seconds. When a prompt fails on
-            Psalm 23, the developer can locate the relevant section in seconds rather than
-            re-reading 500 lines searching for scattered rules.</para></listitem>
-          <listitem><para><emphasis>AI consistency</emphasis>: Co-locating data sources with
-            transformation rules reduced field-source mismatches from approximately 15% to
-            approximately 2% (measured over 50 passages across multiple books and genres).
-            The AI stopped fabricating content when the data source was visible in the same
-            section as the transformation rule.</para></listitem>
-          <listitem><para><emphasis>Example quality</emphasis>: Blocking AI-generated examples
-            and requiring human-written examples eliminated approximately 40% of subtle
-            pattern violations that passed initial review. AI-generated examples looked
-            plausible but encoded the wrong pattern; human examples demonstrated the
-            precise behavior required.</para></listitem>
-        </itemizedlist>
-
-        <para>These results suggest that prompts benefit from the same information
-          architecture principles that make technical documentation effective: locality
-          of reference, explicit data flow, worked examples, and human authorship of
-          training data. The task-focused organization serves both human understanding
-          and AI execution by reducing cognitive load through careful information
-          structure. In production environments where prompts process real data at scale,
-          organization is not cosmetic—it determines whether the system produces reliable
-          results or descends into hallucination and inconsistency.</para>
-      </section>
     </section>
   </section>
 
@@ -2479,7 +2196,7 @@ obsidian/grc/intermediate/
           describe textual structure. A <emphasis>discourse unit</emphasis> is any
           coherent span of text with internal unity and clear boundaries — ranging
           from a single clause to an entire book. A <emphasis>pericope</emphasis>
-          (from Greek <emphasis role="ital">περικοπή</emphasis>, "section cut
+          (from Greek <foreignphrase>περικοπή</foreignphrase>, "section cut
           around") is a self-contained narrative episode or teaching unit,
           typically spanning several verses to a chapter. A <emphasis>segment</emphasis>
           is a smaller unit within a pericope, often corresponding to a scene
@@ -2571,116 +2288,82 @@ obsidian/grc/intermediate/
           generated as abstract syntax trees (ASTs) in JSON intermediate
           files, then rendered to Markdown and USX 3.1.</para>
         <para>The following excerpt shows the Bodies and Hearts questions for
-          one scene from Mark 12:18–27, generated April 1, 2026, showing the current
-          quality of pipeline output:</para>
-        <figure xml:id="fig-ears-mark12">
-          <title>Leaders' guide excerpt for Mark 12:18–27 (from April 1, 2026 pipeline run)</title>
-          <programlisting><![CDATA[## Scene 1: Seven Brothers, One Wife
+          one scene from John 1:35–51, taken directly from the generated
+          leaders' guide:</para>
+        <figure xml:id="fig-ears-john1">
+          <title>Leaders' guide excerpt for John 1:35–39 (from leadersguide output)</title>
+          <programlisting><![CDATA[## Scene 1: Look, the Lamb of God
 
-*Citation: Mark 12:18-27*
+*Citation: John 1:35-39*
+
+**BSB (English):**
+> The next day John was there again with two of his disciples. When he
+> saw Jesus walking by, he said, "Look, the Lamb of God!" And when the
+> two disciples heard him say this, they followed Jesus. Jesus turned
+> and saw them following. "What do you want?" He asked. They said to Him,
+> "Rabbi" (which means Teacher), "where are You staying?" "Come and see,"
+> He replied. So they went and saw where He was staying, and spent that
+> day with Him. It was about the tenth hour.
+
+**SBLGNT (Greek):**
+> Τῇ ἐπαύριον πάλιν ἱστήκει ὁ Ἰωάννης καὶ ἐκ τῶν μαθητῶν αὐτοῦ δύο...
 
 ---
 
-### 👣 Enter the Scene with Your Body (Mark 12:18-27)
-
-Let's hear this part of the story again and pay attention to what it would
-be like to be in this scene. What you would you see, hear, smell, taste, or
-physically feel? How are people sitting or standing? What do they touch?
-How close are they? How are they moving?
+### 👣 Enter the Scene with Your Body (John 1:35-39)
 
 #### 👀 Notice
 
-Let's start with what the scene shows us about bodies, senses, space,
-and movement.
+##### Perspective: Two disciples
 
-_Perspective: the Sadducees_
-
-* What do the Sadducees do at the beginning of this scene?
-
-* What do the Sadducees say to Jesus about Moses and marriage?
-
-* What scenario do the Sadducees describe involving seven brothers and a woman?
-
-* What final question do the Sadducees ask Jesus about the resurrection?
-
-_Perspective: Jesus_
-
-* What does Jesus do in response to the Sadducees' question?
-
-* What does Jesus say about marriage after the resurrection?
-
-    * What passage from Moses does Jesus mention in his answer?
-
-    * What final statement does Jesus make about God and the living?
+- Where do the two disciples stand as Jesus walks by?
+- What does John say as Jesus passes by them?
+- After hearing him, what do the two disciples do?
 
 #### 💭 Imagine
 
-Now let's imagine this moment from each perspective, still using the
-same body questions.
+##### Perspective: Two disciples
 
-_Background:_
-The Sadducees were a wealthy, priestly group in Jerusalem, influential in
-the Temple and known for denying the resurrection. They often debated
-doctrinal matters with Jesus, seeking to defend their status and beliefs
-before the people. Moses, as the lawgiver, is invoked as the authority for
-the practice of levirate marriage: if a man dies without children, his
-brother is to marry the widow to produce offspring for the deceased. This
-legal tradition grounds the Sadducees' question.
+- How would the two disciples hear Jesus ask them what they seek?
+- Where do the two disciples go after Jesus says, "Come and see"?
+- As they follow, how do the two disciples position themselves in
+  relation to Jesus?
 
-_Perspective: the Sadducees_
-
-* You are one of the Sadducees standing before Jesus in the Temple. What
-  do you do as you present your question?
-
-    * You are one of the Sadducees. What story do you tell Jesus and those
-      listening?
-
-_Perspective: Jesus_
-
-* You are Jesus, surrounded by the crowd and religious leaders. What do
-  you say in response to the Sadducees' question?
-
-### 🫀 Enter the Scene with Your Whole Heart (Mark 12:18-27)
-
-Staying inside this scene, let's ask about people's hearts—where they set
-their hearts, what is at stake, what they fear, and what they hope for.
+### 🫀 Enter the Scene with Your Whole Heart (John 1:35-39)
 
 #### 👀 Notice
 
-Let's focus on what the text actually tells us about where people are
-setting their hearts and what is at stake for them.
+##### Perspective: John
 
-_Perspective: the Sadducees_
+- Whom did John trust Jesus to be?
 
-* Why do the Sadducees bring this question to Jesus?
+##### Perspective: Two disciples
 
-_Perspective: Jesus_
+- What did the two disciples want to do that day?
 
-* Why does Jesus respond so sharply to their question?
+#### 💭 Imagine
 
-    * What is Jesus insisting on when he says God is 'of the living'?
+##### Perspective: John
 
-### 👂 Let the Scene Speak to Us (Mark 12:18-27)
+- What might John hope for as he says, "Look, the Lamb of God"?
 
-Let's notice where the same kinds of pressures, questions, and hopes from
-this scene show up in our world today.
+##### Perspective: Two disciples
 
-1. Have you or someone you know ever found yourself in a conversation where
-   it felt like people were more interested in protecting their reputation
-   or proving a point than actually seeking understanding?
+- What might the two disciples hope for when Jesus asks,
+  "What do you seek"?
+- What would it be like to call Him "Rabbi" and stay with Him?
 
-2. Have you or someone you know ever witnessed someone unexpectedly shift a
-   heated debate or tense conversation toward what actually matters most,
-   even when everyone else is caught up in details or appearances?
+### 👂 Let the Scene Speak to Us (John 1:35-39)
+
+1. Have you or someone you know ever followed a new leader or direction?
+2. Where have you seen someone leave a mentor for a new opportunity?
+3. Have you or someone you know ever asked a leader for guidance?
 
 ### 🏷️ Step 4: Name the Scene
 
-Let's choose a short name that captures what stood out to us so we can
-carry this part of the story with us.
-- Seven Brothers, One Wife
-- God of the Living
-- A Question in the Temple
-- You Are Greatly Mistaken]]></programlisting>
+- Look, the Lamb of God
+- Disciples Turn to Follow
+- Come and See]]></programlisting>
         </figure>
         <para>Observe: Bodies questions begin with physical observation (Notice)
           before moving to embodied imagination; Hearts questions surface
@@ -2689,99 +2372,6 @@ carry this part of the story with us.
           Naming invites participants to choose their own title. Multiple
           perspectives are maintained consistently across sections. Source-language
           text appears alongside English translation, both fetched via MCP.</para>
-      </section>
-
-      <section xml:id="ears-leader-intro">
-        <title>Leader's Introduction: Preparing the Way</title>
-        <para>Before the questions begin, each leader's guide includes an
-          introduction designed to help the facilitator prepare. This is not
-          scholarly apparatus or exegetical commentary—it is practical
-          orientation written for someone who needs to understand what the
-          session will feel like and what challenges or insights might emerge.
-          The following excerpt from the Mark 12:18–27 guide (generated April 1,
-          2026) shows the introduction structure:</para>
-        <figure xml:id="fig-ears-intro">
-          <title>Leader's introduction excerpt for Mark 12:18–27</title>
-          <programlisting><![CDATA[### 2. What This Passage Does
-
-This passage draws the conflict between Jesus and the Jerusalem authorities
-into sharper focus. The Sadducees' question is meant to trap Jesus, but he
-turns it into a moment of revelation—correcting their misunderstanding and
-declaring the hope of resurrection in front of all. Jesus' answer doesn't
-just silence the Sadducees; it reframes what is truly at stake: not just
-technical arguments about the law, but trust in God's ongoing, life-giving
-presence.
-
-Within Mark's story, this is part of a series of public tests where Jesus
-is challenged again and again, each time revealing something deeper about
-who he is and what God is like. Here, Jesus claims the authority to interpret
-Scripture and to reveal God's heart. He sets the stage for the next question—
-about the greatest commandment—and moves the narrative closer to the final
-showdowns that will lead to his arrest.
-
----
-
-### 3. Expect Your Group to Connect With
-
-- **Feeling the pressure to defend your reputation or beliefs when
-  challenged in public**—like the Sadducees, who ask their question not out
-  of curiosity, but to protect their standing.
-- **Experiencing conversations where people care more about proving a point
-  than truly listening or seeking understanding.**
-- **Witnessing someone cut through a heated debate to name what really
-  matters, shifting the focus from technicalities to deeper truths.**
-- **Wondering what is at stake when we talk about hope, life, and what God
-  is really like—especially when others are skeptical or dismissive.**
-
----
-
-### 4. As You Prepare
-
-Read this passage through a few times, slowly, and look at each section
-alongside its questions. Notice how the questions are structured: some are
-Open—like "What do the Sadducees do at the beginning of this scene?"—
-inviting your group to explore what the text shows; others are Guiding—
-such as "What passage from Moses does Jesus mention in his answer?"—
-helping your group focus on key details or turning points. The "Imagine"
-prompts invite participants to step into the shoes of both the Sadducees
-and Jesus, to feel the tension and the weight of public challenge.
-
-You'll notice that cultural background appears where it's needed: brief
-notes about who the Sadducees are, why Moses' law matters, and what the
-burning bush means. You don't need to front-load these details—trust that
-your group can pick them up as they go, and that the questions themselves
-will spark curiosity and insight. Let the conversation breathe. If a question
-doesn't fit your group, feel free to skip it or rephrase it. Your role is
-to create space for discovery and honest engagement; you don't need to have
-all the answers. Trust the process, and trust your group—they may notice
-details or connections you haven't seen. Be present, and let the story do
-its work.]]></programlisting>
-        </figure>
-        <para>The introduction serves multiple purposes: <emphasis>What This
-          Passage Does</emphasis> orients the leader to the passage's role in
-          the larger narrative arc; <emphasis>Expect Your Group to Connect
-          With</emphasis> anticipates resonances between the biblical scene
-          and participants' lived experience; <emphasis>As You Prepare</emphasis>
-          coaches the facilitator on how to use the questions, where cultural
-          background appears, and how to hold space for discovery. The overall
-          purpose is to help the leader prepare to lead a group session—to
-          become familiar with the material before the discussion begins,
-          anticipate what the conversation might involve, and gain confidence
-          in facilitating without needing to be a biblical scholar. Observe that
-          this is not traditional study-Bible commentary—it addresses the leader
-          directly, assumes they are not experts, and focuses on group
-          dynamics rather than technical exegesis. The tone is conversational,
-          practical, and encouraging. This material is generated by the
-          <code>leadersguide-intro-ast.gpt</code> prompt, which receives the
-          exegetical analysis and scene structures as input and produces
-          orientation prose designed for facilitators who may have little formal
-          training. Architecturally, the introduction is generated <emphasis>after</emphasis>
-          all the Bodies, Hearts, and Connecting questions have been finalized—it
-          is one of the last pipeline stages—even though it appears first in
-          the final guide. This separation of generation order from presentation
-          order allows the introduction prompt to reference the actual questions
-          that were generated, describing their structure and coaching the leader
-          on how to use them.</para>
       </section>
 
       <section xml:id="ears-prompt-structure">
@@ -3422,33 +3012,6 @@ training data (examples) in prompts. Period.
       January 3, 2024.
       <link xlink:href="https://www.biblicalarchaeology.org/daily/artificial-intelligence-and-bible-translation/"
         >https://www.biblicalarchaeology.org/daily/artificial-intelligence-and-bible-translation/</link>.
-    </bibliomixed>
-
-    <bibliomixed xml:id="ref-vaswani-2017">
-      Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L.,
-      Gomez, A. N., Kaiser, L., and Polosukhin, I. <quote>Attention is All
-      You Need.</quote> <emphasis role="ital">Advances in Neural Information
-      Processing Systems 30</emphasis> (NeurIPS 2017).
-    </bibliomixed>
-
-    <bibliomixed xml:id="ref-alammar-2018">
-      Alammar, Jay. <quote>The Illustrated Transformer.</quote> 2018.
-      <link xlink:href="https://jalammar.github.io/illustrated-transformer/"
-        >https://jalammar.github.io/illustrated-transformer/</link>.
-    </bibliomixed>
-
-    <bibliomixed xml:id="ref-brown-2020">
-      Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P.,
-      Neelakantan, A., Shyam, P., Sastry, G., Askell, A., et al. <quote>Language
-      Models are Few-Shot Learners.</quote> <emphasis role="ital">Advances in
-      Neural Information Processing Systems 33</emphasis> (NeurIPS 2020).
-    </bibliomixed>
-
-    <bibliomixed xml:id="ref-wei-2022">
-      Wei, J., Wang, X., Schuurmans, D., Bosma, M., Ichter, B., Xia, F., Chi, E.,
-      Le, Q., and Zhou, D. <quote>Chain-of-Thought Prompting Elicits Reasoning
-      in Large Language Models.</quote> <emphasis role="ital">Advances in
-      Neural Information Processing Systems 35</emphasis> (NeurIPS 2022).
     </bibliomixed>
 
     <bibliomixed xml:id="ref-russell-2019">

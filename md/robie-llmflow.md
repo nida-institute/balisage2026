@@ -2,9 +2,13 @@
 
 Every software system is also a social system. It decides who has power, who is included, who is left out, how people communicate. Scripture Pipelines is built to serve The Kairos Project --- a Nida Institute initiative to build a global community of scholars serving Bible translation and the global church. The workflow patterns described in this paper are in service of that goal: building collaboration around data-driven biblical scholarship, where each Scripture Pipelines project is meant to support its own communities.
 
-The name is intentional: a moment of opportunity that calls for a response. The Kairos Project exists to raise up scholars worldwide, working together to produce the kind of resources that are actually needed --- not only what the Western academy thinks should exist, but what translation teams, study groups, and readers in every culture can use. The goal is to fully equip the global church by producing high quality, freely licensed resources together with communities worldwide, resources that they can adapt to their own needs. This means building a scholarly community spanning the Western academy and far beyond it --- scholars who want to serve Bible translation and the needs of readers worldwide. Part of what that means is providing information in the most useful form for communities that traditional scholarly resources were not built for: non-Western communities, oral cultures, people who engage Scripture outside the academy, and people learning Greek and Hebrew outside traditional seminaries --- often multilingual learners who bring linguistic gifts that Western institutions do not recognize. These communities do not need all the footnotes and Western abstractions in which traditional resources are packaged, and they have never needed them. This matters because most of these texts were themselves written by and for oral storytelling cultures --- and today\'s oral storytelling communities do not need PhDs from Western academia to read them. What they do need, and what every modern reader needs, is some orientation to settings and cultures that are foreign to any world we live in now. But that orientation rarely looks like a journal article. Sometimes it looks like a map, or a picture, or a set of questions that help a group notice what is actually in the text. Sometimes it looks like knowing that a certain phrase carries a weight that the translation cannot fully render, or that a story is being told in a pattern that an ancient audience would have recognized immediately.
+The name is intentional. *Kairos* is the Greek word for the right time, the opportune moment --- the moment when conditions align and action becomes possible. We believe this is that moment. The open data exists. The communities who need it exist. The capability to use AI to synthesize data at scale exists. The question is whether we will respond to the opportunity --- whether we will build the infrastructure and the collaborative practices that make rigorous, reproducible, AI-assisted scholarship possible, and whether we will organize that work to serve not just the academy but the global church.
 
-Academic biblical scholarship has a tendency to center itself --- to position expert mediation as a prerequisite for real understanding, to make the academy the necessary gateway between Scripture and the reader. The Kairos Project takes a more inclusive approach. It trusts that readers, in community, can encounter the text directly and make genuine discoveries --- and that the scholar\'s role is to equip that encounter, not to conduct it on the reader\'s behalf. Scholarship serves the text; the text serves the reader; the reader is not a passive recipient of conclusions but an active participant in meaning-making. Resources are built to enable that participation, not to replace it. This does not mean The Kairos Project is anti-scholarly. It also builds resources for people who want to learn Greek or Hebrew, who want to understand what discourse analysis reveals about how a text is structured, who want to climb the ladder into technical scholarship because they feel the pull of the text drawing them deeper. The goal is to provide scaffolding at every level --- and to ensure that the ladder runs in both directions, so that scholarly insight flows out to communities that have long been on the receiving end of others\' conclusions, and so that the questions those communities bring flow back into scholarship and enrich it. The West does not have a monopoly on wisdom about these texts. Perpetuating the status gap between Western scholarship and the rest of the world\'s readers is not a neutral act; it is a choice The Kairos Project refuses to make.
+The Kairos Project exists to raise up scholars worldwide, working together to produce the kind of resources that are actually needed --- not only what the Western academy thinks should exist, but what translation teams, study groups, and readers in every culture can use. The goal is to fully equip the global church by producing high quality, freely licensed resources together with communities worldwide, resources that they can adapt to their own needs. This means building a scholarly community spanning the Western academy and far beyond it --- scholars who want to serve Bible translation and the needs of readers worldwide. Part of what that means is providing information in the most useful form for communities that traditional scholarly resources were not built for: non-Western communities, oral cultures, people who engage Scripture outside the academy, and people learning Greek and Hebrew outside traditional seminaries --- often multilingual learners who bring linguistic gifts that Western institutions do not recognize. These communities do not need all the footnotes and Western abstractions in which traditional resources are packaged, and they have never needed them. This matters because most of these texts were themselves written by and for oral storytelling cultures --- and today\'s oral storytelling communities do not need PhDs from Western academia to read them. What they do need, and what every modern reader needs, is some orientation to settings and cultures that are foreign to any world we live in now. But that orientation rarely looks like a journal article. Sometimes it looks like a map, or a picture, or a set of questions that help a group notice what is actually in the text. Sometimes it looks like knowing that a certain phrase carries a weight that the translation cannot fully render, or that a story is being told in a pattern that an ancient audience would have recognized immediately.
+
+Scholarly resources have traditionally been packaged in forms that serve academic communities well --- journal articles, monographs, reference works dense with technical terminology. But this creates real barriers for readers outside the academy, for oral cultures, for translation teams working in contexts where Western academic conventions are foreign, and for multilingual learners whose linguistic gifts often go unrecognized by traditional institutions. The lack of resources in forms these communities can actually use has been a real bottleneck. The Kairos Project exists to open those doors --- to serve the whole range of people who want to engage Scripture deeply: those learning to use this technology to produce materials, those learning to read Greek and Hebrew, those doing serious biblical scholarship, and those learning to lead local Bible studies. The goal is building interlocking communities, not just software. Each community needs different resources at different levels of depth, but they are not separate silos. Technical infrastructure serves language learners; scholars equip study leaders; insights from local reading communities flow back into scholarship and enrich it. The scaffolding works at every level: from technical documentation for pipeline architects, to lexicons and discourse analyses for scholars, to study guides for group leaders reading Scripture together in community. The goal is bidirectional flow: scholarly insight goes out in forms communities can actually use, and the questions those communities bring reshape what scholarship attends to. Readers in community can encounter the text directly and make genuine discoveries. The scholar\'s role is to equip that encounter, not to conduct it on the reader\'s behalf. Scholarship serves the text; the text serves the reader; the reader is not a passive recipient of conclusions but an active participant in meaning-making.
+
+**Scripture Pipelines is an infrastructure that makes this vision possible.** It is an open-source declarative pipeline system designed to synthesize structured scholarly datasets at scale using AI, while maintaining the reproducibility, auditability, and transparency that scholarly work requires. Rather than embedding AI calls in imperative code, Scripture Pipelines expresses each workflow as a YAML pipeline: a sequence of named steps with explicit inputs, outputs, and prompt contracts. Every intermediate result is persisted. Every LLM step can be required to account for the sources it used. The same pipeline that generates a lexicon entry can be rerun with a revised prompt without re-querying upstream data sources. This paper describes Scripture Pipelines\' design and reports on its application across multiple Nida Institute projects producing freely licensed biblical reference materials --- lexicons, grammatical analyses, discourse structures, and Bible study guides --- with a detailed case study of the Ears to Hear leaders\' guide generation project.
 
 This vision requires infrastructure. Biblical and linguistic scholarship now has more open data than it can use: word-level morphological annotations for the entire Hebrew Bible and Greek New Testament, syntactic treebanks, discourse feature datasets encoding decades of scholarly analysis, lexicographic databases aggregating multiple traditions, documentary papyri and inscriptions in EpiDoc XML, texts from across the Hellenistic world in TEI encoding. Much of it freely licensed. All of it underused.
 
@@ -68,7 +72,7 @@ These disciplines are not novel to AI-driven development. Test-driven developmen
 
 *Persistent context infrastructure.* Corrigibility requires that the AI know, at every session, what the scholar or pipeline architect has decided --- not just what the model remembers from training. Each Scripture Pipelines project carries two kinds of constraining context. The `.github/copilot-instructions.md` file is the AI\'s constitution for the repository: it names the architecture patterns to follow, the pitfalls to avoid, the things not to change without explicit instruction, and the requirement to explain before implementing. The `docs/ai-context/` directory, scaffolded by `sp init`, encodes which data sources to trust, what the pipeline language supports, what work is currently in progress, and what the project is trying to accomplish. These are not documentation artifacts; they are the active working constraints in every session. When the pipeline language gains a new step type, a dataset contact changes, or the interpretive framework for an analysis shifts, updating these files is a first-class development task. Keeping them in sync with the actual codebase is what makes AI collaboration trustworthy across the many sessions a project requires.
 
-*Cross-repository choreography.* Scripture Pipelines projects are embedded in an ecosystem of shared upstream datasets: Macula Greek and Hebrew, the Levinsohn LGNTDF, ACAI entity data. When a pipeline run reveals an error in one of these datasets --- a gap in entity coverage, an inconsistent lemma form, a buggy annotation --- the right response is a well-formed upstream issue: the AI drafts the body with evidence and counts, files it via the GitHub CLI, and records the issue number in `project/TODO.md`. Consumer repositories can file feature requests against the core Scripture Pipelines engine; the engine opens issues on consumer repositories announcing new capabilities and migration requirements. GitHub project boards provide coordination visibility across repositories without requiring manual synchronization. The issue tracker is the communication bus. The AI on either end is the correspondent. The human remains the architect --- the one who decides whether the upstream error is worth fixing, whether the new engine feature warrants upgrading, and whether the design the AI has drafted actually captures what needs to be said.
+*Cross-repository choreography.* Scripture Pipelines projects are embedded in an ecosystem of shared upstream datasets: Macula Greek [bibliomixed_title](#ref-macula-greek) and Hebrew [bibliomixed_title](#ref-macula-hebrew), the Levinsohn LGNTDF [bibliomixed_title](#ref-lgntdf), ACAI entity data [bibliomixed_title](#ref-acai). When a pipeline run reveals an error in one of these datasets --- a gap in entity coverage, an inconsistent lemma form, a buggy annotation --- the right response is a well-formed upstream issue: the AI drafts the body with evidence and counts, files it via the GitHub CLI, and records the issue number in `project/TODO.md`. Consumer repositories can file feature requests against the core Scripture Pipelines engine; the engine opens issues on consumer repositories announcing new capabilities and migration requirements. GitHub project boards provide coordination visibility across repositories without requiring manual synchronization. The issue tracker is the communication bus. The AI on either end is the correspondent. The human remains the architect --- the one who decides whether the upstream error is worth fixing, whether the new engine feature warrants upgrading, and whether the design the AI has drafted actually captures what needs to be said.
 
 There is a wider frame here too, which concerns how scholarship in data-rich fields actually advances. Wallace Chafe articulated what scholarship should aspire to: "If I could become both a broad and deep observer and at the same time a creative imaginer, then I would approach my own vision of what a \"scientific superman\" should be" (Chafe 1994, 24). Holding meticulous observational detail and wide-angle creative vision simultaneously is extraordinarily difficult for any individual researcher working alone --- but it is exactly what communities organized around shared data can collectively approach. That is the deeper purpose of this ecosystem: not to automate scholarship, but to make Chafe\'s aspiration attainable in community, with shared data at its center. A great deal of research work that looks like execution --- tagging a corpus, normalizing a lexicon, aligning a translation --- is meticulous attention to detail in service of a picture the researcher is trying to see. The goal of that labor, in communities organized around data, is not for each researcher to build their own private analysis from scratch. It is for the data to improve over time: shared corpora where corrections, new annotations, and better normalizations accumulate, and where the gold-standard datasets that a field relies on become progressively more trustworthy because many people are contributing to them, not fewer. The Macula datasets, the Levinsohn LGNTDF, ACAI --- these are not fixed artifacts. They are living resources whose improvement is a collective scholarly endeavor.
 
@@ -118,6 +122,8 @@ Similarly, the `--rewind-to` and `--stop-after` CLI flags (discussed below) make
 
 Audit checklists --- the criteria and methodology for verification --- should live in `docs/audits/` alongside other reference documentation. The actual audit results --- the outputs when a scholar works through a checklist --- should live in `project/audits/` alongside other project artifacts like `project/TODO.md` and `project/plans/`. This separation keeps methodology stable and version-controlled in `docs/` while project-specific audit reports accumulate in `project/`. New projects initialized with `sp init` receive both a `docs/audits/` directory with sample checklists for common pipeline patterns and a `project/audits/` directory for audit results.
 
+To support systematic auditing across projects, LLMFlow now includes two global skills: `audit-prompts` (for reviewing `.gpt` prompt files against quality criteria) and `audit-output` (for checking generated pipeline artifacts). These skills encode domain-specific patterns --- what makes a good prompt, what signals indicate overfitting or hallucination in output --- and are available to any project initialized with `sp init`. Because they live in the shared `~/.sp/skills/` directory, improvements to audit methodology propagate across all projects automatically. This infrastructure transforms ad-hoc quality reviews into repeatable, documented processes --- making verification tractable even when working at scale.
+
 ## The Five Principles as Safeguards {#five-principles}
 
 The principles outlined in the Human Commands section work because they constrain AI behavior at specific failure points:
@@ -133,6 +139,14 @@ The principles outlined in the Human Commands section work because they constrai
 5.  *Human architectural oversight* ensures maintainability. Code that an LLM generates and the core developer or pipeline architect doesn\'t understand is code that cannot be maintained. The requirement to explain designs in advance, and to iterate on explanations until the architect approves, ensures that the resulting architecture remains within the architect\'s capacity to modify and extend. This is not optional: every AI-assisted project eventually requires changes that the AI did not anticipate, and those changes must be made by humans who understand what they are modifying.
 
 These principles work not because they make the AI better but because they constrain its failure modes. The collaboration succeeds when the core developer and pipeline architect remain the architects and the AI remains the implementer --- corrigible, accountable, and subject to correction at every step.
+
+Even with this infrastructure in place --- shared conventions in `~/.sp/conventions/`, workflow skills in `~/.sp/skills/`, audit checklists in `docs/audits/`, and explicit AI context files documenting architectural patterns --- the human expert\'s role remains intensive. In practice, the pipeline architect spends roughly half their time explicitly redirecting the AI to consult the documentation it should have read automatically, and the other half using domain expertise to track what is actually happening and steer toward the intended goal. The infrastructure does not automate oversight; it makes oversight tractable. The conventions provide a shared vocabulary that makes correction faster when it is needed. The skills provide reproducible workflows that the architect can invoke and verify. The audit checklists provide criteria that make verification systematic rather than improvised. But none of these eliminate the need for continuous human judgment. The collaboration model described here is not a path to autonomous AI development. It is a protocol for keeping AI-assisted work under human control while leveraging the genuine capabilities the models provide. The cost is real --- sustained attention from an expert who knows both the domain and the architecture --- but so is the value: work that would be infeasible to do manually becomes tractable to do collaboratively.
+
+The collaboration dynamic has an oddly transactional character. It is like working with a brilliant colleague who lies, cheats, and steals --- but who does excellent work as long as you are watching carefully. The model will take shortcuts, fabricate citations, quietly ignore constraints, and claim to have checked things it never verified. It will do all of this while sounding confident and helpful. But it will also produce genuinely useful output when the task is well-specified, the tests are clear, and the review is systematic. Fortunately, this is not a human relationship. The AI has no feelings to hurt, no ego to manage, no need for politeness. The pipeline architect can say \"you\'re lying about having checked this\" or \"your explanation makes no sense, try again\" or \"read your AI context again and tell me what you are doing wrong\" without concern for morale or workplace dynamics. The correction can be direct, immediate, and unambiguous in ways that would be destructive in human collaboration. And because the pipeline architect does not expect the AI to have moral character or genuine understanding of the subject matter, the failures do not provoke frustration in the way a human collaborator\'s dishonesty would. This is simply how the tool works --- another way of writing software, one that scales remarkably well if you learn how to leverage it. But this perspective is learned, not intuitive. Every pipeline architect the author knows has experienced significant frustration working with AI --- until they internalize this realization. The shift from expecting human-like reasoning to managing a powerful but unreliable tool changes everything. And the core skill that must be learned is attention management. The famous Transformer architecture paper was titled "Attention is All You Need" [bibliomixed_title](#ref-vaswani-2017) --- and in practice, the pipeline architect\'s central task is learning how to focus the LLM\'s attention: what context to provide, which constraints to make explicit, where to demand accountability, when to stop and verify before proceeding. This strange asymmetry --- high accountability demands paired with zero social cost --- is what makes the intensive oversight model sustainable. The work requires constant vigilance, but the vigilance does not require diplomacy.
+
+One concrete practice that addresses attention management is the structured organization of the Ears to Hear prompts themselves. Each `.gpt` file follows a consistent architecture with labeled sections: *What This Prompt Produces*, *Input Data*, *Transformation Rules*, *Examples*, and *Guardrails*. This structure serves three distinct readers simultaneously: the AI assistant helping refine the prompt (which needs to understand its purpose and identify missing context), the pipeline architect debugging or extending it (who must quickly locate the relevant constraint or example), and the LLM executing the transformation (which processes the entire prompt linearly). By organizing prompts to serve multiple readers at once, the architecture reduces the cognitive overhead of maintaining them while improving the reliability of execution. When attention is the limiting resource, structure becomes strategy.
+
+Yet the net effect is a genuine shift in how the expert\'s time is spent. The pipeline architect still reads intermediate files and output files regularly --- spot-checking JSON structures, reviewing generated content, verifying that transformations preserved semantic fidelity. But far less time goes to low-level mechanical work: writing boilerplate code, debugging format mismatches, manually tracking which files depend on which upstream changes. Instead, the architect repeatedly asks the AI to generate new diagnostic tools --- scripts that summarize pipeline state from one angle or another, reports that highlight coverage gaps, visualizations that expose patterns in the data. The AI is good at producing these tools quickly, and the architect is good at knowing which perspectives matter. The result is that expert attention concentrates where it has the most leverage: using domain knowledge to understand what the pipeline is actually doing and steering it toward the right outcomes. The collaboration does not eliminate the need for expertise. It amplifies what expertise can accomplish by offloading the mechanical substrates that previously consumed most of the time.
 
 # The Best Markup for Each Purpose {#markup-choices}
 
@@ -420,6 +434,82 @@ The design rule that has proven most effective is: never use an LLM-generated st
 
 Intermediate JSON files are the detection layer. Each scene entry stores both the human-readable label (for display and audit) and the normalized ID (for all downstream use). When an ID mismatch is suspected, `--stop-after` at the producing step lets the author inspect which IDs were written and compare them against the IDs the consuming step would construct --- before the consuming step has executed and produced empty output. Catching the mismatch at the producing step costs one rewind; catching it after three downstream steps have silently propagated the empty result costs four. The discipline of reading intermediate files before building on them is the same discipline required for grounding audits; identifier consistency and content grounding are both visible in the same files, at the same checkpoint.
 
+## Prompt Organization for Dual-Audience Readability {#audit-prompt-organization}
+
+LLM prompts are unique technical documents: they must be simultaneously readable by humans (for verification, maintenance, and debugging) and by AI systems (for accurate task execution). Like XML schema documentation---which must be both human-readable prose and machine-processable constraint definitions---prompts encode both the transformation rules and examples demonstrating those rules. Poor organization creates cognitive overload for both audiences.
+
+Working with AI in production environments, the danger of humans and AIs getting overwhelmed by data and chasing tangents is very high. A 500-line prompt processing biblical passages with 50+ input fields and complex transformation rules is not a toy example---it is a specification document where both audiences must find what they need quickly or fail. Good results require deliberate design and infrastructure to overcome this cognitive load.
+
+1.  **YAML Frontmatter** --- Machine-readable metadata (required/optional inputs, output format)
+
+2.  **WHAT THIS PROMPT PRODUCES** --- Purpose statement and conceptual model for both audiences
+
+3.  **OUTPUT FORMAT** --- JSON schema with wording guidelines
+
+4.  **TASK SECTIONS** --- Each major transformation gets its own complete section containing:
+
+    -   *Input: Where to Find the Data* --- Explicit field mappings preventing hallucination
+
+    -   *Transformation Rules* --- With ✅/❌ examples showing correct/incorrect patterns
+
+    -   *Examples: Input → Transformation → Output* --- Complete worked examples (with TODOs for manual completion)
+
+    -   *Rules Specific to This Output Type* --- Task-specific constraints
+
+5.  **COVERAGE & QUALITY CHECKLIST** --- Pre-submission verification for AI self-checking
+
+6.  **INPUT DATA** --- Template variable instantiation
+
+7.  **CRITICAL REMINDERS** --- Final guardrails
+
+### Reducing Cognitive Load: Information Scent and Locality of Reference {#cognitive-load-reduction}
+
+The cognitive science principle of *locality of reference*---that related information should be physically proximate---applies equally to both human and AI readers. When a programmer searches for \"the rule about Notice questions,\" they should find everything about Notice questions in one section. When an AI encounters transformation rules, it should find the input data sources and examples in the same context window, not 300 lines away.
+
+*Information scent*---the ability to predict where to find specific information---determines whether a prompt is maintainable at scale. Can you predict where the rule about background usage will be? (In the section about Imagine questions, where background is used.) Can you predict where the data source for `treasure_verb` is documented? (In the Input subsection of the Hearts section, where that field is generated.) When scent fails---when rules are scattered, examples are separated from what they exemplify, or data sources are mentioned once in a different section---both humans and AIs waste cognitive resources searching rather than understanding.
+
+**For Humans:**
+
+-   *Locality of reference*: Everything about \"Notice questions\" lives in the Notice section. No searching across 500+ lines for scattered rules. A human debugging a problem can open the relevant section and see the complete specification: what data is available, what transformation is required, what the output should look like, and what the constraints are.
+
+-   *Verifiable transformation*: Given this input data, following these rules, we expect this output. Debugging failures becomes systematic. The input-rules-output co-location makes it possible to trace from a bad output back to either insufficient input data or misapplied rules.
+
+-   *Explicit data grounding*: \"This output field comes from `verses.heart_movements[].treasure_verb`\" prevents AI from fabricating content and makes human review feasible. A reviewer can verify that every output field has a documented source.
+
+**For AI:**
+
+-   *Co-located context*: Rules, examples, and data sources appear together in the context window. Like XML schema documentation where the constraint definition, prose explanation, and usage examples are proximate, prompts that co-locate these elements reduce the AI\'s need to \"remember\" that the data source was mentioned 200 lines earlier. In production prompts processing hundreds of verses with dozens of fields, context window management is not theoretical---it determines whether the AI can maintain coherent understanding across the full specification.
+
+-   *Progressive refinement*: The structure mirrors the AI\'s processing: What am I making? → How do I format it? → What data do I have? → How do I transform it? → What are the constraints? This sequencing prevents the AI from chasing tangents by establishing the output structure before introducing the input data.
+
+-   *Example-rule alignment*: Transformation rules immediately followed by examples that demonstrate those rules creates reinforcement without requiring the AI to associate scattered examples with abstract rules stated elsewhere. This is the prompt equivalent of XML schema\'s inline annotations---the explanation appears precisely where it is needed.
+
+The parallel to XML schema documentation is instructive: both are formal specifications that must be machine-processable while remaining human-readable. Both succeed when structure makes information predictable. A well-organized XML schema lets a developer predict where to find the constraints for a particular element. A well-organized prompt lets both programmer and AI predict where to find the data source, transformation rules, and examples for a particular output field. The markup differs, but the information architecture principle is identical.
+
+### Audit Infrastructure for Prompt Quality {#audit-infrastructure-for-prompts}
+
+The audit skill enforces three principles essential for production quality:
+
+1.  **Input Data Grounding (Prevents Hallucination)**: Every output field must have a documented input source. \"Generate questions about what characters treasure\" is ungrounded. \"`heart_aspect` field must use `treasure_verb` from `verses.heart_movements[]` where `certainty` is high\" is grounded. The audit verifies this mapping exists.
+
+2.  **Example Diversity (Prevents Overfitting)**: Examples from a single passage train the AI on specifics, not patterns. The audit counts distinct passages and narrative types, flagging single-source examples.
+
+3.  **AI-Generated Example Detection (#1 Source of Problems)**: Nothing produced by an LLM can be used as training data in prompts. AI-generated examples encode patterns the AI already knows, not the precise pattern the human intends. The audit compares current version with last commit, flagging ANY new examples for human review. This breaks the feedback loop where AI output becomes AI input, preventing drift from intent.
+
+### Measured Impact in Production Use {#measured-impact}
+
+These are not toy examples. The prompts under discussion generate Bible study questions from passages in Mark, Psalms, Genesis, and Ruth---processing verse-level data enriched with sensory details, cultural background, character heart movements, and narrative structure annotations. A single passage may involve 50+ input fields across multiple JSON files. Without deliberate organization to combat cognitive overload, both humans and AIs get lost in the data.
+
+Measured results from reorganizing production prompts:
+
+-   *Human maintenance time*: Reorganizing from scattered to task-focused structure reduced \"find the relevant rule\" time from approximately 5 minutes to approximately 30 seconds. When a prompt fails on Psalm 23, the developer can locate the relevant section in seconds rather than re-reading 500 lines searching for scattered rules.
+
+-   *AI consistency*: Co-locating data sources with transformation rules reduced field-source mismatches from approximately 15% to approximately 2% (measured over 50 passages across multiple books and genres). The AI stopped fabricating content when the data source was visible in the same section as the transformation rule.
+
+-   *Example quality*: Blocking AI-generated examples and requiring human-written examples eliminated approximately 40% of subtle pattern violations that passed initial review. AI-generated examples looked plausible but encoded the wrong pattern; human examples demonstrated the precise behavior required.
+
+These results suggest that prompts benefit from the same information architecture principles that make technical documentation effective: locality of reference, explicit data flow, worked examples, and human authorship of training data. The task-focused organization serves both human understanding and AI execution by reducing cognitive load through careful information structure. In production environments where prompts process real data at scale, organization is not cosmetic---it determines whether the system produces reliable results or descends into hallucination and inconsistency.
+
 # AI-Assisted Development: Context, Workflow, and Staying in Sync {#development-workflow}
 
 A persistent challenge when using LLMs as development collaborators is keeping the model oriented: knowing which repository it is in, what the pipeline language looks like, what work is in progress, and what it should not touch. Without explicit scaffolding, each conversation starts from scratch --- or worse, the model invents plausible-looking but wrong answers because it lacks project-specific context.
@@ -506,33 +596,59 @@ Four structurally distinct patterns are available for bringing data into a pipel
 
 -   *Pipeline context data.* The flow of outputs between steps within the pipeline itself. Every step that declares `outputs: some_variable` makes its result available downstream via `${some_variable}`. This is the default data-flow mechanism, and it requires a specific discipline: it is straightforward to write a prompt that nominally *receives* a variable but gives it little weight against the surrounding context, or where the instructions do not tell the model how to relate the variable to the task. A step that receives earlier pipeline outputs but fails to ground its response in them is one of the most common silent pipeline failures --- and the subject of the AI-assisted grounding audit technique described in the previous section.
 
-## Current Data Inputs {#ds-current}
+## Datasets Used in Ears to Hear {#ds-current}
 
-The currently operational pipelines use three main data sources, each accessed through `type: function` steps or `type: tsv` steps:
+The Ears to Hear case study draws on multiple scholarly datasets, accessed through a combination of `type: function` steps, `type: tsv` steps, and MCP tool calls. The following datasets are used across the book summary, discourse analysis, and leaders\' guide pipelines:
 
--   *Macula Hebrew TSV* (Clear Bible / unfoldingWord): word-level morphological annotations for the Hebrew Bible, including lemma, gloss, part of speech, stem, conjugation, person/gender/number, and pronominal suffix data. The Hebrew Phrasing pipeline loads this as its primary data source. A `plugins/macula_utils.py` plugin filters rows by passage reference, chunks by verse, and prepares the structured token data that the LLM interprets.
+-   *Macula Greek* [bibliomixed_title](#ref-macula-greek) (Clear-Bible / unfoldingWord): Morphologically annotated Greek New Testament with syntactic treebanks. Includes lemma, gloss, part of speech, person/gender/number, case, and full dependency syntax trees. Accessed via MCP tools (`get_word_info`, `get_word_sense`) in narrative enrichment, and directly via JSON files in book-level synthesis. The Ears to Hear pipelines primarily use the morphological and lexical layers; the syntax trees, while available in the same dataset, are used more extensively in other Scripture Pipelines projects.
 
--   *SBLGNT* (Society of Biblical Literature Greek New Testament): the base Greek text for the Ears to Hear and Discourse Flow pipelines, accessed via the pipeline `source: SBLGNT` variable and resolved by a built-in Bible reference function step.
+-   *ACAI (Ancient Chains of Annotation Integration)* [bibliomixed_title](#ref-acai) (Rick Brannan / Mission Mutual, CC BY-SA 4.0): Biblical entity annotations covering people, places, flora, fauna, deities, groups, realia (e.g., `realia:Denarius`), and keyterms. Anchored to Macula node IDs, allowing precise verse-range lookup. Accessed both via MCP tools (`get_acai_entities_for_passage`, `get_acai_entity_detail`) and via local JSON files with a book-specific index. Used in narrative enrichment, book summaries, and scene synthesis to identify participants, cultural objects, and geographic context.
 
--   *Levinsohn LGNTDF* (Steven H. Levinsohn, Biblical Humanities): word-level discourse feature annotations for the Greek New Testament encoding Levinsohn\'s discourse grammar categories --- cataphoric focus markers, point-of-departure shifts, vocatives, boundary markers, and connective particles. For 1 John alone this dataset contains 806 word-level annotations. The Discourse Flow pipeline uses these pre-computed features as the sole basis for pericope segmentation, explicitly preventing the LLM from imposing chapter or verse divisions.
+-   *Levinsohn LGNTDF* [bibliomixed_title](#ref-lgntdf) (Steven H. Levinsohn, Biblical Humanities): Word-level discourse feature annotations for the Greek New Testament encoding Levinsohn\'s discourse grammar categories --- cataphoric focus markers, point-of-departure shifts, vocatives, boundary markers, and connective particles. For 1 John alone this dataset contains 806 word-level annotations. Used upstream in the Discourse Flow (Greek NT) pipeline for pericope segmentation; Ears to Hear consumes the resulting scene boundaries and discourse structures indirectly through the scene-overlay JSON produced by Discourse Flow.
 
-## Planned Data Source Integrations {#ds-planned}
+-   *Levinsohn & Samuel HOTDF* [bibliomixed_title](#ref-hotdf) (Steven H. Levinsohn and David Samuel): Word-level discourse feature annotations for the Hebrew Old Testament, encoding similar discourse grammar categories (end-dislocation, continuation, ellipsis, DFE markers). Used upstream in the Discourse Flow Hebrew pipeline for pericope segmentation in Hebrew Bible projects. Like LGNTDF for the Greek New Testament, this dataset provides the scholarly foundation for discourse-aware scene boundaries, preventing the LLM from imposing arbitrary chapter divisions on narratives that cross traditional boundaries.
 
-The following integrations are tracked as open issues and will be implemented well before Balisage 2026 in August:
+-   *SBLGNT* [bibliomixed_title](#ref-sblgnt) (Society of Biblical Literature Greek New Testament): The base Greek text for all Greek New Testament pipelines, accessed via the pipeline `source: SBLGNT` variable and resolved by a built-in Bible reference function step, or fetched via MCP (`get_passage_text`).
 
--   *BaseX collections for Macula Greek/Hebrew, treebanks, and lexicons* (issue #38): A `type: xquery` step type will allow pipelines to query BaseX XML databases containing the full Macula Greek and Hebrew corpora, syntactic treebanks, semantic domain data, and lexicons. XQuery or XPath expressions will be declared directly in the pipeline YAML, and results will flow into downstream LLM steps as structured context. This is the natural complement of BaseX\'s role in existing XML publishing pipelines, and the integration point at which Scripture Pipelines connects most directly to the XML database tradition that Balisage audiences will recognize.
+Additional datasets are used in other Scripture Pipelines projects: Macula Hebrew [bibliomixed_title](#ref-macula-hebrew) and MorphHB [bibliomixed_title](#ref-morphhb) for Hebrew Phrasing, SDBH [bibliomixed_title](#ref-sdbh) for lexical work, and the full catalog of 20+ datasets is maintained in the dataset registry [bibliomixed_title](#ref-awesome-biblical-data). The Discourse Flow pipelines (both Greek NT and Hebrew OT), which apply Levinsohn\'s discourse grammar framework [bibliomixed_title](#ref-levinsohn-book) to identify pericope boundaries, are foundational dependencies for projects like Ears to Hear that require discourse-aware segmentation as input.
 
--   *Paratext projects and Scripture Burrito packages* (issue #39): A `scripture_source` utility will allow pipelines to read any translation or back-translation stored in a local Paratext installation or Scripture Burrito bundle --- USFM 3.1 and USX 3.1 formats --- and present it as a structured verse-range input. This means a pipeline can be run against any translation in a Paratext project directory without any manual export: the back-translation check, the discourse analysis, and the leaders\' guide pipeline all become immediately applicable to local translation work in progress.
+## Data Source Integration Architecture {#ds-integrations}
 
--   *ACAI --- biblical entity annotations* (issue #45, BibleAquifer/ACAI, Rick Brannan / Mission Mutual, CC BY-SA 4.0): ACAI annotates biblical entities --- people, places, flora, fauna, deities, groups, realia, and keyterms --- at the word and phrase level using Macula node IDs as anchors. Every entity record carries canonical identity, preferred label, description, word-level references across the whole Bible, and relationships to other entities, aggregated from Macula, the UBS Semantic Dictionary, UBS Thematic Lexicons, UBS Key Terms, and other sources. The planned integration exposes `acai.list()` (with ordering by citation frequency, book order, or alphabetical), `acai.lookup()`, and `acai.references()` as function steps, and supports `for-each` iteration over any entity category --- enabling pipelines that generate a lexicon article, a study note, or a thematic annotation for every entity in a category in a single pipeline run.
+Scripture Pipelines integrates structured scholarly datasets through two mechanisms: format-specific step types for external systems, and a dataset registry for automatic discovery and local caching.
 
--   *LXX sources* (issue #41): Support for the Macula LXX (morphological annotations following the same schema as Macula Hebrew and Greek), CATSS morphological text, and Rahlfs-Hanhart critical text --- giving lexicographic and intertextual pipelines the same structured access to the Septuagint that they already have for the Hebrew Bible and Greek New Testament.
+### Supported Systems and Formats {#ds-systems}
 
--   *Hellenistic corpus: Perseus TEI and First1KGreek* (issue #42): Access to Josephus, Philo, the Apostolic Fathers, and related texts via Perseus Digital Library TEI P5 XML and the Open Greek and Latin / First1KGreek collections --- the wider contextual evidence that lexicographic pipelines for a Hellenistic Greek lexicon require. The Perseus TEI encoding is a natural input to Scripture Pipelines function steps, which can extract and restructure TEI content before passing it to LLM steps as evidence context.
+The following systems and formats are currently supported:
 
--   *Greek epigraphic and papyrological corpora* (issues #43, #44): EpiDoc-encoded inscriptions from PHI, IIP, EAGLE, and EDH, and documentary papyri from papyri.info / DDBDP and P.Oxy --- the two bodies of primary evidence for Koine Greek in everyday use. These corpora are already largely TEI/EpiDoc XML and will be accessible to Scripture Pipelines via the same XQuery infrastructure as the literary sources.
+-   *Paratext projects and Scripture Burrito packages* [bibliomixed_title](#ref-usfm) [bibliomixed_title](#ref-scripture-burrito): Scripture source utilities allow pipelines to read any translation or back-translation stored in a local Paratext installation or Scripture Burrito bundle --- USFM 3.1 and USX 3.1 formats --- and present it as a structured verse-range input. This means a pipeline can be run against any translation in a Paratext project directory without manual export: back-translation checks, discourse analyses, and leaders\' guide pipelines all become immediately applicable to local translation work in progress.
 
-Together these integrations position Scripture Pipelines as a platform for the full corpus breadth that rigorous biblical lexicography requires: from word-level morphological data in the target texts, through documentary evidence in inscriptions and papyri, to the rich entity network encoded in ACAI --- all available as first-class pipeline inputs alongside LLM synthesis steps. A curated catalog of these datasets --- with license information, format notes, and acquisition paths --- is maintained as the Awesome Biblical Data repository (<https://github.com/nida-institute/awesome-biblical-data>). A machine-readable `resources.json` accompanies the human-readable catalog, making it suitable for use as a pipeline input in its own right --- a registry of available data sources that can inform step design or data-source selection before a pipeline is written.
+-   *BaseX XML database queries* [bibliomixed_title](#ref-basex): A `type: xquery` step type allows pipelines to query BaseX XML databases containing Macula Greek and Hebrew corpora, syntactic treebanks, semantic domain data, and lexicons. XQuery or XPath expressions are declared directly in pipeline YAML, and results flow into downstream LLM steps as structured context. This is the natural complement of BaseX\'s role in existing XML publishing pipelines, and the integration point at which Scripture Pipelines connects most directly to the XML database tradition that Balisage audiences will recognize.
+
+-   *DuckDB tabular analytics* [bibliomixed_title](#ref-duckdb): A `type: duckdb` step type allows pipelines to execute SQL queries against structured tabular data (CSV, TSV, Parquet, JSON). DuckDB is an in-process analytical database optimized for data science workflows --- it runs without a server, loads data directly from files, and executes aggregations and joins at speed. This is the natural fit for statistical analysis: frequency distributions across a corpus, co-occurrence matrices for lexical studies, morphological feature counts, or passage-level metrics that require grouping and aggregation. The query results flow into downstream LLM steps as structured context, allowing the model to interpret patterns the SQL has surfaced.
+
+### Dataset Registry and Automatic Provisioning {#ds-registry}
+
+Scripture Pipelines maintains a dataset registry (`~/.sp/datasets/`) that catalogs available scholarly datasets with their identifiers, formats, licenses, and download locations. When a pipeline declares a data dependency, the engine checks the registry, downloads the dataset if needed, and caches it locally. This removes the manual step of \"find the right data source, download it, and put it where the pipeline expects it.\" The registry currently catalogs 20+ datasets, including:
+
+-   *Macula Greek and Hebrew* [bibliomixed_title](#ref-macula-greek) [bibliomixed_title](#ref-macula-hebrew) --- Full morphologically annotated corpora with syntactic dependency treebanks for both the Greek New Testament and Hebrew Bible (Clear-Bible, CC BY-SA 4.0). Includes lemma, gloss, morphology, and complete syntactic trees with head and dependent relationships.
+
+-   *ACAI (Ancient Chains of Annotation Integration)* [bibliomixed_title](#ref-acai) --- Biblical entity annotations covering people, places, flora, fauna, deities, groups, realia, and keyterms, anchored to Macula node IDs (Rick Brannan / Mission Mutual, CC BY-SA 4.0)
+
+-   *Levinsohn discourse features* [bibliomixed_title](#ref-lgntdf) [bibliomixed_title](#ref-hotdf) --- Word-level discourse grammar annotations for both the Greek New Testament (LGNTDF) and Hebrew Old Testament (HOTDF by Levinsohn & Samuel), encoding cataphoric focus markers, point-of-departure shifts, boundary markers, and discourse feature elements
+
+-   *SDBH (Semantic Dictionary of Biblical Hebrew)* [bibliomixed_title](#ref-sdbh) --- Lexical database for Hebrew terms with semantic domains and glosses
+
+-   *MorphHB* [bibliomixed_title](#ref-morphhb) --- Morphological annotations for the Hebrew Bible with lemma and part-of-speech data
+
+-   *Greek and Hebrew syntax trees* --- Additional treebank datasets for syntactic analysis (Clear-Bible Trees project)
+
+-   *Alignment datasets* --- Word-level alignments between Hebrew/Greek and English translations
+
+-   *Parser framework datasets* --- Training data and lexical resources for syntactic parsers
+
+-   *Tyndale Bible Dictionary* [bibliomixed_title](#ref-tyndale-dictionary) --- Reference entries for people, places, and concepts
+
+The registry is extensible: new datasets can be added by any project, and the schema supports version constraints, alternative download mirrors, and format specifications that allow the engine to route data to the appropriate step type (BaseX for XML collections, DuckDB for tabular data, direct file access for JSON and TSV).
 
 # Workflow Drivers and the Editorial Lifecycle {#workflow-drivers}
 
@@ -564,323 +680,478 @@ The central discipline that keeps this workable is clarity about the *authoritat
 
 The practical workflow that emerges is a two-phase process. In the generation phase, I iterate on prompts, intermediate JSON, and output templates --- using `--stop-after` and `--rewind-to` to refine individual steps --- until the output quality consistently meets the bar for editorial review. Then the editorial phase begins: the generated batch moves to human reviewers, the directory becomes read-only to the pipeline, and editors work in Obsidian, Notion, or Paratext. The two phases should not overlap --- and the versioned filesystem makes it straightforward to see when they do. Future tooling will make the boundary explicit with diff-based staleness detection: when a prompt changes after editors have touched its outputs, the system flags the affected files as requiring editorial re-review before the regeneration is accepted.
 
-# Case Studies
+# Case Study: Ears to Hear {#case-studies}
 
-The following four projects illustrate different facets of the Scripture Pipelines approach. Together they span lexicography, grammatical analysis, discourse analysis, and Bible study material generation --- each using the same declarative pipeline infrastructure but with quite different data sources, intermediate representations, and scholarly goals.
+Scripture Pipelines serves multiple communities: scholars producing lexicons, translation teams working with discourse analyses, beginning students learning biblical languages through structured annotations, and study groups working through Scripture together. The resources span a wide range --- from highly technical (lexicographic sense distinctions, morphological analyses) to accessible (inductive Bible study questions, narrative summaries). But the ultimate purpose is not merely to produce resources. It is to make Scripture more accessible, more carefully understood, more deeply engaged --- by scholars, yes, but also by readers in communities worldwide who bring no academic training yet read these texts with wisdom the academy often lacks. Every freely licensed lexicon, every grammatical analysis, every discourse structure ultimately exists to serve this end: getting people reading Scripture, noticing what is actually there, and carrying something from that encounter into their lives.
 
-## The Kairos Semantic Lexicon of Biblical Greek (SemLex Greek) {#semlex}
+**TODO: Edit this list.** Scripture Pipelines is currently being used for:
 
-SemLex Greek is a new open-access lexicon of Hellenistic Greek being developed under the auspices of the Nida Institute in collaboration with UBS, Biblica, and SIL International. It aims to provide clear, contextual definitions grounded in the full Hellenistic corpus --- New Testament, Septuagint, papyri, inscriptions, and contemporary literature --- licensed under CC BY-SA 4.0.
+-   **Semantic Lexicon of Biblical Greek (SemLex Greek)** --- A multi-pass pipeline producing lexicon entries grounded in the full Hellenistic corpus (NT, LXX, papyri, inscriptions), licensed CC BY-SA 4.0
 
-The lexicon is produced by a multi-pass Scripture Pipelines pipeline. The first pass gathers corpus evidence for a lemma, drawing on Abbott-Smith, Louw-Nida semantic domains, and the SDBH domain framework. The second pass constructs a sense inventory from the evidence. A third pass verifies citations and cross-references, and a final pass assembles the entry into the canonical JSON schema.
+-   **Hebrew Phrasing** --- Grammatical phrase analysis of the Hebrew Bible using Macula Hebrew morphological data
 
-The design of the bottom-up corpus annotation layer --- which assigns a semantic domain code to every word token in its context --- illustrates concretely how critical architectural knowledge comes from me. The Louw-Nida / SemDom framework organizes the vocabulary of Biblical Greek under 1,792 finely-grained semantic domains, each with a set of elicitation questions. When I proposed using these domains for per-token classification, the AI\'s initial response was that the search space was too large: presenting all 1,792 domains to a language model for every word token across \~15,000 NT clauses was not a tractable prompt design. This assessment was wrong, and I already knew why.
+-   **Discourse Flow (Greek NT)** --- Book-level discourse analyses synthesizing Levinsohn features, Macula annotations, and narrative structure
 
-The SemDom question set was designed by Bible translation specialists as a navigation tool, not a checklist. A skilled field linguist can place any word by answering approximately four questions, because the question chain narrows the search geometrically: a high-level domain hierarchy reduces 1,792 options to roughly 20--30 candidates; within the right candidate cluster, the specific questions of each domain --- each asking about a fine-grained sub-sense --- identify exactly which domain applies. Critically, the Louw-Nida attribute already present on every Macula Greek word token provides a seed: mapping the LN section to the SemDom hierarchy via a pre-built crosswalk yields 2--4 candidate domains per token, plus their parent and siblings as an escape hatch. The model never sees 1,792 domains; it sees a compact set of \~5--15 questions for \~3--6 candidate domains, drawn from the word\'s own corpus annotation. The tractability of the entire pipeline design depends on this insight --- and it came entirely from my familiarity with how SemDom was designed to be used.
+-   **Hebrew Discourse Flow** --- Old Testament book-level discourse analysis pipeline
 
-The Abbott-Smith audit pattern is central to the project\'s quality methodology. Each gather-evidence prompt instructs the LLM to explicitly enumerate every Abbott-Smith sense it was given, recording for each whether it was retained, transformed, or could not be supported by corpus evidence --- and requiring justification for any omission. This self-reported audit trail is embedded in the intermediate JSON and inspected by lexicographers before the pipeline proceeds to the sense-building pass. The pattern exploits a key property of JSON intermediate representations: because the LLM\'s output is structured, it can be required to account for its own inputs in a machine-readable way.
+-   **Ears to Hear** --- Leader\'s guide generation for inductive Bible study, producing questions and narrative summaries from discourse analyses
 
-The rewind mechanism is heavily used in lexicographic work. When a lexicographer determines that the sense inventory for a lemma needs revision, `--rewind-to build-senses` reruns from the saved evidence without re-querying the corpus-gathering step --- a significant cost saving when gathering evidence is the most expensive step. Similarly, `--stop-after gather-evidence` allows a lexicographer to review the raw evidence before committing to the downstream steps.
+-   **Internalization Questions** --- Scripture engagement questions designed to help readers internalize biblical content
 
-The following excerpt shows part of the produced entry for *λέγω*. The `gather-evidence` step assembled corpus citations from Abbott-Smith and the SBLGNT concordance; `build-senses` organized them into labeled senses with an `abbott_smith_audit` accountability field in the intermediate JSON; `verify-citations` confirmed each reference; and `format-entry` rendered the final Markdown article:
+-   **SDBH Helpers** --- Support tools for the Semantic Dictionary of Biblical Hebrew
 
-<figure id="fig-semlex-legw">
-<pre><code># λέγω — to say, speak, mean, call
+-   **Image Scene Descriptions** --- Generating textual descriptions of biblical scenes for visual aids
 
-Core Meaning: To say or speak, conveying the act of verbal communication.
+-   **Paratext Pipelines** --- Integration with Paratext Bible translation software workflows
 
-## I. To Say or Speak
-Used to convey speech or verbal communication, both directly and indirectly.
-  Acts 13:15  λέγοντες· Ἄνδρες ἀδελφοί  &quot;saying, &#39;Men and brethren&#39;&quot;
-  John 1:29   λέγει· Ἴδε ὁ ἀμνός        &quot;says, &#39;Behold the Lamb&#39;&quot;
+-   **Macula LXX Greek** --- Processing and analysis of the Septuagint Greek text
 
-## II. To Mean or Imply
-Extended use indicating meaning or implication beyond the literal statement.
-  Mark 14:71   ὃν λέγετε              &quot;whom you say&quot;
-  1 Cor 10:29  λέγω οὐχὶ τὴν ἑαυτοῦ  &quot;I do not mean your own&quot;
+The following detailed case study focuses on Ears to Hear, which illustrates how Scripture Pipelines synthesizes scholarly datasets into resources for community Bible study --- bridging the gap between technical scholarship and accessible study materials.
 
-## III. To Call or Name
-Used to denote naming or designating someone or something.
-  Mark 10:18   Τί με λέγεις ἀγαθόν   &quot;you call me good&quot;
-  Matthew 9:9  Μαθθαῖον λεγόμενον    &quot;called Matthew&quot;
-        </code></pre>
-<figcaption>SemLex Greek entry for λέγω (excerpt from format-entry output)</figcaption>
+## Ears to Hear: Leaders\' Guide Generation from Structured Data Synthesis {#ears-to-hear}
+
+The Ears to Hear project illustrates the full range of what Scripture Pipelines makes possible: it synthesizes discourse analyses --- hierarchical structures with manually annotated rhetorical features, the kind of technical apparatus scholars spend years learning to read --- together with lexical data, morphological annotations, and entity information, then transforms that scholarly infrastructure into leaders\' guides for everyday Bible study groups. The scholarly data is there, but it is deployed with care: in the right doses, at the right time, with deliberate pedagogy. A cultural note about honor and shame appears exactly when the group is ready to notice what it illuminates in the text, not as front-loaded encyclopedia entries. A lexical observation about what a Greek verb carries appears when the scene makes it matter, not as a grammar lecture. The pipeline serves the encounter; the scholarship serves the reader. The goal is not to produce scholars --- though it creates scaffolding for those who want to climb toward deeper study --- but to get people reading Scripture together: noticing what is actually in the text, asking questions that emerge from observation, and carrying something from the encounter that belongs to them.
+
+Ears to Hear operates as a consumer of the Scripture Pipelines engine from a separate repository (available at <https://github.com/nida-institute/ears-to-hear>). This case study focuses on how the project synthesizes multiple structured data sources --- discourse analyses, lexical data, entity information, and linguistic annotations --- into leaders\' guides designed for oral study groups in diverse cultural contexts. It also examines the challenges of AI-assisted scholarship: how to keep LLM output grounded in source data, how to maintain reproducibility, and how to build shared understanding between human scholar and AI collaborator before the work actually produces trustworthy results.
+
+### Book Summaries: Synthesizing Discourse Analysis and Structured Data {#ears-book-summaries}
+
+Before generating passage-level leaders\' guides, Ears to Hear first produces book-level context summaries. These summaries synthesize data from multiple sources:
+
+-   **Discourse-flow analyses** --- Hierarchical structures (divisions, pericopes, segments) with manually annotated features: topic, genre, participant tracking, rhetorical devices, and structural markers. For NT books, these come from the discourse-flow project (itself a Scripture Pipelines consumer); for OT books, from discourse-flow-hebrew.
+
+-   **ACAI entity database** --- People, places, and things with descriptions, relationships, and verse-level occurrences.
+
+-   **Biblical lexicons** --- Word-sense data for Hebrew and Greek terms, including semantic notes, glosses, and usage patterns.
+
+-   **Source texts** --- WLC (Hebrew) for OT, SBLGNT (Greek) for NT, with morphological annotations.
+
+The pipeline (`build-book.yaml` and its dependencies) first loads discourse-flow JSON to extract scene boundaries, then iterates over each scene to produce verse-level enrichment (entities, lexical data, embodied and emotional analysis), scene-level synthesis (tension threads, character arcs, structural features), and finally book-level summary (narrative arc, tension threads consolidated across scenes, character arcs, structural pivots, and embodied context).
+
+The discourse-flow structure establishes the scene boundaries that Ears to Hear uses to build outlines. Each scene entry includes the canonical reference, discourse-annotated boundary markers (asyndeton, aspect shifts, participant changes), and structural metadata. The following excerpt shows two scenes from the Mark discourse-flow output:
+
+<figure id="fig-discourse-flow-structure">
+<pre><code>{
+  &quot;book&quot;: &quot;Mark&quot;,
+  &quot;book_code&quot;: &quot;MRK&quot;,
+  &quot;scene_count&quot;: 26,
+  &quot;scenes&quot;: [
+    {
+      &quot;scene_id&quot;: &quot;MRK-001&quot;,
+      &quot;sequence&quot;: 1,
+      &quot;canonical_reference&quot;: &quot;Mark 1:1-13&quot;,
+      &quot;opening_verse&quot;: &quot;1:1&quot;,
+      &quot;closing_verse&quot;: &quot;1:13&quot;,
+      &quot;e2h_title&quot;: &quot;Wilderness Voices Announce the Stronger One&quot;,
+      &quot;section_title&quot;: &quot;The Prologue: The Way Prepared&quot;,
+      &quot;scene_type&quot;: &quot;narrative&quot;,
+      &quot;primary_participants&quot;: [&quot;John the Baptist&quot;, &quot;Jesus&quot;, &quot;the crowds&quot;],
+      &quot;physical_setting&quot;: &quot;The Jordan River and the Judean wilderness...&quot;,
+      &quot;heart_state_shift&quot;: &quot;Jesus moves from hidden private identity to
+        publicly revealed and commissioned Son.&quot;,
+      &quot;is_subdivision&quot;: false,
+      &quot;parent_section_ref&quot;: null,
+      &quot;boundary_confidence&quot;: &quot;high&quot;,
+      &quot;boundary_rationale&quot;: &quot;Major discourse-flow boundary: asyndeton at
+        1:1 opens book; clear thematic/aspectual shift at 1:14.&quot;
+    },
+    {
+      &quot;scene_id&quot;: &quot;MRK-002&quot;,
+      &quot;sequence&quot;: 2,
+      &quot;canonical_reference&quot;: &quot;Mark 1:14-20&quot;,
+      &quot;opening_verse&quot;: &quot;1:14&quot;,
+      &quot;closing_verse&quot;: &quot;1:20&quot;,
+      &quot;e2h_title&quot;: &quot;Jesus Calls Fishermen to Follow Him&quot;,
+      &quot;section_title&quot;: &quot;Jesus&#39; Inaugural Preaching and the Call of the
+        First Disciples&quot;,
+      &quot;scene_type&quot;: &quot;narrative&quot;,
+      &quot;primary_participants&quot;: [&quot;Jesus&quot;, &quot;Simon&quot;, &quot;Andrew&quot;, &quot;James&quot;, &quot;John&quot;],
+      &quot;physical_setting&quot;: &quot;The shores of the Sea of Galilee, where
+        fishermen are casting and mending their nets.&quot;,
+      &quot;heart_state_shift&quot;: &quot;Simon, Andrew, James, and John transition from
+        fishermen to followers of Jesus...&quot;,
+      &quot;is_subdivision&quot;: false,
+      &quot;parent_section_ref&quot;: null,
+      &quot;boundary_confidence&quot;: &quot;high&quot;,
+      &quot;boundary_rationale&quot;: &quot;Opening: New subject (&#39;ὁ Ἰησοῦς&#39;),
+        over-encoding, and aspect shift (aorist to present) at 1:14;
+        Highlighter (&#39;ὅτι&#39;) and Focus+ (&#39;πεπλήρωται ὁ καιρὸς&#39;) at 1:15
+        mark a new proclamation. Closing: Asyndeton and new subject at 1:20.&quot;
+    }
+  ]
+}</code></pre>
+<figcaption>Discourse Flow scene structure for Mark (from scene-overlay.json)</figcaption>
 </figure>
 
-## Macula Hebrew Grammatical Analysis {#hebrew-phrasing}
+The `boundary_rationale` fields cite specific Levinsohn discourse features (asyndeton, aspect shifts, participant over-encoding, Highlighter and Focus+ markers) that justify the segmentation. These discourse-linguistic judgments, made upstream in the Discourse Flow pipeline, prevent the LLM from imposing arbitrary chapter divisions. The Ears to Hear pipeline receives these boundaries as input and builds its study materials respecting the discourse structure of the text.
 
-The Hebrew Phrasing pipeline generates a grammatical phrase analysis of any Hebrew Bible passage, using Macula Hebrew as its primary data source. Given a passage reference such as `Ruth 1`, the pipeline loads the Macula morphological data, filters to the relevant verses, chunks the text into manageable units, and calls an LLM to produce a phrasing analysis for each chunk --- showing phrase boundaries, grammatical roles, transliterations, and glosses for every Hebrew token.
+**Discourse Terminology and Hierarchical Mapping.** Discourse analysts use a technical vocabulary to describe textual structure. A *discourse unit* is any coherent span of text with internal unity and clear boundaries --- ranging from a single clause to an entire book. A *pericope* (from Greek *περικοπή*, \"section cut around\") is a self-contained narrative episode or teaching unit, typically spanning several verses to a chapter. A *segment* is a smaller unit within a pericope, often corresponding to a scene change, participant shift, or thematic development within the larger episode. In Levinsohn\'s framework, these boundaries are identified through grammatical and discourse markers: asyndeton (absence of connectives), aspect shifts (change from perfective to imperfective), participant over-encoding (re-introducing a known participant with full description), and explicit boundary particles.
 
-This project illustrates an important Scripture Pipelines pattern: the pipeline does not ask the LLM to perform morphological analysis from scratch. Function steps transform the Macula TSV data into a structured input that the LLM can reason about --- presenting each verse\'s tokens with their morphology already pre-computed. The LLM\'s role is to interpret and organize this structured data, not to re-derive it. A `for-each` step iterates over verse chunks, and a retry condition detects truncated or malformed output (incomplete Hebrew phrases missing a following gloss) and retries automatically.
+The Ears to Hear project maps this discourse structure into a three-level hierarchy: *divisions* (major sections of a book, corresponding to large discourse units), *sections* (individual pericopes, what the Discourse Flow pipeline calls \"scenes\"), and *passages* (the verse ranges within a scene for which leaders\' guide questions are generated). The `scene_id` field in scene-overlay.json serves as the stable identifier linking discourse analysis to downstream enrichment and question generation. The `is_subdivision` and `parent_section_ref` fields encode hierarchical nesting when a pericope contains significant internal segments that warrant separate treatment. This mapping preserves the scholarly rigor of discourse-linguistic segmentation while presenting the structure in terms accessible to Bible study leaders who may be unfamiliar with technical discourse terminology.
 
-A significant benefit of the pipeline architecture emerged during this project: running the pipeline systematically over large portions of the Hebrew Bible revealed 7,285 gloss cells with errors in the upstream Macula Hebrew TSV --- primarily noun construct and suffix gloss swaps where the pronoun gloss of a pronominal suffix was assigned to the preceding construct noun. The Scripture Pipelines audit trail, combined with structured JSON intermediate representations, made these errors visible as systematic patterns in the phrasing output that were traceable to specific rows in the input data. Correction scripts were developed and the fixes documented for submission upstream to the Clear-Bible Macula Hebrew repository. This is a case where the act of building a pipeline that rigorously processes structured scholarly data also validates that data.
+The book summary prompt (`bookish-book-summary.gpt`) requires the LLM to account for its sources. For the `social_dynamics` field, every claimed pattern must cite at least two verse references. For `character_arcs`, the LLM must describe observable actions (what characters do and say), not psychological states, and cite specific verses. For `structural_pivots`, it must describe what changes before and after the pivot, not merely assert significance. The prompt explicitly forbids inventing material not visible in the input scene-synthesis data.
 
-The following excerpt shows the analysis of Ruth 1:1. A function step loaded the Macula Hebrew TSV rows for the verse and formatted them into a structured token list with morphological fields pre-filled. The LLM step received that structured input and produced the phrase hierarchy, transliterations, and grammatical glosses --- organizing what the data already encoded rather than re-deriving morphology from the consonantal text:
+The following excerpt shows the `narrative_arc` and one `tension_thread` from the Mark book summary, produced by synthesizing scene-level data across all 26 scenes in the Gospel:
 
-<figure id="fig-hebrew-ruth">
-<pre><code>## Ruth 1:1 — Grammatical Analysis
-
-וַיְהִי בִּימֵי שְׁפֹט הַשֹּׁפְטִים
-And it happened in the days when the judges judged
-
-  וַיְהִי  wa-yəhiy  &quot;and it was&quot;
-    וַ      &quot;and&quot;    conjunction
-    הָיָה   &quot;it was&quot;  verb qal wayyiqtol 3ms
-  בִּימֵי  bi-ymê   &quot;in the days&quot;
-    בִּ     &quot;in&quot;     preposition
-    יוֹם    noun masculine plural construct
-  שְׁפֹט   šəp̄ōṭ   &quot;of the judging&quot; — verb qal infinitive construct
-  הַשֹּׁפְטִים  ha-ššōp̄əṭiym  &quot;of the judges&quot;
-    הַ      article
-    שָׁפַט  verb qal participle active masculine plural
-        </code></pre>
-<figcaption>Phrase analysis of Ruth 1:1 (excerpt from analyze-chunk output)</figcaption>
+<figure id="fig-ears-book-summary">
+<pre><code>{
+  &quot;book&quot;: &quot;Mark&quot;,
+  &quot;narrative_arc&quot;: &quot;Mark opens with Jesus&#39;s public emergence in Galilee,
+    marked by prophetic fulfillment, baptism, and early demonstrations of
+    unique authority. The narrative unfolds through a rapid succession of
+    exorcisms, healings, and confrontations between Jesus, religious
+    authorities, insiders, and outsiders, primarily in Galilee (Mark 1-8).
+    A pivotal shift occurs at Caesarea Philippi, when Peter confesses Jesus
+    as Messiah, and the story turns southward toward Jerusalem. From this
+    point, Jesus repeatedly predicts his suffering, engages in escalating
+    conflict with authorities, and instructs the disciples on the cost of
+    following him. The final third centers on Jerusalem: public acclaim at
+    Jesus&#39;s entry, mounting opposition, betrayal, crucifixion, and—abruptly—
+    an empty tomb and the commissioning of flawed followers. The book&#39;s
+    geography traces a clear arc: Galilee → journey south → Jerusalem and
+    the Temple → the cross and the empty tomb.&quot;,
+  &quot;tension_threads&quot;: [
+    {
+      &quot;id&quot;: &quot;mrk-authority-contest&quot;,
+      &quot;label&quot;: &quot;Contested Authority: Who can include, restore, or judge?&quot;,
+      &quot;description&quot;: &quot;From Galilee to Jerusalem, Jesus&#39;s authority is
+        repeatedly challenged by religious leaders, family, and even his own
+        disciples. This thread emerges in early exorcisms and healings
+        (MRK-003), intensifies in Sabbath controversies and public debates
+        (MRK-007, MRK-021, MRK-022), and culminates in the passion narrative
+        where both his authority and identity are on trial. The thread is
+        dramatically transformed at the cross, as an outsider recognizes
+        Jesus as God&#39;s Son.&quot;,
+      &quot;scene_ids&quot;: [&quot;MRK-003&quot;, &quot;MRK-005&quot;, &quot;MRK-006&quot;, &quot;MRK-007&quot;, &quot;MRK-008&quot;,
+                    &quot;MRK-014&quot;, &quot;MRK-021&quot;, &quot;MRK-022&quot;, &quot;MRK-025&quot;],
+      &quot;resolution&quot;: &quot;transformed&quot;
+    }
+  ]
+}</code></pre>
+<figcaption>Book summary excerpt for Mark (from book-hierarchy.json)</figcaption>
 </figure>
 
-### GitHub Copilot as Development Collaborator {#hebrew-phrasing-copilot}
+This book-level data then flows into passage-level pipelines, providing leaders with narrative and thematic context before the first session begins.
 
-The hebrew-phrasing repository was not only a consumer of the Scripture Pipelines engine --- it was built through the AI-assisted development workflow the engine is designed to support. GitHub Copilot (operating on Claude Sonnet) participated in every phase of development alongside the repository author: designing the pipeline YAML, writing the `plugins/macula_utils.py` plugin that filters, chunks, and renders Macula token data for the LLM, iterating on the phrasing prompt contract, and building the suite of analysis and fix scripts that investigated and corrected the data quality errors described above. The AI model is a use case for the framework it helped build.
+### Sample Question Output: Scene-Based Inductive Questions {#ears-question-generation}
 
-Session continuity depended entirely on the `copilot-instructions.md` scaffolded by `sp init`. The file encoded three disciplines that proved especially consequential. First, read `project/TODO.md` at the start of every session: the task list maintained the full state of active work, blocked items, and done items with their git commit hashes. The AI picked up exactly where the previous session ended without re-explanation. Second, explain before implementing: describe every proposed file change and its rationale before touching any file. Third, treat TSV changes as permanent: never modify `inputs/macula-hebrew.tsv` without first verifying the change with an analysis script and documenting it in `project/TODO.md`.
+The passage-level pipeline produces leaders\' guides organized by scene and interpretive lens. Each scene receives questions under four lenses: *Bodies* (the physical, observable world), *Hearts* (inner life revealed through observable actions), *Connecting* (questions that draw observed textual tension into participants\' lived experience), and *Naming* (a short scene title participants choose to carry the story). Questions are first generated as abstract syntax trees (ASTs) in JSON intermediate files, then rendered to Markdown and USX 3.1.
 
-The explain-before-implementing rule had real consequences for the fix scripts. In one session the AI was about to write a suffix-fix script that would have used a simple pronoun lookup without accounting for the grammatical relationship between the suffix and its preceding token. The explanation phase revealed the gap: a possessive suffix following a noun in construct state should receive a possessive gloss (\"his,\" \"her\"), while an object suffix following a verb should receive an object pronoun gloss (\"him,\" \"her\"). The script was redesigned before any file was touched, and the resulting `choose_gloss(morph, prev_class)` function dispatched on the preceding token\'s class to select the correct form. This edge case --- affecting hundreds of rows --- would have been silently wrong without the explanation phase.
+The following excerpt shows the Bodies and Hearts questions for one scene from Mark 12:18--27, generated April 1, 2026, showing the current quality of pipeline output:
 
-#### Pipeline Output as Data Quality Instrument {#hebrew-phrasing-gloss-discovery}
+<figure id="fig-ears-mark12">
+<pre><code>## Scene 1: Seven Brothers, One Wife
 
-The 7,285 gloss corrections did not originate in a data audit. They became visible in the first pipeline runs over Ruth. Phrasing analyses returned construct nouns glossed \"his\" and \"my\" while their following suffix tokens carried noun lemma glosses. The human-readable Markdown output --- designed to be reviewed, not just processed --- made the backwards pattern immediately perceptible to a reader. Building a pipeline that rigorously interprets structured scholarly data is itself a form of data auditing: errors that persist invisibly in a raw TSV become visible the moment the data is rendered for a human eye.
+*Citation: Mark 12:18-27*
 
-Once the pattern was recognized, the AI drafted an investigation script implementing a heuristic to detect and count the affected rows across the full Hebrew Bible. The heuristic combined morphological class, the construct-state indicator in the morph code, and membership in a known set of possessive glosses:
+---
 
-<figure id="fig-gloss-heuristic">
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>PRON_GLOSSES <span class="op">=</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;his&quot;</span>, <span class="st">&quot;her&quot;</span>, <span class="st">&quot;their&quot;</span>, <span class="st">&quot;my&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;our&quot;</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;his/its&quot;</span>, <span class="st">&quot;its&quot;</span>, <span class="st">&quot;me&quot;</span>, <span class="st">&quot;him&quot;</span>, <span class="st">&quot;them&quot;</span>, <span class="st">&quot;us&quot;</span>, <span class="st">&quot;you&quot;</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Detect construct noun carrying a possessive gloss that belongs on</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># the following suffix token</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> cls <span class="op">==</span> <span class="st">&quot;noun&quot;</span> <span class="kw">and</span> morph.endswith(<span class="st">&quot;c&quot;</span>) <span class="op">\</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span> gloss.lower() <span class="kw">in</span> PRON_GLOSSES:</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    issues[<span class="st">&quot;gloss_swap_noun&quot;</span>].append(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        (xml_id, ref, text, gloss, lemma, morph))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Detect suffix token carrying a non-pronominal gloss that belongs</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># on the preceding construct noun</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> cls <span class="op">==</span> <span class="st">&quot;pron&quot;</span> <span class="kw">and</span> pos <span class="op">==</span> <span class="st">&quot;suffix&quot;</span>:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gloss <span class="kw">and</span> gloss.lower() <span class="kw">not</span> <span class="kw">in</span> PRON_GLOSSES <span class="op">\</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> gloss.lower() <span class="kw">not</span> <span class="kw">in</span> (</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;of&quot;</span>, <span class="st">&quot;for&quot;</span>, <span class="st">&quot;to&quot;</span>, <span class="st">&quot;from&quot;</span>, <span class="st">&quot;with&quot;</span>):</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        issues[<span class="st">&quot;gloss_swap_suffix&quot;</span>].append(</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            (xml_id, ref, text, gloss, lemma, morph))</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            </span></code></pre></div>
-<figcaption>Gloss-swap detection heuristic from <code>audit_tsv.py</code> (drafted by GitHub Copilot)</figcaption>
-</figure>
+### 👣 Enter the Scene with Your Body (Mark 12:18-27)
 
-Running this across the full Macula Hebrew TSV identified 12,872 candidate rows. A subsequent analysis pass stratified candidates by the morphological code of the surrounding tokens, confirming that the fixable core --- 7,285 rows --- were those where the preceding noun was provably in construct state. A swap-and-verify script corrected those rows, re-ran the heuristic from scratch, and confirmed zero residual matches for the targeted pattern. The corrected rows were packaged in a structured JSON manifest --- one entry per row, recording the row ID, field name, old value, new value, and reason --- suitable for a pull request to the upstream Clear-Bible Macula Hebrew repository. Both the manifest format and the bundling script were designed in the same session as the fix, so that the contribution would be reproducible from the spec file if the upstream repository accepted only a subset.
-
-#### What We Learned {#hebrew-phrasing-lessons}
-
-Several lessons from this collaboration generalize to any Scripture Pipelines project using an AI development collaborator.
-
-*The AI context files must stay in sync with the code.* When the `copilot-instructions.md` referenced a linting flag that had been renamed, the AI produced commands that failed silently. Maintaining the context files is a first-class development task, not documentation overhead. The files that matter most are the project-specific additions --- the ones `sp init --update` deliberately leaves untouched --- and they require human attention whenever the underlying engine changes.
-
-*The AI is highly effective at data scripts when the schema is in context.* Because the Macula TSV column schema was referenced in `docs/` and cited in `project/TODO.md`, the AI could write correct CSV read/write code, reference the right field names, and implement correct filtering logic from a plain-language description of the problem. Tabular data scripts over a well-defined schema are exactly the task class where current language models are reliable: the schema is the contract, the CSV standard library is the tool, and the patterns are ones the model has seen many times.
-
-*Always write the verification script alongside the fix script.* This discipline emerged after an early fix was difficult to audit post-hoc. Thereafter, no fix script was written without a corresponding `verify_*.py` script that reported the before-and-after state. The verifier was run after the fix and its output committed to `project/TODO.md` as the done record. This made every data change reproducibly auditable and prevented the gradual accumulation of changes whose correctness could be challenged only by re-running the full pipeline.
-
-*The two-pipeline model --- the scholarly pipeline that generates the output, and the development pipeline where human and AI iterate on the code --- have the same accountability requirements.* Just as a Scripture Pipelines scholarly pipeline requires every LLM step to account for its sources in structured JSON, the AI development collaborator needs structured context (a schema, a task list, a decision record) to produce accountable results. The copilot-instructions.md file is the prompt contract for the development session; `project/TODO.md` is the persisted intermediate output that carries state from step to step across sessions. The design principles that make scholarly pipelines auditable turn out to apply directly to the development workflow that builds them.
-
-#### Cross-Repository Issue Filing as a Collaboration Primitive {#cross-repo-issue-filing}
-
-A Scripture Pipelines project does not exist in isolation. It depends on upstream data repositories --- Macula Hebrew, Macula Greek, ACAI, Levinsohn LGNTDF --- maintained by other teams. When a pipeline run reveals an error or gap in one of these upstream sources, the natural response is to file a bug report. What is less obvious is that an AI collaborator working inside one repository can act as a first-class contributor to another: it can research the issue in the context of the current repository, draft a complete issue body with evidence, reproduction steps, and proposed correction, write the body to a temporary file, and invoke the GitHub CLI to file the issue against the correct upstream repository --- without leaving the current editor session.
-
-The Hebrew Phrasing project makes this pattern concrete. When the gloss-swap errors were confirmed across 7,285 rows, the `copilot-instructions.md` already included a standing instruction for issue filing:
-
-> Draft issue bodies in a temp file: `gh issue create --body-file /tmp/issue.md`. Link from `project/TODO.md` with `→ #N`.
-
-Following this pattern, the AI drafted an issue body for the Clear-Bible Macula Hebrew repository containing: a one-paragraph summary of the gloss-swap pattern and its cause; the detection heuristic as a reproducible code snippet; the row counts by error category (12,872 candidates, 7,285 confirmed fixable); a link to the correction manifest; and a proposed fix strategy for upstream review. The body was written to `/tmp/macula-gloss-swap.md` and the issue was filed with a single CLI command. The issue number was then recorded in `project/TODO.md` as the upstream tracking reference, linking the local fix work to the upstream discussion.
-
-This pattern scales. A network of Scripture Pipelines repositories --- each with its own AI collaborator, each consuming shared upstream scholarly datasets --- can collectively act as a distributed quality assurance layer over those datasets. Each repository\'s AI sees a different slice of the data (Ruth for Hebrew Phrasing, Pauline letters for Discourse Flow, function words for a lexicographic pipeline) and notices different classes of error. Because each AI can file a well-formed issue with evidence against the upstream repository --- not a vague complaint but a structured report with row IDs, heuristics, counts, and proposed corrections --- the upstreams receive actionable, reproducible bug reports without requiring the resource project maintainers to first map their observations into a format suitable for upstream contribution.
-
-The same pattern applies to the Scripture Pipelines engine itself. An AI collaborator in a resource repository can equally file issues against the engine --- a pipeline maintainer\'s repo, the core Scripture Pipelines repository, a shared prompt library --- using the same draft-and-file pattern. The combination of persistent `project/TODO.md` state, issue links recorded as `→ #N` references, and the AI\'s ability to read a repository\'s own `copilot-instructions.md` before filing means the issue arrives formatted according to the receiving project\'s own conventions.
-
-This gives rise to a natural bidirectional communication pattern between client repositories and the core engine. A client repository\'s AI, encountering a capability it needs that the engine does not yet provide, researches whether the gap is real, drafts a feature request with a concrete use case and proposed YAML syntax, and files it against the Scripture Pipelines core repository. The core repository\'s AI --- working in a session oriented toward that issue --- implements the feature, writes tests, and closes the issue. It then opens a new issue on the originating client repository explaining how the new feature works: the relevant YAML keys, a minimal example adapted to that project\'s own pipeline, and any migration notes if existing pipeline YAML needs updating.
-
-The client repository\'s AI picks up that inbound issue at the start of the next session --- `project/TODO.md` is updated, the pipeline is revised, the lint and dry-run cycle runs, and the issue is closed with a commit reference. Neither the client maintainer nor the core maintainer needed to manually draft meeting notes, send emails, or remember to follow up. The issue tracker is the shared communication bus; the AIs on both ends are the correspondents. But the humans are the architects: they decide what features are worth building, whether a proposed solution will actually work in practice, and when something the AI recommends will fail --- often because they hold domain knowledge that was never written down. The AI facilitates; the maintainer directs. The result is an asynchronous, auditable, cross-repository development workflow that scales across an arbitrarily large ecosystem of Scripture Pipelines projects without requiring the humans directing it to hold all of its coordination overhead in their heads.
-
-## Discourse Flow: Book-Level Discourse Analysis {#discourse-flow}
-
-The Discourse Flow pipeline performs a full book-level discourse analysis of a New Testament book, producing pericope segmentation, per-pericope discourse analysis, and a synthesized book arc --- rendered as JSON, Markdown, and USX 3.1 artifacts suitable for translators and publication teams.
-
-The pipeline embodies a key design principle: the LLM should interpret pre-computed scholarly data, not invent structural judgments from scratch. Pericope boundaries are determined using the Levinsohn LGNTDF dataset --- word-level structural annotations encoding vocatives, cataphoric focus markers, referential point-of-departure shifts, and connective patterns derived from sustained application of Levinsohn\'s discourse grammar. 1 John alone contains 806 such annotations. The pipeline feeds these pre-computed features to the `segment_book` step, which interprets them rather than performing independent segmentation. The LLM is used as an interpreter of structured scholarly data, not as an autonomous analyst operating on raw text.
-
-Chapter and verse divisions --- which postdate the original texts by more than a millennium and frequently cut across discourse seams --- are deliberately excluded as analytical units. They appear only as practical fetch boundaries for managing API call sizes. This design decision is enforced by the pipeline architecture itself: the segmentation step operates on Levinsohn features indexed by word, making chapter-driven analysis impossible without explicit modification.
-
-The `--stop-after segment_book` option is documented in the project as a standard workflow checkpoint, allowing scholars to review the pericope boundaries the model identified before committing to the expensive per-pericope analysis loop that follows. This makes the segmentation judgment revisable without restarting the pipeline from scratch.
-
-The following excerpt shows part of the discourse analysis of Philemon. The pericope and segment boundaries derive from Levinsohn LGNTDF annotations: the connective *διό* at 1:8 triggers the section opening; the vocative *ἀδελφέ* at 1:20 marks its close. The function labels (directive, assertive) and the incoming/outgoing transitions are the LLM\'s interpretation of those pre-computed structural markers. Chapter or verse numbers appear only as fetch boundaries, not as analytical divisions:
-
-<figure id="fig-discourse-philemon">
-<pre><code>### Paul&#39;s Appeal for Onesimus (1:8–20)
-Cohesion: Sustained focus on reconciliation and appeal.
-Opens (strong):  Connective &#39;διό&#39; (1:8) — major transition to exhortation.
-Closes (strong): Vocative &#39;ἀδελφέ&#39; (1:20).
-
-  Pericope 2: Paul&#39;s Appeal — From Slave to Beloved Brother (1:8–20)
-  Key Themes: Reconciliation and Forgiveness, Appeal and Love
-
-  Segment 1: Paul&#39;s Gentle Appeal [1:8–10]
-    Διό πολλὴν ἐν Χριστῷ παρρησίαν ἔχων ἐπιτάσσειν σοι τὸ ἀνῆκον
-    διὰ τὴν ἀγάπην μᾶλλον παρακαλῶ...
-
-    Function:   exhortation (directive)
-    Focus:      Paul&#39;s choice to appeal rather than command
-    Incoming:   Transitions from thanksgiving to exhortation
-    Outgoing:   Sets stage for Onesimus&#39;s introduction
-    Feature:    Connective &#39;διὰ τὴν ἀγάπην&#39; (1:9) — basis of appeal stated
-
-  Segment 2: Onesimus&#39;s Transformation [1:11–14]
-    τόν ποτέ σοι ἄχρηστον νυνὶ δὲ σοὶ καὶ ἐμοὶ εὔχρηστον...
-
-    Function:   elaboration (assertive)
-    Focus:      Transformation from useless to useful
-    Feature:    Contrast &#39;ποτέ&#39; vs. &#39;νυνὶ&#39; (1:11) — change emphasized
-        </code></pre>
-<figcaption>Discourse Flow analysis of Philemon (excerpt from analyze-pericope output)</figcaption>
-</figure>
-
-## Ears to Hear: Leaders\' Guide Generation {#ears-to-hear}
-
-The ultimate purpose of Scripture Pipelines is not to produce AI-generated content. It is to get people reading Scripture together --- noticing what is actually in the text, asking questions that emerge from observation, and carrying something from the encounter that belongs to them. Not just scholars. Not just translators. Groups of people across cultures, including cultures where reading occupies a different role than it does in academic communities. The Ears to Hear project is built for this goal. The pipeline serves it; it is not the point.
-
-Ears to Hear generates Bible study leaders\' guides from a passage reference. It works across both Testaments --- OT passages use the WLC Hebrew text; NT passages use the SBLGNT --- and produces three output formats per passage: Markdown for review, JSON for downstream processing, and USX 3.1 for loading into Paratext.
-
-The pipeline works through four interpretive lenses applied sequentially, each building on the previous: *Bodies* (the physical, observable world of the text --- what participants see, touch, hear, and do), *Hearts* (the inner life encoded in the biblical *lev* and *kardia* --- attention, evaluation, desire, trust, direction, and choice revealed through observable actions), *Connecting* (questions that draw observed textual tension into participants\' own lived experience, not abstract moralizing), and *Naming* (a short scene title participants choose to carry the story with them). The pipeline produces a structured set of questions for every scene under each lens, organized as abstract syntax trees (ASTs) in JSON intermediate files before rendering to Markdown and USX 3.1.
-
-The `enrich_passage` step uses an MCP server (the Biblica Bible Resource Server) to gather passage text in both source language and English, look up ACAI entities for the passage, fetch entity details, and pull word-sense data from a biblical lexicon --- in a single multi-tool LLM call that may invoke up to 40 tool calls before completing. This enriched JSON then flows as context into downstream steps, replacing what would otherwise be hand-prepared study notes. The two exegetical analysis steps --- `analyze_bodies` and `analyze_hearts` --- run on GPT-5 with `reasoning_effort: high`, applying the full weight of the enrichment data to scene-level analysis before question generation begins. Steps that generate questions run on GPT-5 with `reasoning_effort: medium`, reading the exegetical analysis as their primary grounding source.
-
-Like the Discourse Flow project, Ears to Hear operates as a consumer of the Scripture Pipelines engine from a separate repository (available at <https://github.com/nida-institute/ears-to-hear>). The pipeline YAML declares information flow; a `plugins/` directory contains Python functions for scene parsing, AST assembly, scene-id normalization, and output rendering. The `copilot-instructions.md` at the repository root encodes the Ears to Hear interpretive framework --- the Bodies/Hearts model, the valid cultural lenses with their Hebrew and Greek anchors, and the guardrails against speculation --- so the AI collaborator understands not just pipeline mechanics but the interpretive standards the output must meet.
-
-The following excerpt is taken directly from the generated leaders\' guide for Mark 10:46--52 (Bartimaeus). The pipeline segmented the passage into four scenes; this shows the first two. Observe how Bodies questions focus on physical observation before moving to imagined experience; how Hearts questions surface inner-life stakes grounded in observable actions; how multiple named perspectives (Bartimaeus, crowd, Jesus) are maintained consistently across both Notice and Imagine sub-sections; how Connecting questions tie observed textual tension to lived experience without moralizing; and how Naming invites participants to choose their own title. Both English (BSB) and Greek (SBLGNT) text appear at the head of each scene, fetched by the `enrich_passage` MCP step:
-
-<figure id="fig-ears-mark10">
-<pre><code># Leaders Guide: Mark 10:46-52
-
-## Scene 1: Bartimaeus by the Roadside (Mark 10:46)
-
-  BSB:    &quot;...a blind beggar named Bartimaeus, the son of Timaeus,
-           was sitting beside the road.&quot;
-  SBLGNT: ὁ υἱὸς Τιμαίου Βαρτιμαῖος τυφλὸς προσαίτης ἐκάθητο
-           παρὰ τὴν ὁδόν.
-
-### 👣 Enter the Scene with Your Body (Mark 10:46)
+Let&#39;s hear this part of the story again and pay attention to what it would
+be like to be in this scene. What you would you see, hear, smell, taste, or
+physically feel? How are people sitting or standing? What do they touch?
+How close are they? How are they moving?
 
 #### 👀 Notice
 
-  Perspective: crowd
-  - Where are Jesus, the disciples, and the crowd walking?
-  - As they leave Jericho, who is by the side of the road?
-  - What is Bartimaeus doing by the side of the road?
+Let&#39;s start with what the scene shows us about bodies, senses, space,
+and movement.
+
+_Perspective: the Sadducees_
+
+* What do the Sadducees do at the beginning of this scene?
+
+* What do the Sadducees say to Jesus about Moses and marriage?
+
+* What scenario do the Sadducees describe involving seven brothers and a woman?
+
+* What final question do the Sadducees ask Jesus about the resurrection?
+
+_Perspective: Jesus_
+
+* What does Jesus do in response to the Sadducees&#39; question?
+
+* What does Jesus say about marriage after the resurrection?
+
+    * What passage from Moses does Jesus mention in his answer?
+
+    * What final statement does Jesus make about God and the living?
 
 #### 💭 Imagine
 
-  Perspective: Bartimaeus
-  - What is it like for Bartimaeus to sit by the road and beg?
-  - How would Bartimaeus know a large crowd is passing?
-  - What is it like when feet and animals move close by?
+Now let&#39;s imagine this moment from each perspective, still using the
+same body questions.
 
-### 🫀 Enter the Scene with Your Whole Heart (Mark 10:46)
+_Background:_
+The Sadducees were a wealthy, priestly group in Jerusalem, influential in
+the Temple and known for denying the resurrection. They often debated
+doctrinal matters with Jesus, seeking to defend their status and beliefs
+before the people. Moses, as the lawgiver, is invoked as the authority for
+the practice of levirate marriage: if a man dies without children, his
+brother is to marry the widow to produce offspring for the deceased. This
+legal tradition grounds the Sadducees&#39; question.
+
+_Perspective: the Sadducees_
+
+* You are one of the Sadducees standing before Jesus in the Temple. What
+  do you do as you present your question?
+
+    * You are one of the Sadducees. What story do you tell Jesus and those
+      listening?
+
+_Perspective: Jesus_
+
+* You are Jesus, surrounded by the crowd and religious leaders. What do
+  you say in response to the Sadducees&#39; question?
+
+### 🫀 Enter the Scene with Your Whole Heart (Mark 12:18-27)
+
+Staying inside this scene, let&#39;s ask about people&#39;s hearts—where they set
+their hearts, what is at stake, what they fear, and what they hope for.
 
 #### 👀 Notice
 
-  Perspective: Bartimaeus
-  - What did Bartimaeus want from passing travelers?
+Let&#39;s focus on what the text actually tells us about where people are
+setting their hearts and what is at stake for them.
 
-  Perspective: crowd
-  - What did the crowd want to do as they left Jericho?
+_Perspective: the Sadducees_
 
-#### 💭 Imagine
+* Why do the Sadducees bring this question to Jesus?
 
-  Perspective: Bartimaeus
-  - What might Bartimaeus hope for as the crowd passes by?
-  - What might Bartimaeus fear if the crowd ignores him?
+_Perspective: Jesus_
 
-  Perspective: crowd
-  - [Giving onto a beggar&#39;s cloak is visible; donors&#39; reputations
-    are shaped publicly.] What might travelers want to display
-    when giving publicly to Bartimaeus?
+* Why does Jesus respond so sharply to their question?
 
-### 👂 Let the Scene Speak to Us (Mark 10:46)
+    * What is Jesus insisting on when he says God is &#39;of the living&#39;?
 
-  1. Have you or someone you know been ignored by a busy crowd?
-  2. Have you been part of a group moving quickly through a
-     public space?
-  3. Have you or someone you know ever had to ask for help
-     from strangers?
+### 👂 Let the Scene Speak to Us (Mark 12:18-27)
+
+Let&#39;s notice where the same kinds of pressures, questions, and hopes from
+this scene show up in our world today.
+
+1. Have you or someone you know ever found yourself in a conversation where
+   it felt like people were more interested in protecting their reputation
+   or proving a point than actually seeking understanding?
+
+2. Have you or someone you know ever witnessed someone unexpectedly shift a
+   heated debate or tense conversation toward what actually matters most,
+   even when everyone else is caught up in details or appearances?
 
 ### 🏷️ Step 4: Name the Scene
-  - Bartimaeus by the Roadside
-  - The Beggar&#39;s Hopeful Waiting
-  - Dusty Jericho Road
 
-## Scene 2: Bartimaeus Cries for Mercy (Mark 10:47-48)
-
-  BSB:    &quot;Jesus, Son of David, have mercy on me!...he cried out
-           all the louder, &#39;Son of David, have mercy on me!&#39;&quot;
-  SBLGNT: Υἱὲ Δαυὶδ Ἰησοῦ, ἐλέησόν με...
-          ὁ δὲ πολλῷ μᾶλλον ἔκραζεν· Υἱὲ Δαυίδ, ἐλέησόν με.
-
-### 👣 Enter the Scene with Your Body (Mark 10:47-48)
-
-#### 👀 Notice
-
-  Perspective: crowd
-  - When Bartimaeus hears Jesus, what does he shout?
-  - How does the crowd respond to his shouting?
-  - After the rebuke, what does Bartimaeus do?
-
-#### 💭 Imagine
-
-  Perspective: Bartimaeus
-  - What is it like to keep shouting for mercy over a crowd?
-  - What is it like when many people tell him to be silent?
-  - How would Bartimaeus aim his voice toward Jesus he cannot see?
-
-### 🫀 Enter the Scene with Your Whole Heart (Mark 10:47-48)
-
-#### 👀 Notice
-
-  Perspective: Bartimaeus
-  - What did Bartimaeus ask Jesus for?
-
-  Perspective: crowd
-  - What did many in the crowd want Bartimaeus to do?
-
-#### 💭 Imagine
-
-  Perspective: Bartimaeus
-  - What might Bartimaeus hope for despite the rebukes?
-  - What might Bartimaeus trust about Jesus as he cries
-    &#39;Son of David&#39;?
-
-  Perspective: crowd
-  - What might the crowd fear if he keeps shouting?
-  - What might the crowd want to protect by silencing him?
-
-### 👂 Let the Scene Speak to Us (Mark 10:47-48)
-
-  1. Have you heard someone cry out for help in a public place?
-     What did you notice or feel?
-  2. Have you tried to quiet someone who was disrupting a gathering?
-  3. Have you seen someone persist despite being told to stop?
-
-### 🏷️ Step 4: Name the Scene
-  - Bartimaeus Cries for Mercy
-  - Son of David, Have Mercy
-  - Silenced by the Crowd
-        </code></pre>
-<figcaption>Ears to Hear leaders' guide for Mark 10:46–52 (excerpt from render_markdown output)</figcaption>
+Let&#39;s choose a short name that captures what stood out to us so we can
+carry this part of the story with us.
+- Seven Brothers, One Wife
+- God of the Living
+- A Question in the Temple
+- You Are Greatly Mistaken</code></pre>
+<figcaption>Leaders' guide excerpt for Mark 12:18–27 (from April 1, 2026 pipeline run)</figcaption>
 </figure>
+
+Observe: Bodies questions begin with physical observation (Notice) before moving to embodied imagination; Hearts questions surface inner-life stakes grounded in observable actions; Connecting questions tie observed textual tension to lived experience without moralizing; Naming invites participants to choose their own title. Multiple perspectives are maintained consistently across sections. Source-language text appears alongside English translation, both fetched via MCP.
+
+### Leader\'s Introduction: Preparing the Way {#ears-leader-intro}
+
+Before the questions begin, each leader\'s guide includes an introduction designed to help the facilitator prepare. This is not scholarly apparatus or exegetical commentary---it is practical orientation written for someone who needs to understand what the session will feel like and what challenges or insights might emerge. The following excerpt from the Mark 12:18--27 guide (generated April 1, 2026) shows the introduction structure:
+
+<figure id="fig-ears-intro">
+<pre><code>### 2. What This Passage Does
+
+This passage draws the conflict between Jesus and the Jerusalem authorities
+into sharper focus. The Sadducees&#39; question is meant to trap Jesus, but he
+turns it into a moment of revelation—correcting their misunderstanding and
+declaring the hope of resurrection in front of all. Jesus&#39; answer doesn&#39;t
+just silence the Sadducees; it reframes what is truly at stake: not just
+technical arguments about the law, but trust in God&#39;s ongoing, life-giving
+presence.
+
+Within Mark&#39;s story, this is part of a series of public tests where Jesus
+is challenged again and again, each time revealing something deeper about
+who he is and what God is like. Here, Jesus claims the authority to interpret
+Scripture and to reveal God&#39;s heart. He sets the stage for the next question—
+about the greatest commandment—and moves the narrative closer to the final
+showdowns that will lead to his arrest.
+
+---
+
+### 3. Expect Your Group to Connect With
+
+- **Feeling the pressure to defend your reputation or beliefs when
+  challenged in public**—like the Sadducees, who ask their question not out
+  of curiosity, but to protect their standing.
+- **Experiencing conversations where people care more about proving a point
+  than truly listening or seeking understanding.**
+- **Witnessing someone cut through a heated debate to name what really
+  matters, shifting the focus from technicalities to deeper truths.**
+- **Wondering what is at stake when we talk about hope, life, and what God
+  is really like—especially when others are skeptical or dismissive.**
+
+---
+
+### 4. As You Prepare
+
+Read this passage through a few times, slowly, and look at each section
+alongside its questions. Notice how the questions are structured: some are
+Open—like &quot;What do the Sadducees do at the beginning of this scene?&quot;—
+inviting your group to explore what the text shows; others are Guiding—
+such as &quot;What passage from Moses does Jesus mention in his answer?&quot;—
+helping your group focus on key details or turning points. The &quot;Imagine&quot;
+prompts invite participants to step into the shoes of both the Sadducees
+and Jesus, to feel the tension and the weight of public challenge.
+
+You&#39;ll notice that cultural background appears where it&#39;s needed: brief
+notes about who the Sadducees are, why Moses&#39; law matters, and what the
+burning bush means. You don&#39;t need to front-load these details—trust that
+your group can pick them up as they go, and that the questions themselves
+will spark curiosity and insight. Let the conversation breathe. If a question
+doesn&#39;t fit your group, feel free to skip it or rephrase it. Your role is
+to create space for discovery and honest engagement; you don&#39;t need to have
+all the answers. Trust the process, and trust your group—they may notice
+details or connections you haven&#39;t seen. Be present, and let the story do
+its work.</code></pre>
+<figcaption>Leader's introduction excerpt for Mark 12:18–27</figcaption>
+</figure>
+
+The introduction serves multiple purposes: *What This Passage Does* orients the leader to the passage\'s role in the larger narrative arc; *Expect Your Group to Connect With* anticipates resonances between the biblical scene and participants\' lived experience; *As You Prepare* coaches the facilitator on how to use the questions, where cultural background appears, and how to hold space for discovery. The overall purpose is to help the leader prepare to lead a group session---to become familiar with the material before the discussion begins, anticipate what the conversation might involve, and gain confidence in facilitating without needing to be a biblical scholar. Observe that this is not traditional study-Bible commentary---it addresses the leader directly, assumes they are not experts, and focuses on group dynamics rather than technical exegesis. The tone is conversational, practical, and encouraging. This material is generated by the `leadersguide-intro-ast.gpt` prompt, which receives the exegetical analysis and scene structures as input and produces orientation prose designed for facilitators who may have little formal training. Architecturally, the introduction is generated *after* all the Bodies, Hearts, and Connecting questions have been finalized---it is one of the last pipeline stages---even though it appears first in the final guide. This separation of generation order from presentation order allows the introduction prompt to reference the actual questions that were generated, describing their structure and coaching the leader on how to use them.
+
+### Prompt Structure: Input, Output, Rules {#ears-prompt-structure}
+
+Ears to Hear prompts are declarative contracts specifying input data, output format, and generation rules. Each `.gpt` file has a YAML frontmatter declaring required inputs, output format, and a description; the prompt body then specifies task, input schema, output schema, and guardrails. The following excerpts from `leadersguide-bodies-ast.gpt` show the contract structure:
+
+<figure id="fig-ears-prompt-contract">
+<pre><code>---
+prompt:
+  requires:
+    - passage
+    - leadersguide_snippets
+  format: json
+  description: &gt;-
+    Rewrite Bodies snippet skeletons into globally accessible oral questions.
+---
+
+# Task
+You receive `leadersguide_snippets.skeletons`, a precomputed array of
+question skeletons built entirely from exegetical analysis. Your job
+is NOT to generate new ideas. Simply rewrite each Bodies skeleton into
+an inductive oral question while keeping every other field unchanged.
+
+## Data You Receive
+Each skeleton object includes:
+- `id`, `section`, `list`, `scene_index`, `scene_title`, `citation`
+- `perspective`, `question_role`, `anchor`, `anchor_type`, `source_excerpt`
+- `source_paths`, `assumptions`, `background`, `background_sources`
+
+Only process entries whose `section == &quot;bodies&quot;`. Preserve the original
+ordering so Notice/Imagine pairings remain aligned.</code></pre>
+<figcaption>Prompt contract (YAML frontmatter and input specification)</figcaption>
+</figure>
+
+The prompt contract makes explicit: (1) what input variables the LLM will receive (`passage`, `leadersguide_snippets`); (2) what output format is required (JSON); (3) the task is rewrite-only, not generate-new-content. Every field in the skeleton object is listed, so the LLM knows what data it has access to.
+
+The rules section of the prompt specifies output constraints:
+
+<figure id="fig-ears-prompt-rules">
+<pre><code>## Rewrite Rules
+1. **Rewrite-only.** Turn the `anchor` text into a ≤15-word oral question.
+   Stay in the third person, keep vocabulary globally accessible, and never
+   add information that is not already present in either the `anchor` or
+   the supplied `background` text.
+2. **Notice vs. Imagine.**
+   - `list == &quot;Notice&quot;`: No modal verbs (`might`, `would`, `could`). Ask
+     for the concrete action, posture, or sensory fact already stated.
+   - `list == &quot;Imagine&quot;`: You may use one modal verb to explore sensory
+     implications, but you still may not introduce new facts.
+3. **Question role.** Match the tone to `question_role`.
+   - `open`: broad inductive invitation (&quot;Tell me...&quot;, &quot;What does...&quot;).
+   - `guiding`: focused wh-question on a single observable detail.
+4. **Active participants only.** Only generate a perspective block
+   (Notice or Imagine) for a perspective whose character is *active*
+   in the citation range — taking an action, speaking, or making a
+   visible choice. A character who only *receives* action without
+   speaking or responding does not warrant a perspective block.
+5. **Perpetrator suppression (Imagine).** If a perspective&#39;s
+   `source_excerpt` or `assumptions` show that this character beats,
+   kills, throws, or physically assaults another character in this scene,
+   do NOT output any `list == &quot;Imagine&quot;` skeletons for that perspective.
+   Immersive &quot;You are X, what is it like to...&quot; questions must not be
+   generated for perpetrators of violence.</code></pre>
+<figcaption>Prompt rules excerpt (guardrails and field-specific constraints)</figcaption>
+</figure>
+
+These rules encode interpretive commitments (no new facts, globally accessible vocabulary, no immersive questions for perpetrators of violence) as testable constraints on LLM output. The prompt contract makes implicit editorial standards explicit and auditable.
+
+### Language Mediation: From Model to Embodied Context {#ears-language-mediation}
+
+One of the intermediate steps in the Ears to Hear pipeline is the *language* analysis, which mediates between lexical data and embodied, scene-aware context. The pipeline loads enriched word-sense data for every lemma in a passage, then asks the LLM to synthesize this into scene-specific embodied and emotional notes. The output is a JSON file (`*_language.json`) that describes, for each key term, what a participant in that scene would physically experience or feel.
+
+The following excerpt from the language analysis for Mark 10:46 shows how the pipeline converts lexical and morphological data into embodied context for the term *τυφλός* (blind):
+
+<figure id="fig-ears-language">
+<pre><code>{
+  &quot;lemma&quot;: &quot;τυφλός&quot;,
+  &quot;gloss&quot;: &quot;blind&quot;,
+  &quot;source&quot;: &quot;enriched&quot;,
+  &quot;semantic_notes&quot;: &quot;Core: unable to see (MAT 11:5). In narratives,
+    marks physical limitation and social vulnerability.&quot;,
+  &quot;embodied_notes&quot;: &quot;No visual input; orientation by sound and touch.
+    Head tilts toward voices; hands trace ground or cloak edge to
+    locate objects. Eyes may be dry/irritated from dust; habitual
+    squinting without visual focus.&quot;,
+  &quot;emotional_relational_notes&quot;: &quot;Dependence on passersby for guidance
+    and charity; others decide when to help or ignore. Limited mobility
+    increases exposure to crowd mood and control.&quot;
+}</code></pre>
+<figcaption>Language mediation excerpt for Mark 10:46 (from 41010046-41010052_language.json)</figcaption>
+</figure>
+
+This intermediate representation then flows into the `analyze_bodies` and `analyze_hearts` steps, grounding the exegetical analysis in the physical and emotional register of the text. The language mediation layer is where abstract lexical data becomes scene-specific embodied context --- translating the model\'s semantic knowledge into the sensory and relational world of the passage.
+
+This layer is necessary because lexicons typically describe what a word *means*, not what someone experiences when the word names their condition or action. The language mediation step fills that gap, preparing context for downstream question generation that is meant to help participants enter the scene with their own bodies and hearts.
+
+### Skills Files and Human-AI Collaboration Challenges {#ears-skills-collaboration}
+
+Ears to Hear encodes its interpretive framework and workflow standards in a `.github/copilot-instructions.md` file at the repository root, and in domain-specific `SKILL.md` files in the `docs/skills/` directory. These files are not documentation for humans --- they are persistent instructions for the AI collaborator, encoding domain knowledge, coding patterns, and workflow guardrails that the AI must follow.
+
+The `audit-prompts/SKILL.md` file is a case in point. It defines a read-only workflow for auditing `.gpt` prompt files for sprawl, convention compliance, and --- most critically --- for detecting when LLM output has been used as training data (examples) in prompts. The skill\'s preamble states the core principle:
+
+<figure id="fig-ears-skill-principle">
+<pre><code>## Core Principle: No LLM-Generated Training Data
+
+**ABSOLUTE RULE:** Nothing produced by an LLM can ever be used as
+training data (examples) in prompts. Period.
+
+**Why this matters:**
+- LLM output doesn&#39;t match user intent with sufficient precision
+- AI-generated examples encode subtle patterns the AI already knows,
+  not what you&#39;re trying to teach
+- Examples must demonstrate the exact pattern you want, which requires
+  human judgment
+- Using LLM output as training creates circular reasoning and drift
+  from intent
+
+**What this means for audits:**
+- Any new examples since last commit are SUSPECT until proven
+  human-written
+- At best, AI can propose examples for user approval (never auto-merged)
+- Often, user must write examples themselves to ensure quality
+- TODOs that get replaced with examples warrant extra scrutiny</code></pre>
+<figcaption>Core principle from audit-prompts/SKILL.md</figcaption>
+</figure>
+
+This principle emerged from repeated failure modes in human-AI collaboration on prompt engineering:
+
+1.  **AI treating LLM output as training data.** The AI would generate sample output, then propose adding that output as an example in the prompt --- treating its own generation as ground truth. This creates circular reasoning: the AI learns from examples it generated, not from examples that demonstrate the user\'s intent.
+
+2.  **Conflating training data with test cases.** Test cases verify that a prompt produces correct output; training examples teach the LLM what correct output looks like. The AI repeatedly confused these, proposing to add test output as examples, which defeats the purpose of testing.
+
+3.  **Solving the wrong problem.** The AI would assume it understood the user\'s problem from a brief description, then implement a solution before confirming alignment. Often the AI\'s inferred problem was not the user\'s actual problem, resulting in wasted work and misalignment.
+
+4.  **The audit-prompt skill as a solution.** The skill encodes a read-only audit workflow that forces the AI to report what it finds without making changes. This prevents premature implementation and gives the user visibility before committing to a direction. The skill explicitly forbids `replace_string_in_file` and `create_file` tools, ensuring the AI cannot act on its inferences without user approval.
+
+But even with skills files, the fundamental constraint remains: *the AI and the human must build a shared understanding before the work produces trustworthy results.* The user still has to read the prompts in detail, read the data, and verify that the AI\'s understanding matches intent. Skills files reduce friction and encode common patterns, but they do not replace the need for the human scholar to remain the final arbiter of whether the output is correct. This is not a limitation of the current generation of AI --- it is a structural feature of using AI for scholarly work: the AI does not have access to the user\'s intent except through the instructions and data it is given, and those instructions must be precise enough to constrain the AI\'s vast pattern-matching capacity to the narrow problem the user actually wants solved.
+
+Scripture Pipelines does not solve this problem. It makes it manageable. By externalizing prompts, requiring explicit input/output contracts, and persisting all intermediate results, it provides the visibility and auditability needed to catch misalignment before it propagates. But the human scholar must still do the reading, the checking, and the final judgment. The pipeline serves scholarship; it does not replace it.
 
 # Related Work
 
@@ -926,7 +1197,7 @@ None of this diminishes the role of human expertise --- it transforms how that e
 
 This is what The Kairos Project is for. When we say \"a scholar with deep domain knowledge,\" we mean scholars worldwide --- including those learning Greek and Hebrew outside traditional seminaries, multilingual learners who bring linguistic gifts that Western institutions have not recognized, translation teams who know their target audience in ways the academy never will. The goal is not to make Western scholars more productive; the goal is to democratize the tools so that scholarship can happen where it is needed, by people who have been told they are not qualified, producing resources together with the communities who will actually use them. Scripture Pipelines is infrastructure for that vision. It makes the open datasets --- the treebanks, the lexicons, the discourse annotations --- accessible to people who do not have a PhD from a Western university and do not need one to do rigorous work with the text. The Kairos Project exists to raise up scholars globally, not to preserve the Western academy\'s role as gatekeeper. The bidirectional flow between academy and church, between institution and field, is not a concession --- it is the point.
 
-The four case studies reported here are early instances of a larger program. As the planned data source integrations come online --- BaseX for the full Macula corpus, Paratext for translation project integration, ACAI for entity-level annotation, Perseus and First1KGreek for Hellenistic corpus breadth --- the range of pipeline-producible scholarly materials will expand. The goal is a world where the open data that scholars have painstakingly assembled becomes the shared foundation for work that communities worldwide do together --- not resources provided for them, but scholarship they participate in creating.
+The projects reported here are early instances of a larger program. The dataset registry and system integrations provide the infrastructure for an expanding range of pipeline-producible scholarly materials. The goal is a world where the open data that scholars have painstakingly assembled becomes the shared foundation for work that communities worldwide do together --- not resources provided for them, but scholarship they participate in creating.
 
 # A Note on AI in the Writing of This Paper {#ai-disclosure}
 
@@ -944,9 +1215,21 @@ Levinsohn, S. H. *Discourse Features of New Testament Greek: A Coursebook on the
 
 Levinsohn, S. H. *Levinsohn Greek New Testament Discourse Features (LGNTDF)*. Data set. Biblical Humanities. <https://github.com/biblicalhumanities/levinsohn>.
 
-Clear Bible / unfoldingWord. *Macula Hebrew Linguistic Datasets*. Data set. <https://github.com/Clear-Bible/macula-hebrew>.
+Clear Bible. *Macula Greek Linguistic Datasets*. Data set. CC BY 4.0. <https://github.com/Clear-Bible/macula-greek>.
 
-Holmes, M. W. (ed.). *The Greek New Testament: SBL Edition*. Society of Biblical Literature and Logos Bible Software, Atlanta and Bellingham, 2010.
+Clear Bible. *Macula Hebrew Linguistic Datasets*. Data set. CC BY 4.0. <https://github.com/Clear-Bible/macula-hebrew>.
+
+Levinsohn, S. H. and D. Samuel. *Hebrew Old Testament Discourse Features (HOTDF)*. Data set. Nida Institute. <https://github.com/nida-institute/levinsohn-samuel-hebrew>.
+
+United Bible Societies. *Semantic Dictionary of Biblical Hebrew (SDBH)*. Data set. Open license. <https://github.com/ubsicap/ubs-open-license>. <https://semanticdictionary.org/>.
+
+OpenScriptures. *Hebrew Bible (morphhb): Parsed Hebrew Bible with Strong\'s numbers and morphology*. Data set. MIT License. <https://github.com/openscriptures/morphhb>.
+
+Elwell, W. A. and P. W. Comfort (eds.). *Tyndale Bible Dictionary*. Tyndale House Publishers, Carol Stream, IL, 2001.
+
+Raasveldt, M. and H. Mühleisen. "DuckDB: an Embeddable Analytical Database." *Proceedings of the 2019 International Conference on Management of Data (SIGMOD)*, pp. 1981--1984, 2019.
+
+Holmes, M. W. (ed.). *The Greek New Testament: SBL Edition*. Society of Biblical Literature and Logos Bible Software, Atlanta and Bellingham, 2010. Custom license. <http://sblgnt.com/>. <https://github.com/morphgnt/sblgnt>.
 
 Bunning, A. *Center for New Testament Restoration: Transcriptions of Greek New Testament Manuscripts*. <https://greekcntr.org/>.
 
@@ -987,5 +1270,13 @@ Robie, J. *Ears to Hear*. Nida Institute, 2025. <https://github.com/nida-institu
 Chafe, Wallace. *Discourse, Consciousness, and Time: The Flow and Displacement of Conscious Experience in Speaking and Writing*. University of Chicago Press, Chicago, 1994.
 
 Robie, J. "Artificial Intelligence and Bible Translation." *Bible History Daily*. Biblical Archaeology Society, January 3, 2024. <https://www.biblicalarchaeology.org/daily/artificial-intelligence-and-bible-translation/>.
+
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., and Polosukhin, I. "Attention is All You Need." *Advances in Neural Information Processing Systems 30* (NeurIPS 2017).
+
+Alammar, Jay. "The Illustrated Transformer." 2018. <https://jalammar.github.io/illustrated-transformer/>.
+
+Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., et al. "Language Models are Few-Shot Learners." *Advances in Neural Information Processing Systems 33* (NeurIPS 2020).
+
+Wei, J., Wang, X., Schuurmans, D., Bosma, M., Ichter, B., Xia, F., Chi, E., Le, Q., and Zhou, D. "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." *Advances in Neural Information Processing Systems 35* (NeurIPS 2022).
 
 Russell, Stuart. *Human Compatible: Artificial Intelligence and the Problem of Control*. Viking, New York, 2019.
