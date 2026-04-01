@@ -688,27 +688,27 @@ The practical workflow that emerges is a two-phase process. In the generation ph
 
 Scripture Pipelines serves multiple communities: scholars producing lexicons, translation teams working with discourse analyses, beginning students learning biblical languages through structured annotations, and study groups working through Scripture together. The resources span a wide range --- from highly technical (lexicographic sense distinctions, morphological analyses) to accessible (inductive Bible study questions, narrative summaries). But the ultimate purpose is not merely to produce resources. It is to make Scripture more accessible, more carefully understood, more deeply engaged --- by scholars, yes, but also by readers in communities worldwide who bring no academic training yet read these texts with wisdom the academy often lacks. Every freely licensed lexicon, every grammatical analysis, every discourse structure ultimately exists to serve this end: getting people reading Scripture, noticing what is actually there, and carrying something from that encounter into their lives.
 
-**TODO: Edit this list.** Scripture Pipelines is currently being used for:
+Scripture Pipelines is currently being used across multiple Nida Institute projects producing freely licensed biblical reference materials:
+
+-   **Ears to Hear** --- Leader\'s guide generation for inductive Bible study, producing questions and narrative summaries from discourse analyses (detailed case study below)
 
 -   **Semantic Lexicon of Biblical Greek (SemLex Greek)** --- A multi-pass pipeline producing lexicon entries grounded in the full Hellenistic corpus (NT, LXX, papyri, inscriptions), licensed CC BY-SA 4.0
-
--   **Hebrew Phrasing** --- Grammatical phrase analysis of the Hebrew Bible using Macula Hebrew morphological data
 
 -   **Discourse Flow (Greek NT)** --- Book-level discourse analyses synthesizing Levinsohn features, Macula annotations, and narrative structure
 
 -   **Hebrew Discourse Flow** --- Old Testament book-level discourse analysis pipeline
 
--   **Ears to Hear** --- Leader\'s guide generation for inductive Bible study, producing questions and narrative summaries from discourse analyses
-
--   **Internalization Questions** --- Scripture engagement questions designed to help readers internalize biblical content
+-   **Hebrew Phrasing** --- Grammatical phrase analysis of the Hebrew Bible using Macula Hebrew morphological data
 
 -   **SDBH Helpers** --- Support tools for the Semantic Dictionary of Biblical Hebrew
 
--   **Image Scene Descriptions** --- Generating textual descriptions of biblical scenes for visual aids
+-   **Internalization Questions** --- Scripture engagement questions designed to help readers internalize biblical content
 
--   **Paratext Pipelines** --- Integration with Paratext Bible translation software workflows
+-   **Paratext Integration** --- Pipelines reading from and writing to Paratext Bible translation software
 
 -   **Macula LXX Greek** --- Processing and analysis of the Septuagint Greek text
+
+-   **Image Scene Descriptions** --- Generating textual descriptions of biblical scenes for visual aids
 
 The following detailed case study focuses on Ears to Hear, which illustrates how Scripture Pipelines synthesizes scholarly datasets into resources for community Bible study --- bridging the gap between technical scholarship and accessible study materials.
 

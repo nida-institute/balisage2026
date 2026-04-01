@@ -2350,32 +2350,32 @@ obsidian/grc/intermediate/
       every grammatical analysis, every discourse structure ultimately exists
       to serve this end: getting people reading Scripture, noticing what is
       actually there, and carrying something from that encounter into their lives.</para>
-    <para><emphasis role="bold">TODO: Edit this list.</emphasis> Scripture Pipelines
-      is currently being used for:</para>
+    <para>Scripture Pipelines is currently being used across multiple Nida Institute
+      projects producing freely licensed biblical reference materials:</para>
     <itemizedlist>
+      <listitem><para><emphasis role="bold">Ears to Hear</emphasis> — Leader's
+        guide generation for inductive Bible study, producing questions and
+        narrative summaries from discourse analyses (detailed case study below)</para></listitem>
       <listitem><para><emphasis role="bold">Semantic Lexicon of Biblical Greek (SemLex Greek)</emphasis>
         — A multi-pass pipeline producing lexicon entries grounded in the full
         Hellenistic corpus (NT, LXX, papyri, inscriptions), licensed CC BY-SA 4.0</para></listitem>
-      <listitem><para><emphasis role="bold">Hebrew Phrasing</emphasis> — Grammatical
-        phrase analysis of the Hebrew Bible using Macula Hebrew morphological data</para></listitem>
       <listitem><para><emphasis role="bold">Discourse Flow (Greek NT)</emphasis> —
         Book-level discourse analyses synthesizing Levinsohn features, Macula annotations,
         and narrative structure</para></listitem>
       <listitem><para><emphasis role="bold">Hebrew Discourse Flow</emphasis> —
         Old Testament book-level discourse analysis pipeline</para></listitem>
-      <listitem><para><emphasis role="bold">Ears to Hear</emphasis> — Leader's
-        guide generation for inductive Bible study, producing questions and
-        narrative summaries from discourse analyses</para></listitem>
-      <listitem><para><emphasis role="bold">Internalization Questions</emphasis> —
-        Scripture engagement questions designed to help readers internalize biblical content</para></listitem>
+      <listitem><para><emphasis role="bold">Hebrew Phrasing</emphasis> — Grammatical
+        phrase analysis of the Hebrew Bible using Macula Hebrew morphological data</para></listitem>
       <listitem><para><emphasis role="bold">SDBH Helpers</emphasis> — Support
         tools for the Semantic Dictionary of Biblical Hebrew</para></listitem>
-      <listitem><para><emphasis role="bold">Image Scene Descriptions</emphasis> —
-        Generating textual descriptions of biblical scenes for visual aids</para></listitem>
-      <listitem><para><emphasis role="bold">Paratext Pipelines</emphasis> —
-        Integration with Paratext Bible translation software workflows</para></listitem>
+      <listitem><para><emphasis role="bold">Internalization Questions</emphasis> —
+        Scripture engagement questions designed to help readers internalize biblical content</para></listitem>
+      <listitem><para><emphasis role="bold">Paratext Integration</emphasis> —
+        Pipelines reading from and writing to Paratext Bible translation software</para></listitem>
       <listitem><para><emphasis role="bold">Macula LXX Greek</emphasis> —
         Processing and analysis of the Septuagint Greek text</para></listitem>
+      <listitem><para><emphasis role="bold">Image Scene Descriptions</emphasis> —
+        Generating textual descriptions of biblical scenes for visual aids</para></listitem>
     </itemizedlist>
     <para>The following detailed case study focuses on Ears to Hear, which
       illustrates how Scripture Pipelines synthesizes scholarly datasets into
