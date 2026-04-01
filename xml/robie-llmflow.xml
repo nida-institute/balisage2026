@@ -271,6 +271,23 @@
       build, which scholarly traditions ground the work, and what good enough
       means for the community the output will serve. The AI implements what is
       specified. It does not decide what is worth specifying.</para>
+    <para>Building infrastructure for this model is like designing the panels
+      and voice interaction systems on the Enterprise bridge. Kirk can command
+      the ship effectively not because he understands warp field equations or
+      antimatter containment, but because the interface is designed to translate
+      his decisions into ship operations. The panels display the information he
+      needs to make informed decisions; the voice system accepts natural commands
+      and confirms what it understood; the engineering team has structured
+      subsystems so that high-level commands ("full stop", "evasive maneuvers")
+      trigger coordinated low-level operations reliably. Scripture Pipelines
+      builds the analogous infrastructure for AI collaboration: prompt organization
+      that makes information findable for both humans and LLMs, audit tooling
+      that surfaces what needs verification, persistent file structures that make
+      pipeline state inspectable, and conventions that allow commands like "rerun
+      this step with the updated prompt" to execute predictably. The goal is not
+      to eliminate expertise — Kirk still needs tactical judgment, scholars still
+      need exegetical training — but to ensure that expertise translates into
+      effective control rather than dissolving into coordination overhead.</para>
     <para>This collaborative model depends on clear role boundaries. Scripture
       Pipelines enables collaboration across four distinct roles, each with
       specific responsibilities:</para>
