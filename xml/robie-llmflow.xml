@@ -1639,6 +1639,23 @@ obsidian/grc/intermediate/
           structure. In production environments where prompts process real data at scale,
           organization is not cosmetic—it determines whether the system produces reliable
           results or descends into hallucination and inconsistency.</para>
+
+        <para>The success of this organization pattern in production use led to its
+          formalization as a global LLMFlow convention with automated audit tooling.
+          After battle-testing the structure on 15+ prompts ranging from 117 to 603
+          lines across multiple biblical books and genres, the pattern proved robust
+          enough to encode as a standard. The audit skill—a read-only workflow tool
+          that checks for convention compliance, input data grounding, example
+          diversity, and AI-generated example pollution—now systematically detects
+          the problems that previously required manual review. This combination of
+          structured organization and automated verification measurably improves both
+          LLM performance (by reducing hallucination through explicit data grounding)
+          and human oversight (by making debugging systematic rather than exploratory).
+          The convention and audit tooling are proposed as global LLMFlow resources
+          available to all projects. Our real-world
+          experience demonstrates that prompt organization is architecture, not
+          formatting—it shapes whether AI collaboration produces reliable results or
+          degenerates into maintenance burden.</para>
       </section>
     </section>
   </section>
