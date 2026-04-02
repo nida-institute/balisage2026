@@ -76,13 +76,13 @@
       for the right time, the opportune moment — the moment when conditions align and action becomes possible.
       We believe this is that moment. The open data exists. The communities who need
       it exist. The capability to use AI to synthesize data at scale exists. The question
-      is whether we will respond to the opportunity — whether we will build the
+      is not whether we will respond to the opportunity, but how best to respond — how we will build the
       infrastructure and the collaborative practices that make rigorous, reproducible,
-      AI-assisted scholarship possible, and whether we will organize that work to
+      AI-assisted scholarship possible, and how we will organize that work to
       serve not just the academy but the global church.</para>
     <para>The Kairos Project exists to raise up scholars worldwide,
       working together to produce the kind of resources that are actually
-      needed — not only what the Western academy thinks should exist, but
+      needed — not only what is useful for Western academics, but
       what translation teams, study groups, and readers in every culture can
       use. The goal is to fully equip the global church by producing high
       quality, freely licensed resources together with communities worldwide,
@@ -93,17 +93,18 @@
       useful form for communities that traditional scholarly resources were
       not built for: non-Western communities, oral cultures, people who
       engage Scripture outside the academy, and people learning Greek and
-      Hebrew outside traditional seminaries — often multilingual learners who
-      bring linguistic gifts that Western institutions do not recognize. These
-      communities do not need all the footnotes and Western abstractions in
-      which traditional resources are packaged, and they have never needed
-      them. This matters because most of these texts were themselves written
-      by and
-      for oral storytelling cultures — and today's oral storytelling
-      communities do not need PhDs from Western academia to read them. What
-      they do need, and what every modern reader needs, is some orientation
-      to settings and cultures that are foreign to any world we live in now.
-      But that orientation rarely looks like a journal article. Sometimes it
+      Hebrew outside traditional seminaries — often multilingual learners whose
+      linguistic gifts may not be accompanied by formal credentials. These
+      communities need different formats than academic reference works typically
+      provide, and they have never needed them packaged that way.
+      This matters because the biblical texts were written by and for people
+      immersed in ancient cultures and social worlds very different from any
+      modern setting — and every modern reader, regardless of background, needs
+      help understanding those foreign contexts. Most people today do not recline
+      at tables, have never seen a hoopoe, and are unfamiliar with the honor
+      dynamics of Mediterranean patronage systems. Scholarly insights bridge that
+      gap. A journal article is the wrong way to present that information
+      to most readers — there are simpler, more straightforward ways. Sometimes it
       looks like a map, or a picture, or a set of questions that help a group
       notice what is actually in the text. Sometimes it looks like knowing
       that a certain phrase carries a weight that the translation cannot fully
@@ -113,29 +114,28 @@
       serve academic communities well — journal articles, monographs, reference
       works dense with technical terminology. But this creates real barriers
       for readers outside the academy, for oral cultures, for translation teams
-      working in contexts where Western academic conventions are foreign, and
-      for multilingual learners whose linguistic gifts often go unrecognized by
-      traditional institutions. The lack of resources in forms these communities
+      working in contexts where academic conventions may be unfamiliar, and
+      for multilingual learners whose linguistic gifts may not be accompanied by
+      formal credentials. The lack of resources in forms these communities
       can actually use has been a real bottleneck. The Kairos Project exists to
       open those doors — to serve the whole range of people who want to engage
-      Scripture deeply: those learning to use this technology to produce materials,
+      Scripture deeply: those learning to use this technology to produce resources for their local churches,
       those learning to read Greek and Hebrew, those doing serious biblical
       scholarship, and those learning to lead local Bible studies. The goal is
       building interlocking communities, not just software. Each community needs
       different resources at different levels of depth, but they are not separate
       silos. Technical infrastructure serves language learners; scholars equip
       study leaders; insights from local reading communities flow back into
-      scholarship and enrich it. The scaffolding works at every level: from
+      scholarship and enrich it. These resources provide support at every level: from
       technical documentation for pipeline architects, to lexicons and discourse
       analyses for scholars, to study guides for group leaders reading Scripture
-      together in community. The goal is bidirectional flow: scholarly insight
+      together in community. The goal is communities that talk with each other,
+      where each community learns from the others: scholarly insight
       goes out in forms communities can actually use, and the questions those
       communities bring reshape what scholarship attends to. Readers in community
       can encounter the text directly and make genuine discoveries. The scholar's
-      role is to equip that encounter, not to conduct it on the reader's behalf.
-      Scholarship serves the text; the text serves the reader; the reader is not
-      a passive recipient of conclusions but an active participant in
-      meaning-making.</para>
+      role is to help inform that encounter, not to conduct it on the reader's behalf.
+      </para>
     <para><emphasis role="bold">Scripture Pipelines is an infrastructure that
       makes this vision possible.</emphasis> It is an open-source declarative
       pipeline system designed to synthesize structured scholarly datasets at
@@ -143,22 +143,31 @@
       transparency that scholarly work requires. Rather than embedding AI calls
       in imperative code, Scripture Pipelines expresses each workflow as a YAML
       pipeline: a sequence of named steps with explicit inputs, outputs, and
-      prompt contracts. Every intermediate result is persisted. Every LLM step
-      can be required to account for the sources it used. The same pipeline that
-      generates a lexicon entry can be rerun with a revised prompt without
-      re-querying upstream data sources. This paper describes Scripture Pipelines'
+      prompt contracts. Each pipeline step declares a contract: what data it takes
+      (and from where), what the prompt instructs the AI to do, and what output
+      it promises to produce. Because every intermediate result is saved, scholars
+      can test one step at a time without running the entire pipeline—and they can
+      audit each step's work: which sources were actually used, whether the AI
+      followed the prompt's instructions, and whether the result matches what was
+      specified. When a prompt needs refinement, the same pipeline that generates
+      a lexicon entry can rerun with the revised prompt without re-querying the
+      corpus-gathering step. This paper describes Scripture Pipelines'
       design and reports on its application across multiple Nida Institute projects
       producing freely licensed biblical reference materials — lexicons,
       grammatical analyses, discourse structures, and Bible study guides — with
       a detailed case study of the Ears to Hear leaders' guide generation project.</para>
-    <para>This vision requires infrastructure. Biblical and linguistic scholarship
-      now has more open data than it can use: word-level morphological annotations
-      for the entire Hebrew Bible and Greek New Testament, syntactic treebanks,
-      discourse feature datasets encoding decades of scholarly analysis, lexicographic
-      databases aggregating multiple traditions, documentary papyri and inscriptions
-      in EpiDoc XML, texts from across the Hellenistic world in TEI encoding. Much
-      of it freely licensed. All of it underused.</para>
-    <para>The underuse is not only a problem of scale. Much of this data is simply
+  </section>
+
+  <!-- ============================================================ -->
+  <section xml:id="data-challenge">
+    <title>The Challenge: Data Abundance, Human Capacity Constraints</title>
+    <para>Biblical and linguistic scholarship now has more open data than it can use:
+      word-level morphological annotations for the entire Hebrew Bible and Greek New
+      Testament, syntactic treebanks, discourse feature datasets encoding decades of
+      scholarly analysis, lexicographic databases aggregating multiple traditions,
+      documentary papyri and inscriptions in EpiDoc XML, texts from across the
+      Hellenistic world in TEI encoding. Much of it freely licensed. All of it underused.</para>
+   <para>The underuse is not only a problem of scale. Much of this data is simply
       unknown to the scholars who would most benefit from it. Biblical studies,
       linguistics, text encoding, lexicography, papyrology, and Bible translation
       each have their own communities, conferences, and conventions — and the
@@ -192,35 +201,6 @@
       evidence it was given. The world has enough ChatGPT-generated text that no one
       can vouch for. What it does not have enough of is AI-assisted scholarly work
       that is transparent, auditable, and freely licensed.</para>
-    <para>The typical approach to AI-assisted scholarship is ad-hoc: a Python script
-      calls an API, loops over a word list, and writes results to files. This works
-      for one-off experiments but fails as a sustainable scholarly practice. Results
-      are not reproducible because the prompts are embedded in code; intermediate
-      outputs are not preserved so failures require recomputation from scratch; the
-      relationship between input, prompt, and output is opaque; and iteration — the
-      core of prompt engineering — requires modifying code rather than configuration.</para>
-    <para>Scripture Pipelines is a declarative pipeline system designed for this
-      problem. Workflows are declared in YAML pipelines that specify information
-      flow, prompt contracts, and output structure, while the engine handles
-      execution, validation, and persistence. Every intermediate result is saved to
-      disk. Every LLM step can be required to account for the sources it was given.
-      The same pipeline that generates a lexicon entry can be rerun, with a revised
-      prompt, without re-querying the corpus-gathering step. This paper describes the
-      design decisions behind Scripture Pipelines and reports on its application in
-      several Nida Institute projects producing freely licensed biblical reference
-      materials. Everything produced is freely licensed. The goal is to teach people
-      to read and engage with the wisdom of a Bible that is older and stranger than
-      any of us can fully imagine, yet speaks with remarkable directness to what
-      human communities face today. The scholars, the data, the pipelines, and the
-      communities of readers are not separate. They are members of one body, centered
-      around the same text.</para>
-    <para>The name Scripture Pipelines reflects the tool's primary design community.
-      The same infrastructure applies equally well to classical literature, patristics,
-      and other ancient or historical corpora. Wherever structured scholarly datasets —
-      morphological treebanks, discourse annotations, lexica, documentary papyri —
-      need to be synthesized at scale, the pipeline architecture addresses the same
-      challenges of reproducibility, auditability, and iterative refinement. The name
-      names the context, not the limit.</para>
   </section>
 
   <!-- ============================================================ -->
@@ -319,49 +299,61 @@
       Bible study leaders, focus groups, readers in community — use the
       resources in practice. They provide feedback on whether outputs are
       actually helpful. They are not passive recipients. Their encounter
-      with the text is the reason the work exists.</para>
+      with the text is the reason the work exists — and they teach us what
+      really matters, because what matters most is what matters to them.</para>
     <para>These collaborative workflows address fundamental challenges that
       arise whenever complex technical work spans multiple sessions and
       multiple contributors — challenges that intensify when AI is involved:</para>
     <itemizedlist>
       <listitem>
-        <para><emphasis>Cognitive overload.</emphasis> Work must be decomposed
-          to manage cognitive load for both humans and AI.</para>
+        <para><emphasis>Cognitive overload.</emphasis> Both humans and AI can
+          be overwhelmed when tasks are too large or complex. Work must be
+          decomposed into manageable pieces.</para>
       </listitem>
       <listitem>
-        <para><emphasis>Architecture drift.</emphasis> Individual components
-          must coordinate with evolving plans; goals shift over time, and it is
-          easy to work as though nothing has changed. AI reimplements existing
-          patterns because it does not know the architecture.</para>
+        <para><emphasis>Architecture drift.</emphasis> Goals shift over time,
+          and both humans and AI can work as though nothing has changed. Without
+          persistent reminders of the architecture, the AI reimplements existing
+          patterns because it does not know what has already been decided.</para>
       </listitem>
       <listitem>
-        <para><emphasis>False confidence.</emphasis> AI outputs look confident
-          even when wrong, with no intuitive signal to calibrate trust.</para>
+        <para><emphasis>False confidence.</emphasis> AI outputs look
+          confident even when they are incorrect, with no intuitive signal to
+          calibrate trust. Humans have the same problem, but we have learned
+          to watch for hedging language and expertise markers that AI does not
+          reliably produce.</para>
       </listitem>
       <listitem>
-        <para><emphasis>Session amnesia.</emphasis> Sessions have no memory
-          without persistent context infrastructure.</para>
+        <para><emphasis>Session amnesia.</emphasis> Each new conversation starts
+          from scratch. Without persistent context files, the AI forgets decisions
+          made in previous sessions. Humans forget too, but we can usually
+          reconstruct enough context to continue. AI cannot.</para>
       </listitem>
       <listitem>
         <para><emphasis>Error compounding.</emphasis> Without verification
-          checkpoints, small misunderstandings compound across sessions.</para>
+          checkpoints, a small misunderstanding in one session becomes the
+          foundation for work in the next. Both humans and AI make mistakes,
+          but AI mistakes are easier to miss because the output looks polished.</para>
       </listitem>
       <listitem>
         <para><emphasis>Scope creep.</emphasis> AI suggests "improvements" not
-          tied to project needs; both AIs and humans generate suggestions faster
-          than they can be implemented.</para>
+          tied to project needs; humans do the same. Both AI and humans generate
+          suggestions faster than they can be implemented, and without discipline,
+          work drifts away from core goals.</para>
       </listitem>
       <listitem>
         <para><emphasis>Priority paralysis.</emphasis> Without prioritization
-          discipline, teams chase the newest idea rather than the most important
-          work.</para>
+          discipline, both humans and AI chase the newest suggestion rather than
+          the most important work. AI will eagerly implement whatever seems
+          interesting; humans are not much better.</para>
       </listitem>
       <listitem>
-        <para><emphasis>Progress invisibility.</emphasis> Measurable progress
-          becomes invisible — entire sessions can feel productive while merely
-          refactoring in circles. Human time remains the scarce resource even
-          with AI productivity gains; steering that time to what matters most
-          requires explicit priority management.</para>
+        <para><emphasis>Progress invisibility.</emphasis> Entire sessions can
+          feel productive while merely refactoring code in circles. AI can spin
+          its wheels endlessly if not directed toward measurable outcomes. Human
+          time remains the scarce resource even with AI productivity gains;
+          steering that time to what matters most requires explicit priority
+          management.</para>
       </listitem>
     </itemizedlist>
     <para>The disciplines that follow address these risks.</para>
@@ -370,9 +362,9 @@
     <para>These disciplines are not novel to AI-driven development.
       Test-driven development, continuous integration, documentation
       standards, and cross-repository coordination have been core software
-      engineering practices for decades. What is new is their accessibility.
-      In traditional development environments, these practices were so
-      resource-intensive that teams typically needed dedicated specialists —
+      engineering practices for decades. What is new is that AI can offload
+      most of the work. In traditional development environments, these practices
+      were so resource-intensive that teams typically needed dedicated specialists —
       one QA engineer per four to eight developers, separate DevOps teams,
       dedicated technical writers. With AI collaboration, the disciplines
       remain essential (perhaps even more so, given the need for
@@ -382,17 +374,11 @@
       small scholarly teams.</para>
     <para><emphasis>Test-driven development.</emphasis> The Scripture Pipelines
       engine maintains approximately two lines of test code for every line of
-      production code. This ratio is a deliberate constraint on AI autonomy,
-      not a programmer's stylistic preference. Writing the test first — the
-      failing specification — forces the core developer or pipeline architect
-      to own the decision about what the code should do before the AI touches
-      it. An AI that passes a precise test has done what was asked. An AI that writes code without a test has
-      decided what was asked. Without the full test suite, a model that
-      simply ignores an inconvenient requirement produces code that compiles
-      and runs while silently failing to meet the specification — a failure
-      mode that is common, hard to detect, and expensive to discover late. The
-      full suite, run before every commit, is what makes it safe to accept
-      AI-generated implementation at all.</para>
+      production code. The workflow: the developer specifies what the code should
+      do, the AI writes the tests (asking about ambiguities), and then the AI
+      writes the implementation. The specification determines the tests; the tests
+      determine whether the implementation works — no need to guess whether the AI
+      has done its job correctly.</para>
     <para><emphasis>Explain before implementing.</emphasis> Every non-trivial
       change begins with the AI describing what it plans to do, which files it
       will modify, and its interpretation of the task — before any file is
@@ -407,7 +393,7 @@
     <para><emphasis>Persistent context infrastructure.</emphasis> Corrigibility
       requires that the AI know, at every session, what the scholar or pipeline
       architect has decided — not just what the model remembers from training.
-      Each Scripture Pipelines project carries two kinds of constraining context. The
+      Each Scripture Pipelines project carries three kinds of constraining context. The
       <code>.github/copilot-instructions.md</code> file is the AI's
       constitution for the repository: it names the architecture patterns to
       follow, the pitfalls to avoid, the things not to change without explicit
@@ -415,28 +401,31 @@
       <code>docs/ai-context/</code> directory, scaffolded by <code>sp init</code>,
       encodes which data sources to trust, what the pipeline
       language supports, what work is currently in progress, and what the
-      project is trying to accomplish. These are not documentation artifacts;
-      they are the active working constraints in every session. When the
-      pipeline language gains a new step type, a dataset contact changes, or
-      the interpretive framework for an analysis shifts, updating these files
-      is a first-class development task. Keeping them in sync with the actual
-      codebase is what makes AI collaboration trustworthy across the many
-      sessions a project requires.</para>
+      project is trying to accomplish. The <code>project/TODO.md</code> file
+      tracks active work, blockers, and decisions made — with links to GitHub
+      issues and project boards that coordinate work across repositories.
+      These are not documentation artifacts; they are the active working
+      constraints in every session. When the pipeline language gains a new
+      step type, a dataset contact changes, or the interpretive framework
+      for an analysis shifts, updating these files is a first-class development
+      task. Keeping them in sync with the actual codebase is what makes AI
+      collaboration trustworthy across the many sessions a project requires.</para>
     <para><emphasis>Cross-repository choreography.</emphasis> Scripture
       Pipelines projects are embedded in an ecosystem of shared upstream
       datasets: Macula Greek <xref linkend="ref-macula-greek"/> and Hebrew <xref linkend="ref-macula-hebrew"/>, the Levinsohn LGNTDF <xref linkend="ref-lgntdf"/>, ACAI entity
       data <xref linkend="ref-acai"/>. When a pipeline run reveals an error in one of these datasets —
       a gap in entity coverage, an inconsistent lemma form, a buggy
       annotation — the right response is a well-formed upstream issue: the
-      AI drafts the body with evidence and counts, files it via the GitHub
+      AI drafts the body with evidence and counts, creates the issue via the GitHub
       CLI, and records the issue number in <code>project/TODO.md</code>.
-      Consumer repositories can file feature requests against the core
-      Scripture Pipelines engine; the engine opens issues on consumer
-      repositories announcing new capabilities and migration requirements.
-      GitHub project boards provide coordination visibility across
-      repositories without requiring manual synchronization. The issue
-      tracker is the communication bus. The AI on either end is the
-      correspondent. The human remains the architect — the one who decides
+      The AI actively manages this coordination infrastructure: it creates issues,
+      adds comments with updated findings, and maintains project boards to track
+      work across repositories. Consumer repositories can file feature requests
+      against the core Scripture Pipelines engine; the engine opens issues on
+      consumer repositories announcing new capabilities and migration requirements.
+      The issue tracker is the communication bus; GitHub project boards provide
+      visibility into what is blocked, in progress, or complete. The AI on either
+      end is the correspondent — but the human remains the architect, deciding
       whether the upstream error is worth fixing, whether the new engine
       feature warrants upgrading, and whether the design the AI has drafted
       actually captures what needs to be said.</para>
@@ -540,10 +529,10 @@
           <para><emphasis role="bold">End User ↔ Pipeline Data Architect:</emphasis>
             The user reports whether resources are usable: file formats that
             don't open, interfaces that assume technical knowledge, outputs
-            structured for Western academic conventions that don't translate
-            to oral cultures. The architect adapts infrastructure to make
-            resources accessible. This is not about dumbing things down; it is
-            about removing barriers that have nothing to do with the content.</para>
+            structured for academic contexts rather than oral cultures. The
+            architect adapts infrastructure to make resources accessible. This
+            is not about dumbing things down; it is about removing barriers that
+            have nothing to do with the content.</para>
         </listitem>
         <listitem>
           <para><emphasis role="bold">All Roles → AI:</emphasis> The AI is a
@@ -863,16 +852,28 @@
   <!-- ============================================================ -->
   <section xml:id="markup-choices">
     <title>The Best Markup for Each Purpose</title>
-    <para>The Balisage community has long debated markup language choices: XML
-      as the universal substrate, domain-specific languages optimized for
-      specific purposes, or successor formats with ambitions to displace XML
-      entirely. Scripture Pipelines sidesteps the debate. The question it asks is simply:
-      which human-readable, Unicode-capable format works best for each role in
-      the pipeline? YAML, JSON, Markdown, and XML each appear in an Scripture Pipelines
-      project — not because any one of them won, but because each is the right
-      tool for its particular job. Format conversion between them is
-      mechanical once identifiers are shared; the choice of serialization
-      syntax is rarely where scholarly meaning lives.</para>
+    <para>XML demonstrated that a single technology could provide complete infrastructure
+      for data interchange: validation (DTD, XML Schema, RELAX NG),<biblioref
+      linkend="ref-relax-ng-tutorial"/> querying (XPath, XQuery),<biblioref
+      linkend="ref-xpath-3-1"/><biblioref linkend="ref-xquery-3-1"/> transformation
+      (XSLT), and publishing workflows. This complete stack—standardized, interoperable,
+      and vendor-neutral—has no equivalent in any other format ecosystem.</para>
+    <para>The simpler formats that emerged later (JSON, YAML, Markdown) are XML's legacy.
+      They learned from XML's mistakes—excessive verbosity, schema complexity, overreach
+      into application domains—while inheriting XML's victories: human-readable text as
+      data, Unicode everywhere, structure matters, and format should fit purpose. But none
+      replicated XML's complete infrastructure. JSON has multiple incompatible query
+      languages (JSONiq,<biblioref linkend="ref-jsoniq"/> vendor-specific N1QL,<biblioref
+      linkend="ref-n1ql"/> JSONPath with competing implementations, jq) and a schema
+      specification still in draft status after years of work.<biblioref
+      linkend="ref-json-schema"/> YAML and TOML lack query languages entirely. Markdown
+      has no standardized structural query capability.</para>
+    <para>This project uses each format for what it does best, recognizing that XML's
+      complete infrastructure remains unmatched for domains that need it. YAML, JSON,
+      Markdown, and XML each appear in a Scripture Pipelines project—not because any
+      one of them won, but because each is the right tool for its particular job. Format
+      conversion between them is mechanical once identifiers are shared; the choice of
+      serialization syntax is rarely where scholarly meaning lives.</para>
 
     <section xml:id="yaml-not-xml">
       <title>YAML for Pipeline Declarations</title>
@@ -945,6 +946,17 @@
         if needed, ask an LLM to help diagnose which step introduced the error.
         This audit-by-inspection is far more tractable with self-documenting
         JSON than with opaque binary or prose outputs.</para>
+      <para>JSON's success demonstrates what XML got right about data interchange—human+machine
+        readability, Unicode throughout, nested structure—while avoiding what XML got wrong.
+        Yet JSON lacks a widely accepted query language. JSONiq extends XQuery to process
+        JSON,<biblioref linkend="ref-jsoniq"/> showing the influence of XML query thinking,
+        but has limited adoption. N1QL (Couchbase) is vendor-specific.<biblioref
+        linkend="ref-n1ql"/> JSONPath has multiple incompatible implementations. The jq
+        command-line tool is powerful but not a standardized query language. This fragmentation
+        contrasts sharply with XML, where W3C standardization of XPath and XQuery created
+        deterministic, repeatable query infrastructure that works identically across
+        implementations. When precise, reproducible queries matter—as they do in
+        scholarship—this standardization has enduring value.</para>
       <para>JSON integrates cleanly with XPath downstream via
         <code>fn:json-to-xml()</code> when XML processing is needed, and with
         Python data structures in the pipeline engine without serialization
@@ -1022,6 +1034,31 @@
         conventions change or a different XML vocabulary is needed downstream,
         the rendering step changes while all upstream pipeline steps remain
         untouched.</para>
+
+      <section xml:id="xpath-xquery-llms">
+        <title>XPath and XQuery: LLMs Lower the Barrier</title>
+        <para>Morphologically-tagged Hebrew and Greek texts—the Macula Greek New
+          Testament and Macula Hebrew Bible—are XML documents encoding multiple distinct
+          hierarchies linked by identifiers: syntax trees, discourse structures, semantic
+          domains, and textual apparatus. Each hierarchy is represented separately (XML
+          is a tree), but identifiers enable queries across all of them.</para>
+        <para>XPath and XQuery enable precise linguistic queries across these linked
+          structures.<biblioref linkend="ref-xpath-3-1"/><biblioref
+          linkend="ref-xquery-3-1"/><biblioref linkend="ref-xquery-31-use-cases"/> A
+          scholar interested in Greek verb clauses grouped by subject writes natural
+          language intent: <quote>For each verb in Matthew's Gospel, show me the clause
+          containing that verb and its grammatical subject.</quote> An LLM translates this
+          to XQuery; BaseX executes it against the Macula Greek XML. The query is 400+ lines
+          of XQuery 3.1—far more than most scholars would write by hand. But the LLM
+          generates it, the scholar reviews it for accuracy, BaseX executes it
+          deterministically, and the results are reproducible.</para>
+        <para>This pattern appears throughout this project: LLMs lower the barrier to using
+          formal query languages, but the deterministic execution of standardized queries
+          remains essential.<biblioref linkend="ref-robie-xquery-2007"/> Both are needed.
+          LLM-generated queries can be wrong; reviewing them requires understanding what
+          the query should produce. But once validated, the query runs identically every
+          time—a property that stochastic text generation cannot provide.</para>
+      </section>
     </section>
   </section>
 
@@ -1841,11 +1878,15 @@ obsidian/grc/intermediate/
           to notice. The AI implements whatever structure is specified;
           specifying it correctly to get the analytical result I want is my work.</para></listitem>
         <listitem><para><emphasis>Designing accountability
-          fields.</emphasis> Which aspects of the LLM's reasoning to make
-          explicit in intermediate JSON — which sources to require
-          enumeration of, which judgments to require justification for —
-          is an epistemological decision. Deciding that the SemLex
-          gather-evidence step must name every Abbott-Smith sense it was
+          fields.</emphasis> Accountability fields are schema elements that require
+          the AI to copy or enumerate specific items from its inputs — not "sources
+          consulted" generically, but concrete identifiers like sense numbers, verse
+          references, or feature IDs from the actual input data. This forces the LLM
+          to demonstrate it actually looked at the input, and the act of copying
+          focuses its attention. Which aspects of the LLM's reasoning to make explicit
+          in intermediate JSON — which sources to require enumeration of, which judgments
+          to require justification for — is an epistemological decision. Deciding that
+          the SemLex gather-evidence step must name every Abbott-Smith sense it was
           given and record whether each was retained or rejected with a
           reason makes a quality claim about what the lexicon should be
           accountable to. No tool makes that claim on the lexicographer's
@@ -1859,6 +1900,15 @@ obsidian/grc/intermediate/
           criteria can be written into context files and prompt instructions
           — but they must first be worked out by practitioners who know the
           material.</para></listitem>
+        <listitem><para><emphasis>Providing tools for expert
+          judgment.</emphasis> Domain experts need appropriate visualization and
+          analysis tools to make informed judgments about pipeline outputs.
+          For discourse segmentation, graphical tools that visualize discourse
+          hierarchies are tremendously helpful. For lexicography, side-by-side
+          concordance views. For study guide generation, tools that show which
+          exegetical features informed which questions. The pipeline produces
+          structured data; experts need ways to inspect that structure in forms
+          that support the specific judgments they must make.</para></listitem>
         <listitem><para><emphasis>The explanation phase as error
           prevention.</emphasis> The discipline of requiring the AI to explain
           what it is about to do, in full, before touching any file reliably
@@ -1908,7 +1958,7 @@ obsidian/grc/intermediate/
           design, recognizing that one layer is load-bearing and volatile, and
           redirecting before any code is written — recurs across all Scripture
           Pipelines projects and is not detectable by any automated check.
-          I am the one who knows the project will still be running
+          I am the one who knows how to design the project so that it will still be running
           in six months.</para>
         </listitem>
         <listitem><para><emphasis>Catching a metric that looks like a
@@ -2346,7 +2396,7 @@ obsidian/grc/intermediate/
       resources. It is to make Scripture more accessible, more carefully
       understood, more deeply engaged — by scholars, yes, but also by readers
       in communities worldwide who bring no academic training yet read these
-      texts with wisdom the academy often lacks. Every freely licensed lexicon,
+      texts with distinctive interpretive insights. Every freely licensed lexicon,
       every grammatical analysis, every discourse structure ultimately exists
       to serve this end: getting people reading Scripture, noticing what is
       actually there, and carrying something from that encounter into their lives.</para>
@@ -3137,79 +3187,182 @@ training data (examples) in prompts. Period.
   <!-- ============================================================ -->
   <section xml:id="conclusion">
     <title>Conclusion</title>
-    <para>The world of biblical and linguistic scholarship has accumulated
-      extraordinary open datasets — morphological treebanks, discourse
-      annotations, documentary papyri, lexicographic databases, ontologies,
-      semantic domains — that
-      represent decades of scholarly labor and are largely inaccessible to
-      practitioners who need them most. The barrier is not availability;
-      most of it is freely licensed. The barrier is the human capacity to
-      synthesize it at scale and turn it into materials that translators,
-      pastors, and students can actually use.</para>
-    <para>Scripture Pipelines addresses this gap by making AI work like a
-      careful research assistant rather than an unchecked generator. A lean
-      team — a pipeline designer, a handful of scholars, and focus groups
-      of real users — can now produce freely licensed reference materials
-      grounded in the full breadth of available scholarly data: lexicons
-      that account for every papyrus citation, discourse analyses that apply
-      the complete Levinsohn dataset to every pericope, study guides derived
-      from rigorous grammatical analysis rather than paraphrase. None of
-      these were feasible for an underresourced project before.</para>
-    <para>The infrastructure that makes this possible — declarative YAML
-      pipelines, structured JSON intermediates with embedded accountability
-      fields, persisted outputs at every step, prompt contracts, and
-      rewind/stop-after debugging — is not primarily a technical achievement.
-      It is a discipline: a set of working practices that keep the human
-      scholar in the loop, make the provenance of every generated artifact
-      traceable, and ensure that AI synthesis is grounded in the structured
-      scholarly data it was given rather than in whatever a language model
-      would produce without constraints. The format choices — YAML, JSON,
-      Markdown, XML, each for its own purpose — reflect the same pragmatism:
-      what works best here, not what wins the syntax debate.</para>
-    <para>None of this diminishes the role of human expertise — it
-      transforms how that expertise is applied. A scholar who knows that
-      the Louw-Nida / SemDom question chain can navigate 1,792 semantic
-      domains to a single word's classification in approximately four
-      questions does not need less expertise to work with Scripture Pipelines
-      than without it; they need more. The pipeline amplifies the reach of
-      that insight across an entire corpus. A discourse analyst who
-      recognizes the significance of Levinsohn's word-level annotations
-      for pericope segmentation unlocks a dataset of 806 structural signals
-      in 1 John alone that would otherwise remain invisible to any pipeline
-      that didn't know to look. The dreaming, the problem framing, the
-      choice of which scholarly tradition to ground a pipeline in, the
-      judgment to know when the model's output is wrong, the taste to know
-      what good enough means for a translator in the field — none of that
-      is supplied by the tool. What changes is the leverage: a single
-      scholar with deep domain knowledge and a well-designed pipeline can
-      now produce work that would previously have required a large team
-      and many years. Experience still counts. It just goes further.</para>
-    <para>This is what The Kairos Project is for. When we say "a scholar with
+    <para>This paper opened with a challenge: biblical and linguistic scholarship
+      has accumulated extraordinary open datasets representing decades of scholarly
+      labor, but the bottleneck is human capacity to synthesize that data at scale
+      and turn it into materials that translators, pastors, students, and reading
+      communities can actually use. The barrier is not data availability — most of
+      it is freely licensed — but the infrastructure and workflows needed to bridge
+      the gap between "data exists" and "practitioners can use it."</para>
+    <para>Scripture Pipelines addresses this challenge through a combination of
+      technical design and collaborative discipline. The technical infrastructure —
+      declarative YAML pipeline definitions, prompt contracts with explicit
+      input/output specifications, structured JSON intermediates with embedded
+      accountability fields, and persisted outputs at every step — makes AI-assisted
+      scholarly work auditable and reproducible. The collaborative framework —
+      the James Kirk model where humans command and AI executes, clear role
+      separation between scholars, pipeline architects, core developers, and end
+      users, and four interlocking disciplines of test-driven development,
+      explain-before-implementing, persistent context files, and cross-repository
+      coordination — keeps human judgment and scholarly accountability at the center.</para>
+    <para>The case studies reported here demonstrate that this approach works in
+      practice. A multi-pass Greek semantic lexicon synthesizing Abbott-Smith,
+      BDAG, and hundreds of papyrus citations. A Hebrew Bible grammatical phrasing
+      analysis built on Macula Hebrew treebank data and Levinsohn discourse
+      annotations. Book-level discourse analyses applying the complete LGNTDF and
+      HOTDF datasets to identify pericope boundaries and rhetorical structures.
+      Leaders' guides for Bible study that ground interpretive questions in
+      exegetical analysis rather than paraphrase. None of these were feasible for
+      underresourced projects before. Now a lean team — a pipeline designer, a
+      handful of scholars, and focus groups of real users — can produce freely
+      licensed reference materials grounded in the full breadth of available
+      scholarly data.</para>
+    <para>The persistence and audit infrastructure described in this paper — saving
+      every intermediate output, making identifier consistency debuggable through
+      checkpoint inspection, enabling grounding audits that trace final outputs
+      back to the specific source data that should have informed them — addresses
+      the singular challenge of LLM-assisted scholarly work: how do you verify
+      that the model actually used the evidence it was given, rather than generating
+      plausible-sounding text from its training distribution? The answer is
+      accountability fields in JSON schemas that force the LLM to enumerate its
+      sources, and checkpoint files that let a human scholar inspect what the model
+      saw at each stage. This is not primarily a technical achievement; it is a
+      discipline that makes the work trustworthy.</para>
+    <para>The prompt organization patterns described here — dual-audience readability
+      for both humans and AI, YAML frontmatter declaring contracts, hierarchical
+      section structure with clear information scent, GOOD/BAD examples demonstrating
+      patterns rather than word-specific bans, and audit skills that check for
+      LLM-generated training data contamination — solve a practical problem that
+      emerges at scale: how do you maintain complex generation workflows across
+      dozens of sessions without cognitive overload causing both humans and AI to
+      miss critical context? The 500-line prompts processing biblical passages with
+      50+ input fields are not toy examples; they are production specifications
+      where both audiences must find what they need quickly or fail. The measured
+      impact from reorganizing production prompts — 60% reduction in misalignment
+      errors, 75% faster human audit time, 40% reduction in AI explanation-phase
+      errors — demonstrates that information architecture matters for AI collaboration
+      just as it matters for human-human technical communication.</para>
+    <para>The format pragmatism throughout Scripture Pipelines — YAML for human-readable
+      configuration, JSON for structured LLM output and intermediate data that must
+      validate against schemas, Markdown for human-facing content with maximum
+      readability, XML where overlapping structures and standardized publishing
+      pipelines require it — reflects a design philosophy that serves scholarly
+      communities better than format purity would. Each format is used where it
+      excels; none is elevated to universal status. The iteration mechanisms —
+      <code>--stop-after</code> to inspect output before downstream steps consume it,
+      <code>--from-step</code> to resume after fixing one stage without re-running
+      expensive earlier stages, <code>sp list-contexts</code> to see what variables
+      are available at any point — make the pipeline state inspectable and the
+      debugging workflow tractable. These are not incidental conveniences; they are
+      essential infrastructure for scholarly work where verification cannot be
+      deferred to the end.</para>
+    <para>None of this diminishes the role of human expertise — it transforms how
+      that expertise is applied. A scholar who knows that the Louw-Nida / SemDom
+      question chain can navigate 1,792 semantic domains to a single word's
+      classification in approximately four questions does not need less expertise
+      to work with Scripture Pipelines than without it; they need more. The pipeline
+      amplifies the reach of that insight across an entire corpus. A discourse
+      analyst who recognizes the significance of Levinsohn's word-level annotations
+      for pericope segmentation unlocks a dataset of 806 structural signals in 1 John
+      alone that would otherwise remain invisible to any pipeline that didn't know
+      to look. The dreaming, the problem framing, the choice of which scholarly
+      tradition to ground a pipeline in, the judgment to know when the model's output
+      is wrong, the taste to know what good enough means for a translator in the
+      field — none of that is supplied by the tool. What changes is the leverage:
+      a single scholar with deep domain knowledge and a well-designed pipeline can
+      now produce work that would previously have required a large team and many
+      years. Experience still counts. It just goes further.</para>
+  </section>
+
+  <!-- ============================================================ -->
+  <section xml:id="xml-enduring-niche">
+    <title>XML's Enduring Niche</title>
+    <para>Many younger engineers view XML as a <quote>weird old Boomer format</quote>
+      that seems unnecessarily complex. This perception reflects a generation gap, not
+      a technical failure. Engineers building REST APIs, deploying microservices, and
+      writing configuration files work in domains where JSON and YAML excel. They have
+      never encountered the problems XML was designed to solve: overlapping hierarchies
+      in literary texts, scholarly apparatus in critical editions, transformation
+      pipelines in publishing workflows, or standardized queries across heterogeneous
+      document collections.</para>
+    <para>But those problems did not disappear. TEI scholarly editions<biblioref
+      linkend="ref-tei-p5"/> still require markup for multiple overlapping structures—syntactic,
+      rhetorical, manuscript witness variants—that cannot be represented in JSON's single
+      tree. DITA technical documentation still needs conditional processing, content reuse,
+      and transformation to multiple output formats. Publishing workflows still require
+      XSLT pipelines that have no equivalent in other ecosystems. These domains need XML's
+      complete infrastructure: validation, querying, transformation, and publishing—all
+      standardized, all interoperable.</para>
+    <para>XML succeeded as a pioneer by proving principles and making mistakes that taught
+      the world what to simplify. It demonstrated that human-readable text could be data
+      at web scale. It proved that Unicode should be everywhere. It showed that structure
+      matters and validation catches errors. And by overreaching—making schemas too complex,
+      creating specification documents too long, trying to be the universal format—it taught
+      the next generation to build simpler, more focused tools.</para>
+    <para>The simpler formats that followed are XML's legacy, not its replacement. JSON
+      learned from XML Schema's complexity and standardized on a simpler model. YAML
+      learned from XML's verbosity and eliminated angle brackets. Markdown learned from
+      XHTML's rigidity and made HTML authoring human-friendly. Each format learned lessons
+      that XML taught through two decades of production use.</para>
+    <para>The final Balisage conference honors XML's achievements while acknowledging this
+      reality: XML did not fail because simpler formats succeeded. XML succeeded by showing
+      what worked, teaching through its mistakes, and enabling the formats that came
+      next—while maintaining its enduring value for the domains whose problems it was
+      designed to solve.</para>
+  </section>
+
+  <!-- ============================================================ -->
+  <section xml:id="kairos-vision">
+    <title>Scripture Pipelines: Infrastructure for The Kairos Vision</title>
+    <para>Scripture Pipelines exists to serve The Kairos Project — the Nida
+      Institute's initiative to build a global community of scholars serving
+      Bible translation and the global church. When we say "a scholar with
       deep domain knowledge," we mean scholars worldwide — including those
       learning Greek and Hebrew outside traditional seminaries, multilingual
       learners who bring linguistic gifts that Western institutions have not
       recognized, translation teams who know their target audience in ways
-      the academy never will. The goal is not to make Western scholars more
-      productive; the goal is to democratize the tools so that scholarship
-      can happen where it is needed, by people who have been told they are
-      not qualified, producing resources together with the communities who
+      the academy never will. The goal is to democratize the tools so that scholarship
+      can happen where it is needed, by people from diverse backgrounds,
+      producing resources together with the communities who
       will actually use them. Scripture Pipelines is infrastructure for that
       vision. It makes the open datasets — the treebanks, the lexicons, the
-      discourse annotations — accessible to people who do not have a PhD
-      from a Western university and do not need one to do rigorous work
-      with the text. The Kairos Project exists to raise up scholars globally,
-      not to preserve the Western academy's role as gatekeeper. The bidirectional
-      flow between academy and church, between institution and field, is not
-      a concession — it is the point.</para>
+      discourse annotations — accessible to scholars globally, whether or not
+      they have formal credentials from established institutions.
+      The Kairos Project exists to serve the global church — to help people
+      everywhere read and understand the Bible accurately. Scripture Pipelines
+      makes that possible by connecting scholars, translators, pastors, teachers,
+      and study leaders in overlapping communities where everyone learns from
+      everyone else. Scholars learn from the questions translation teams and
+      pastors ask. Translation teams and pastors learn from scholarly insights.
+      Study leaders learn from both. We are members of one body, serving together,
+      each bringing what we know, each learning from the others.</para>
     <para>The projects reported here are early instances of a
       larger program. The dataset registry and system integrations provide
       the infrastructure for an expanding range of pipeline-producible scholarly
       materials. The goal is a world where the open data that scholars have
       painstakingly assembled becomes the shared foundation for work that
-      communities worldwide do together — not resources provided for them,
-      but scholarship they participate in creating.</para>
+      communities worldwide do together.</para>
+    <para>The introduction to this paper argued that we are at a kairos moment —
+      the opportune time when the open data exists, the communities who need it
+      exist, and the capability to synthesize that data at scale exists. The
+      question is not whether we will respond but how: will we build infrastructure
+      that serves human flourishing, or infrastructure that displaces it? Will we
+      build tools that amplify human judgment and accountability, or tools that
+      claim to replace them? The James Kirk model — humans command, AI executes —
+      is not a compromise with current technological limitations. It is a design
+      choice about what kind of world we want to build: one where scholarship
+      remains the work of scholars, where translation builds community, where
+      the work of understanding Scripture together is not something we automate
+      away but something we do better, together, with better tools. Scripture
+      Pipelines exists to make that choice sustainable at scale. The infrastructure
+      described in this paper makes rigorous, reproducible, community-accountable
+      AI-assisted scholarship possible. Whether that possibility becomes reality
+      depends on the scholars, translators, and communities who choose to build
+      with it — and on their commitment to keeping human wisdom and judgment at
+      the center.</para>
   </section>
 
+  <!-- ============================================================ -->
   <section xml:id="ai-disclosure">
     <title>A Note on AI in the Writing of This Paper</title>
     <para>This paper was written with AI assistance, in a manner consistent
@@ -3458,6 +3611,183 @@ training data (examples) in prompts. Period.
         >https://www.biblicalarchaeology.org/daily/artificial-intelligence-and-bible-translation/</link>.
     </bibliomixed>
 
+    <!-- XML History and Theory -->
+    <bibliomixed xml:id="ref-bosak-1997">
+      Bosak, J. <quote>XML, Java, and the future of the Web.</quote>
+      <emphasis role="ital">World Wide Web Journal</emphasis> 2(4), 1997.
+      <link xlink:href="https://www.xml.com/pub/a/w3j/s3.bosak.html"
+        >https://www.xml.com/pub/a/w3j/s3.bosak.html</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-sperberg-mcqueen-1991">
+      Sperberg-McQueen, C. M. <quote>Markup systems and the future of scholarly
+      text processing.</quote> <emphasis role="ital">Communications of the
+      ACM</emphasis> 34(11):63–76, 1991.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-sperberg-mcqueen-goddag-2000">
+      Sperberg-McQueen, C. M. and C. Huitfeldt. <quote>GODDAG: A Data Structure
+      for Overlapping Hierarchies.</quote> <emphasis role="ital">DDEP/PODDP 2000:
+      Principles of Digital Document Processing</emphasis>, pp. 139–160.
+      Springer, Berlin, 2000.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-sperberg-mcqueen-lmnl-2004">
+      Sperberg-McQueen, C. M., C. Huitfeldt, and A. Renear. <quote>Markup and
+      Meaning: What's a Text Really Made Of?</quote> (aka "Documents as LMNL").
+      Delivered at ALLC/ACH 2004, Gothenburg. Revised 2007.
+      <link xlink:href="http://www.tei-c.org/Vault/Talks/2004/lmnl.html"
+        >http://www.tei-c.org/Vault/Talks/2004/lmnl.html</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-tei-p5">
+      Burnard, L. and C. M. Sperberg-McQueen (eds.). <emphasis role="ital">TEI P5:
+      Guidelines for Electronic Text Encoding and Interchange</emphasis>. Text
+      Encoding Initiative Consortium, 2007–.
+      <link xlink:href="https://tei-c.org/guidelines/p5/"
+        >https://tei-c.org/guidelines/p5/</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-sperberg-mcqueen-rabbit-duck-2013">
+      Sperberg-McQueen, C. M. <quote>Rabbit/Duck Grammars: A Characterization of
+      Overlap.</quote> <emphasis role="ital">Proceedings of Balisage: The Markup
+      Conference 2013</emphasis>. Balisage Series on Markup Technologies, vol. 10.
+      doi:10.4242/BalisageVol10.Sperberg-McQueen01.
+    </bibliomixed>
+
+    <!-- XQuery and Semi-Structured Data -->
+    <bibliomixed xml:id="ref-buneman-1996">
+      Buneman, P., S. Davidson, G. Hillebrand, and D. Suciu. <quote>A Query
+      Language and Optimization Techniques for Unstructured Data.</quote>
+      <emphasis role="ital">Proceedings of the 1996 ACM SIGMOD International
+      Conference on Management of Data</emphasis>, pp. 505–516, 1996.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-abiteboul-1997">
+      Abiteboul, S. <quote>Querying Semi-Structured Data.</quote>
+      <emphasis role="ital">Proceedings of the 6th International Conference on
+      Database Theory (ICDT)</emphasis>, pp. 1–18. Springer, Berlin, 1997.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-lorel-1997">
+      Abiteboul, S., D. Quass, J. McHugh, J. Widom, and J. Wiener. <quote>The Lorel
+      Query Language for Semistructured Data.</quote> <emphasis role="ital">International
+      Journal on Digital Libraries</emphasis> 1(1):68–88, 1997.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-dataguides-1997">
+      Goldman, R. and J. Widom. <quote>DataGuides: Enabling Query Formulation and
+      Optimization in Semistructured Databases.</quote> <emphasis role="ital">Proceedings
+      of the 23rd VLDB Conference</emphasis>, pp. 436–445, Athens, Greece, 1997.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-xml-ql-1999">
+      Deutsch, A., M. Fernández, D. Florescu, A. Levy, and D. Suciu. <quote>A Query
+      Language for XML.</quote> <emphasis role="ital">Computer Networks</emphasis>
+      31(11–16):1155–1169, 1999. (Proceedings of the 8th International World Wide
+      Web Conference).
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-chamberlin-quilt-2000">
+      Chamberlin, D., J. Robie, and D. Florescu. <quote>Quilt: An XML Query
+      Language for Heterogeneous Data Sources.</quote> <emphasis role="ital">Revised
+      Papers from WebDB 2000: Third International Workshop on the Web and
+      Databases</emphasis>, pp. 53–62. Springer, Berlin, 2000.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-chamberlin-xquery-2000">
+      Chamberlin, D., J. Robie, and D. Florescu. <quote>XQuery: A Query Language for
+      XML.</quote> <emphasis role="ital">Proceedings of W3C QL'98 Query Language
+      Workshop</emphasis>, 1998. Updated version presented at WWW9 Conference, 2000.
+      <link xlink:href="https://www.w3.org/TandS/QL/QL98/pp/xquery.html"
+        >https://www.w3.org/TandS/QL/QL98/pp/xquery.html</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-relax-ng-tutorial">
+      Clark, J. and M. Murata. <emphasis role="ital">RELAX NG Tutorial</emphasis>.
+      OASIS Committee Specification, 3 December 2001.
+      <link xlink:href="https://relaxng.org/tutorial-20011203.html"
+        >https://relaxng.org/tutorial-20011203.html</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-xquery-experts">
+      Katz, H. (ed.). <emphasis role="ital">XQuery from the Experts: A Guide to the
+      W3C XML Query Language</emphasis>. Addison-Wesley, Boston, 2004.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-xquery-1-0">
+      Boag, S., D. Chamberlin, M. F. Fernández, D. Florescu, J. Robie, and J. Siméon
+      (eds.). <emphasis role="ital">XQuery 1.0: An XML Query Language</emphasis>.
+      W3C Recommendation, 23 January 2007.
+      <link xlink:href="https://www.w3.org/TR/xquery/"
+        >https://www.w3.org/TR/xquery/</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-xpath-datamodel">
+      Fernández, M., A. Malhotra, J. Marsh, M. Nagy, and N. Walsh (eds.).
+      <emphasis role="ital">XQuery 1.0 and XPath 2.0 Data Model (XDM)</emphasis>.
+      W3C Recommendation, 23 January 2007.
+      <link xlink:href="https://www.w3.org/TR/xpath-datamodel/"
+        >https://www.w3.org/TR/xpath-datamodel/</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-xquery-use-cases">
+      Chamberlin, D., J. Robie, and D. Florescu (eds.). <emphasis role="ital">XML
+      Query Use Cases</emphasis>. W3C Working Group Note, 23 March 2007.
+      <link xlink:href="https://www.w3.org/TR/xquery-use-cases/"
+        >https://www.w3.org/TR/xquery-use-cases/</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-robie-xquery-2007">
+      Robie, J. <quote>XML Processing and Data Integration with XQuery.</quote>
+      <emphasis role="ital">IEEE Internet Computing</emphasis> 11(4):62–67,
+      July–August 2007. doi:10.1109/MIC.2007.96.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-jsoniq">
+      Florescu, D. and G. Fourny. <quote>JSONiq: The History of a Query Language.</quote>
+      <emphasis role="ital">IEEE Internet Computing</emphasis> 17(5):86–90, 2013.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-xquery-31-use-cases">
+      Chamberlin, D. and J. Robie (eds.). <emphasis role="ital">XQuery 3.1 Use
+      Cases</emphasis>. W3C Working Group Note, 8 December 2015.
+      <link xlink:href="https://www.w3.org/TR/xquery-31-use-cases/"
+        >https://www.w3.org/TR/xquery-31-use-cases/</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-xpath-3-1">
+      Robie, J., M. Dyck, and J. Spiegel (eds.). <emphasis role="ital">XML Path
+      Language (XPath) 3.1</emphasis>. W3C Recommendation, 21 March 2017.
+      <link xlink:href="https://www.w3.org/TR/xpath-31/"
+        >https://www.w3.org/TR/xpath-31/</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-xquery-3-1">
+      Robie, J., M. Dyck, and J. Spiegel (eds.). <emphasis role="ital">XQuery 3.1:
+      An XML Query Language</emphasis>. W3C Recommendation, 21 March 2017.
+      <link xlink:href="https://www.w3.org/TR/xquery-31/"
+        >https://www.w3.org/TR/xquery-31/</link>.
+    </bibliomixed>
+
+    <!-- JSON Infrastructure -->
+    <bibliomixed xml:id="ref-json-schema">
+      Wright, A., H. Andrews, B. Hutton, and G. Dennis (eds.). <emphasis role="ital">JSON
+      Schema: A Media Type for Describing JSON Documents</emphasis>. Internet-Draft
+      draft-bhutton-json-schema-01, December 2022.
+      <link xlink:href="https://json-schema.org/"
+        >https://json-schema.org/</link>.
+    </bibliomixed>
+
+    <bibliomixed xml:id="ref-n1ql">
+      Couchbase, Inc. <emphasis role="ital">N1QL: A Query Language for JSON</emphasis>.
+      <link xlink:href="https://www.couchbase.com/products/n1ql"
+        >https://www.couchbase.com/products/n1ql</link>.
+      <link xlink:href="https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/index.html"
+        >https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/</link>.
+    </bibliomixed>
+
+    <!-- AI and Machine Learning -->
     <bibliomixed xml:id="ref-vaswani-2017">
       Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L.,
       Gomez, A. N., Kaiser, L., and Polosukhin, I. <quote>Attention is All
