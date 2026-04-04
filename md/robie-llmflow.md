@@ -26,14 +26,17 @@ Scripture Pipelines is an open-source declarative pipeline system
         sequence of named steps, each with explicit inputs, outputs, and prompt
         contracts. Every intermediate result is persisted to disk. Every LLM
         step can be required to produce a structured audit record of the sources
-        it used. This paper describes the design decisions behind Scripture
-        Pipelines and reports on its application in several Nida Institute
-        projects producing freely licensed biblical reference materials —
-        including a multi-pass Greek semantic lexicon, a grammatical phrasing
-        analysis of the Hebrew Bible, book-level discourse analyses, and
-        leaders' guides for Bible study. We examine how Scripture Pipelines
-        chooses the best markup for each purpose, how shared identifiers make
-        format translation mechanical, and how its iteration mechanisms support
+        it used. A web-based GUI provides project management, real-time pipeline
+        execution, and content lifecycle tracking (draft → review → approved
+        stages) in a single interface, making the system accessible to both
+        technical and non-technical users. This paper describes the design
+        decisions behind Scripture Pipelines and reports on its application in
+        several Nida Institute projects producing freely licensed biblical
+        reference materials — including a multi-pass Greek semantic lexicon, a
+        grammatical phrasing analysis of the Hebrew Bible, book-level discourse
+        analyses, and leaders' guides for Bible study. We examine how Scripture
+        Pipelines chooses the best markup for each purpose, how shared identifiers
+        make format translation mechanical, and how its iteration mechanisms support
         the scholarly workflow of generate, inspect, and refine.
 
 
