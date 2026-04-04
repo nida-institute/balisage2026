@@ -1,0 +1,190 @@
+<!-- Bosak 1997 -->
+<bibliomixed xml:id="ref-bosak-1997">
+  Bosak, J. <quote>XML, Java, and the future of the Web.</quote>
+  <emphasis role="ital">World Wide Web Journal</emphasis> 2(4), 1997.
+  <link xlink:href="https://www.xml.com/pub/a/w3j/s3.bosak.html"
+    >https://www.xml.com/pub/a/w3j/s3.bosak.html</link>.
+</bibliomixed>
+
+<!-- Sperberg-McQueen: Markup Theory -->
+<bibliomixed xml:id="ref-sperberg-mcqueen-1991">
+  Sperberg-McQueen, C. M. <quote>Markup systems and the future of scholarly
+  text processing.</quote> <emphasis role="ital">Communications of the
+  ACM</emphasis> 34(11):63–76, 1991.
+</bibliomixed>
+
+<!-- Sperberg-McQueen: GODDAG -->
+<bibliomixed xml:id="ref-sperberg-mcqueen-goddag-2000">
+  Sperberg-McQueen, C. M. and C. Huitfeldt. <quote>GODDAG: A Data Structure
+  for Overlapping Hierarchies.</quote> <emphasis role="ital">DDEP/PODDP 2000:
+  Principles of Digital Document Processing</emphasis>, pp. 139–160.
+  Springer, Berlin, 2000.
+</bibliomixed>
+
+<!-- Sperberg-McQueen: LMNL -->
+<bibliomixed xml:id="ref-sperberg-mcqueen-lmnl-2004">
+  Sperberg-McQueen, C. M., C. Huitfeldt, and A. Renear. <quote>Markup and
+  Meaning: What's a Text Really Made Of?</quote> (aka "Documents as LMNL").
+  Delivered at ALLC/ACH 2004, Gothenburg. Revised 2007.
+  <link xlink:href="http://www.tei-c.org/Vault/Talks/2004/lmnl.html"
+    >http://www.tei-c.org/Vault/Talks/2004/lmnl.html</link>.
+</bibliomixed>
+
+<!-- Sperberg-McQueen: TEI P5 -->
+<bibliomixed xml:id="ref-tei-p5">
+  Burnard, L. and C. M. Sperberg-McQueen (eds.). <emphasis role="ital">TEI P5:
+  Guidelines for Electronic Text Encoding and Interchange</emphasis>. Text
+  Encoding Initiative Consortium, 2007–.
+  <link xlink:href="https://tei-c.org/guidelines/p5/"
+    >https://tei-c.org/guidelines/p5/</link>.
+</bibliomixed>
+
+<!-- Sperberg-McQueen: Rabbit/Duck -->
+<bibliomixed xml:id="ref-sperberg-mcqueen-rabbit-duck-2013">
+  Sperberg-McQueen, C. M. <quote>Rabbit/Duck Grammars: A Characterization of
+  Overlap.</quote> <emphasis role="ital">Proceedings of Balisage: The Markup
+  Conference 2013</emphasis>. Balisage Series on Markup Technologies, vol. 10.
+  doi:10.4242/BalisageVol10.Sperberg-McQueen01.
+</bibliomixed>
+
+<!-- Robie & Chamberlin: Quilt -->
+<bibliomixed xml:id="ref-chamberlin-quilt-2000">
+  Chamberlin, D., J. Robie, and D. Florescu. <quote>Quilt: An XML Query
+  Language for Heterogeneous Data Sources.</quote> <emphasis role="ital">Revised
+  Papers from WebDB 2000: Third International Workshop on the Web and
+  Databases</emphasis>, pp. 53–62. Springer, Berlin, 2000.
+</bibliomixed>
+
+<!-- Robie: IEEE Internet Computing -->
+<bibliomixed xml:id="ref-robie-xquery-2007">
+  Robie, J. <quote>XML Processing and Data Integration with XQuery.</quote>
+  <emphasis role="ital">IEEE Internet Computing</emphasis> 11(4):62–67,
+  July–August 2007. doi:10.1109/MIC.2007.96.
+</bibliomixed>
+
+<!-- Robie et al: XQuery 1.0 Spec -->
+<bibliomixed xml:id="ref-xquery-1-0">
+  Boag, S., D. Chamberlin, M. F. Fernández, D. Florescu, J. Robie, and J. Siméon
+  (eds.). <emphasis role="ital">XQuery 1.0: An XML Query Language</emphasis>.
+  W3C Recommendation, 23 January 2007.
+  <link xlink:href="https://www.w3.org/TR/xquery/"
+    >https://www.w3.org/TR/xquery/</link>.
+</bibliomixed>
+
+<!-- XQuery Data Model -->
+<bibliomixed xml:id="ref-xpath-datamodel">
+  Fernández, M., A. Malhotra, J. Marsh, M. Nagy, and N. Walsh (eds.).
+  <emphasis role="ital">XQuery 1.0 and XPath 2.0 Data Model (XDM)</emphasis>.
+  W3C Recommendation, 23 January 2007.
+  <link xlink:href="https://www.w3.org/TR/xpath-datamodel/"
+    >https://www.w3.org/TR/xpath-datamodel/</link>.
+</bibliomixed>
+
+<!-- XQuery from the Experts -->
+<bibliomixed xml:id="ref-xquery-experts">
+  Katz, H. (ed.). <emphasis role="ital">XQuery from the Experts: A Guide to the
+  W3C XML Query Language</emphasis>. Addison-Wesley, Boston, 2004.
+</bibliomixed>
+
+<!-- XPath 3.1 Spec -->
+<bibliomixed xml:id="ref-xpath-3-1">
+  Robie, J., M. Dyck, and J. Spiegel (eds.). <emphasis role="ital">XML Path
+  Language (XPath) 3.1</emphasis>. W3C Recommendation, 21 March 2017.
+  <link xlink:href="https://www.w3.org/TR/xpath-31/"
+    >https://www.w3.org/TR/xpath-31/</link>.
+</bibliomixed>
+
+<!-- XQuery 3.1 Spec -->
+<bibliomixed xml:id="ref-xquery-3-1">
+  Robie, J., M. Dyck, and J. Spiegel (eds.). <emphasis role="ital">XQuery 3.1:
+  An XML Query Language</emphasis>. W3C Recommendation, 21 March 2017.
+  <link xlink:href="https://www.w3.org/TR/xquery-31/"
+    >https://www.w3.org/TR/xquery-31/</link>.
+</bibliomixed>
+
+<!-- XQuery 1.0 Use Cases -->
+<bibliomixed xml:id="ref-xquery-use-cases">
+  Chamberlin, D., J. Robie, and D. Florescu (eds.). <emphasis role="ital">XML
+  Query Use Cases</emphasis>. W3C Working Group Note, 23 March 2007.
+  <link xlink:href="https://www.w3.org/TR/xquery-use-cases/"
+    >https://www.w3.org/TR/xquery-use-cases/</link>.
+</bibliomixed>
+
+<!-- XQuery 3.1 Use Cases -->
+<bibliomixed xml:id="ref-xquery-31-use-cases">
+  Chamberlin, D. and J. Robie (eds.). <emphasis role="ital">XQuery 3.1 Use
+  Cases</emphasis>. W3C Working Group Note, 8 December 2015.
+  <link xlink:href="https://www.w3.org/TR/xquery-31-use-cases/"
+    >https://www.w3.org/TR/xquery-31-use-cases/</link>.
+</bibliomixed>
+
+<!-- Semi-structured Data Foundations -->
+<bibliomixed xml:id="ref-buneman-1996">
+  Buneman, P., S. Davidson, G. Hillebrand, and D. Suciu. <quote>A Query
+  Language and Optimization Techniques for Unstructured Data.</quote>
+  <emphasis role="ital">Proceedings of the 1996 ACM SIGMOD International
+  Conference on Management of Data</emphasis>, pp. 505–516, 1996.
+</bibliomixed>
+
+<bibliomixed xml:id="ref-abiteboul-1997">
+  Abiteboul, S. <quote>Querying Semi-Structured Data.</quote>
+  <emphasis role="ital">Proceedings of the 6th International Conference on
+  Database Theory (ICDT)</emphasis>, pp. 1–18. Springer, Berlin, 1997.
+</bibliomixed>
+
+<bibliomixed xml:id="ref-lorel-1997">
+  Abiteboul, S., D. Quass, J. McHugh, J. Widom, and J. Wiener. <quote>The Lorel
+  Query Language for Semistructured Data.</quote> <emphasis role="ital">International
+  Journal on Digital Libraries</emphasis> 1(1):68–88, 1997.
+</bibliomixed>
+
+<bibliomixed xml:id="ref-dataguides-1997">
+  Goldman, R. and J. Widom. <quote>DataGuides: Enabling Query Formulation and
+  Optimization in Semistructured Databases.</quote> <emphasis role="ital">Proceedings
+  of the 23rd VLDB Conference</emphasis>, pp. 436–445, Athens, Greece, 1997.
+</bibliomixed>
+
+<bibliomixed xml:id="ref-xml-ql-1999">
+  Deutsch, A., M. Fernández, D. Florescu, A. Levy, and D. Suciu. <quote>A Query
+  Language for XML.</quote> <emphasis role="ital">Computer Networks</emphasis>
+  31(11–16):1155–1169, 1999. (Proceedings of the 8th International World Wide
+  Web Conference).
+</bibliomixed>
+
+<bibliomixed xml:id="ref-chamberlin-xquery-2000">
+  Chamberlin, D., J. Robie, and D. Florescu. <quote>XQuery: A Query Language for
+  XML.</quote> <emphasis role="ital">Proceedings of W3C QL'98 Query Language
+  Workshop</emphasis>, 1998. Updated version presented at WWW9 Conference, 2000.
+  <link xlink:href="https://www.w3.org/TandS/QL/QL98/pp/xquery.html"
+    >https://www.w3.org/TandS/QL/QL98/pp/xquery.html</link>.
+</bibliomixed>
+
+<!-- Murata: RELAX NG -->
+<bibliomixed xml:id="ref-relax-ng-tutorial">
+  Clark, J. and M. Murata. <emphasis role="ital">RELAX NG Tutorial</emphasis>.
+  OASIS Committee Specification, 3 December 2001.
+  <link xlink:href="https://relaxng.org/tutorial-20011203.html"
+    >https://relaxng.org/tutorial-20011203.html</link>.
+</bibliomixed>
+
+<!-- JSON Infrastructure -->
+<bibliomixed xml:id="ref-json-schema">
+  Wright, A., H. Andrews, B. Hutton, and G. Dennis (eds.). <emphasis role="ital">JSON
+  Schema: A Media Type for Describing JSON Documents</emphasis>. Internet-Draft
+  draft-bhutton-json-schema-01, December 2022.
+  <link xlink:href="https://json-schema.org/"
+    >https://json-schema.org/</link>.
+</bibliomixed>
+
+<bibliomixed xml:id="ref-jsoniq">
+  Florescu, D. and G. Fourny. <quote>JSONiq: The History of a Query Language.</quote>
+  <emphasis role="ital">IEEE Internet Computing</emphasis> 17(5):86–90, 2013.
+</bibliomixed>
+
+<bibliomixed xml:id="ref-n1ql">
+  Couchbase, Inc. <emphasis role="ital">N1QL: A Query Language for JSON</emphasis>.
+  <link xlink:href="https://www.couchbase.com/products/n1ql"
+    >https://www.couchbase.com/products/n1ql</link>.
+  <link xlink:href="https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/index.html"
+    >https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/</link>.
+</bibliomixed>

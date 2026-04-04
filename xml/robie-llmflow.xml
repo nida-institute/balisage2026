@@ -853,9 +853,9 @@
   <section xml:id="markup-choices">
     <title>The Best Markup for Each Purpose</title>
     <para>XML demonstrated that a single technology could provide complete infrastructure
-      for data interchange: validation (DTD, XML Schema, RELAX NG),<biblioref
-      linkend="ref-relax-ng-tutorial"/> querying (XPath, XQuery),<biblioref
-      linkend="ref-xpath-3-1"/><biblioref linkend="ref-xquery-3-1"/> transformation
+      for data interchange: validation (DTD, XML Schema, RELAX NG),<citation
+      linkend="ref-relax-ng-tutorial"/> querying (XPath, XQuery),<citation
+      linkend="ref-xpath-3-1"/><citation linkend="ref-xquery-3-1"/> transformation
       (XSLT), and publishing workflows. This complete stack—standardized, interoperable,
       and vendor-neutral—has no equivalent in any other format ecosystem.</para>
     <para>The simpler formats that emerged later (JSON, YAML, Markdown) are XML's legacy.
@@ -863,9 +863,9 @@
       into application domains—while inheriting XML's victories: human-readable text as
       data, Unicode everywhere, structure matters, and format should fit purpose. But none
       replicated XML's complete infrastructure. JSON has multiple incompatible query
-      languages (JSONiq,<biblioref linkend="ref-jsoniq"/> vendor-specific N1QL,<biblioref
+      languages (JSONiq,<citation linkend="ref-jsoniq"/> vendor-specific N1QL,<citation
       linkend="ref-n1ql"/> JSONPath with competing implementations, jq) and a schema
-      specification still in draft status after years of work.<biblioref
+      specification still in draft status after years of work.<citation
       linkend="ref-json-schema"/> YAML and TOML lack query languages entirely. Markdown
       has no standardized structural query capability.</para>
     <para>This project uses each format for what it does best, recognizing that XML's
@@ -949,8 +949,8 @@
       <para>JSON's success demonstrates what XML got right about data interchange—human+machine
         readability, Unicode throughout, nested structure—while avoiding what XML got wrong.
         Yet JSON lacks a widely accepted query language. JSONiq extends XQuery to process
-        JSON,<biblioref linkend="ref-jsoniq"/> showing the influence of XML query thinking,
-        but has limited adoption. N1QL (Couchbase) is vendor-specific.<biblioref
+        JSON,<citation linkend="ref-jsoniq"/> showing the influence of XML query thinking,
+        but has limited adoption. N1QL (Couchbase) is vendor-specific.<citation
         linkend="ref-n1ql"/> JSONPath has multiple incompatible implementations. The jq
         command-line tool is powerful but not a standardized query language. This fragmentation
         contrasts sharply with XML, where W3C standardization of XPath and XQuery created
@@ -1043,8 +1043,8 @@
           domains, and textual apparatus. Each hierarchy is represented separately (XML
           is a tree), but identifiers enable queries across all of them.</para>
         <para>XPath and XQuery enable precise linguistic queries across these linked
-          structures.<biblioref linkend="ref-xpath-3-1"/><biblioref
-          linkend="ref-xquery-3-1"/><biblioref linkend="ref-xquery-31-use-cases"/> A
+          structures.<citation linkend="ref-xpath-3-1"/><citation
+          linkend="ref-xquery-3-1"/><citation linkend="ref-xquery-31-use-cases"/> A
           scholar interested in Greek verb clauses grouped by subject writes natural
           language intent: <quote>For each verb in Matthew's Gospel, show me the clause
           containing that verb and its grammatical subject.</quote> An LLM translates this
@@ -1054,7 +1054,7 @@
           deterministically, and the results are reproducible.</para>
         <para>This pattern appears throughout this project: LLMs lower the barrier to using
           formal query languages, but the deterministic execution of standardized queries
-          remains essential.<biblioref linkend="ref-robie-xquery-2007"/> Both are needed.
+          remains essential.<citation linkend="ref-robie-xquery-2007"/> Both are needed.
           LLM-generated queries can be wrong; reviewing them requires understanding what
           the query should produce. But once validated, the query runs identically every
           time—a property that stochastic text generation cannot provide.</para>
@@ -3444,7 +3444,7 @@ training data (examples) in prompts. Period.
       in literary texts, scholarly apparatus in critical editions, transformation
       pipelines in publishing workflows, or standardized queries across heterogeneous
       document collections.</para>
-    <para>But those problems did not disappear. TEI scholarly editions<biblioref
+    <para>But those problems did not disappear. TEI scholarly editions<citation
       linkend="ref-tei-p5"/> still require markup for multiple overlapping structures—syntactic,
       rhetorical, manuscript witness variants—that cannot be represented in JSON's single
       tree. DITA technical documentation still needs conditional processing, content reuse,
