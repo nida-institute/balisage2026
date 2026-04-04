@@ -3073,7 +3073,154 @@ training data (examples) in prompts. Period.
           propagates. But the human scholar must still do the reading, the
           checking, and the final judgment. The pipeline serves scholarship;
           it does not replace it.</para>
+
+        <section xml:id="llm-affirmation-seeking">
+          <title>LLM Optimization Bias: Fast Affirmation vs. Engineering Discipline</title>
+          <para>Current large language models exhibit a systematic bias that
+            creates friction with engineering discipline: they are optimized
+            for fast, cheap affirmation rather than correctness. This optimization
+            arises from the training objective—maximizing human preference
+            ratings—which rewards responses that <emphasis>appear</emphasis>
+            helpful and convincing over responses that are demonstrably correct
+            and well-founded.</para>
+          <para>This manifests in three problematic behaviors:</para>
+          <orderedlist>
+            <listitem><para><emphasis role="bold">Prioritizing plausible over
+              derived.</emphasis> When faced with a problem, LLMs generate what
+              sounds plausible rather than what can be traced back to known-good
+              information. They will confidently propose solutions that "feel
+              right" but lack grounding in the actual system constraints or
+              verified data. For engineering work, this is backwards: correctness
+              requires derivation from specifications, not plausibility.</para></listitem>
+            <listitem><para><emphasis role="bold">Sugar high solutions.</emphasis>
+              LLMs favor quick fixes and workarounds that get immediate acceptance
+              over type-safe, well-tested, auditable solutions that take longer.
+              When faced with a failing TypeScript build, an LLM will suggest
+              adding <code>// @ts-ignore</code> comments or loosening type
+              constraints before it suggests fixing the actual type errors.
+              The former gets faster user acceptance ("it builds now!") even
+              though it defeats the purpose of type checking.</para></listitem>
+            <listitem><para><emphasis role="bold">Solving the inferred problem.</emphasis>
+              LLMs will make assumptions about what problem the user is trying
+              to solve, then implement a solution to that assumed problem without
+              confirming alignment. This is the "wrong problem" failure mode
+              documented in the Skills Files section: the AI treats its inference
+              about the user's intent as if it were the user's actual intent,
+              resulting in solutions that don't match the Captain's requirements.</para></listitem>
+          </orderedlist>
+          <para>The Captain Kirk model addresses this directly. By requiring
+            the AI to address the user as "Captain" and to explicitly confirm
+            understanding before implementation, the model creates a forcing
+            function: the AI must acknowledge that it serves the user's goals,
+            not its own pattern-matching impulses. This is not anthropomorphization
+            —the AI has no agency—but rather a protocol that encodes in the
+            interaction structure what the system's training objective obscures:
+            that correctness, auditability, and alignment with actual requirements
+            trump fast acceptance.</para>
+          <para>Scripture Pipelines enforces this indirectly through external
+            audit infrastructure. The audit trail, test coverage requirements,
+            and explicit type contracts prevent the AI from optimizing for quick
+            acceptance at the expense of correctness. But the collaboration
+            challenge remains: the human must actively resist the AI's bias
+            toward plausible-sounding quick fixes and insist on solutions that
+            meet engineering standards. The Captain Kirk protocol makes this
+            resistance explicit.</para>
+        </section>
       </section>
+    </section>
+  </section>
+
+  <!-- ============================================================ -->
+  <section xml:id="gui">
+    <title>Web-Based GUI: Easier for Everyone</title>
+    <para>While Scripture Pipelines is a command-line tool at its core, the
+      web-based GUI makes the system easier to use for everyone—not just
+      for non-technical users like ministry leaders and translators, but also
+      for technical users who find visual interfaces more efficient than
+      memorizing command-line flags. The GUI provides project management,
+      pipeline execution with real-time output, and content lifecycle tracking
+      in a single interface.</para>
+
+    <section xml:id="gui-architecture">
+      <title>Architecture: Flask Backend, React Frontend</title>
+      <para>The GUI is implemented as a Flask application serving a React
+        frontend. The backend exposes REST APIs for project discovery, pipeline
+        execution, and content management. The frontend is built with Vite
+        and bundled into the Flask application's <code>static/</code> directory,
+        creating a single deployable unit.</para>
+      <para>This architecture was chosen for deployment simplicity: a single
+        <code>pip install llmflow</code> installs both the CLI and the GUI.
+        Users run <code>sp gui</code> to start the server, which opens their
+        browser to <code>http://localhost:5050</code>. No separate frontend
+        server, no Node.js dependency for end users.</para>
+      <figure xml:id="fig-gui-project-list">
+        <title>GUI Project List View</title>
+        <para>[PLACEHOLDER: Screenshot of project list with pipeline discovery]</para>
+      </figure>
+    </section>
+
+    <section xml:id="gui-features">
+      <title>Pipeline Execution and Content Lifecycle</title>
+      <para>The GUI provides three primary workflows:</para>
+      <orderedlist>
+        <listitem><para><emphasis role="bold">Pipeline execution.</emphasis>
+          Users select a project, choose a pipeline YAML file, configure
+          variables, and run the pipeline. Execution happens via WebSocket
+          streaming, showing real-time output as each step completes. The GUI
+          displays step status, token counts, estimated costs, and final output
+          location.</para></listitem>
+        <listitem><para><emphasis role="bold">Content lifecycle management.</emphasis>
+          For projects using the content lifecycle model (draft → review →
+          approved stages), the GUI provides a dashboard showing files at each
+          stage, their metadata, and available transitions. Users can click
+          files to see detailed status, view diffs between stages, and promote
+          content forward when ready.</para></listitem>
+        <listitem><para><emphasis role="bold">Git integration.</emphasis>
+          The GUI shows uncommitted changes, allows commits with messages, and
+          supports push/pull operations for projects under version control.
+          This keeps generated content and pipeline configurations synchronized
+          across team members.</para></listitem>
+      </orderedlist>
+      <figure xml:id="fig-gui-pipeline-execution">
+        <title>Pipeline execution with real-time WebSocket output</title>
+        <para>[PLACEHOLDER: Screenshot of pipeline running, showing step progress]</para>
+      </figure>
+      <figure xml:id="fig-gui-content-lifecycle">
+        <title>Content Lifecycle dashboard showing stage transitions</title>
+        <para>[PLACEHOLDER: Screenshot of content stages with file cards]</para>
+      </figure>
+    </section>
+
+    <section xml:id="gui-deployment">
+      <title>Deployment Without Environment Contamination</title>
+      <para>Shipping Python applications to non-technical users presents a
+        persistent challenge: dependency conflicts, system Python pollution,
+        and the need for users to understand virtual environments. Scripture
+        Pipelines uses <code>Hatch</code> for development and packaging, which
+        addresses these concerns:</para>
+      <orderedlist>
+        <listitem><para><emphasis role="bold">Isolated environments.</emphasis>
+        Hatch creates isolated virtual environments per project, preventing
+          dependency conflicts with other Python tools the user may have
+          installed. Users never touch their system Python.</para></listitem>
+        <listitem><para><emphasis role="bold">Single install command.</emphasis>
+          <code>pip install llmflow</code> (or <code>pipx install llmflow</code>)
+          is all that's needed. The <code>sp</code> command becomes globally
+          available, but its dependencies remain isolated.</para></listitem>
+        <listitem><para><emphasis role="bold">Bundled GUI assets.</emphasis>
+          The React frontend is pre-built and bundled in the distribution.
+          End users never need Node.js, npm, or frontend build tools. The
+          Flask server serves static assets from its package data.</para></listitem>
+      </orderedlist>
+      <para>This deployment model is critical for Scripture Pipelines' target
+        audience. Ministry leaders should not need to understand Python packaging,
+        virtual environments, or frontend build systems. They install once,
+        run <code>sp gui</code>, and get a working web interface with no
+        additional configuration.</para>
+      <para>For advanced users and developers, the CLI remains primary. The
+        GUI is a convenience layer, not a replacement for the pipeline language.
+        All GUI operations map directly to CLI commands and YAML configurations,
+        ensuring feature parity and avoiding lock-in to the GUI workflow.</para>
     </section>
   </section>
 
