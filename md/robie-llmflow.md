@@ -6,7 +6,8 @@ jonathan.robie@biblica.com
 _Biblica, Nida Institute_
 
 _Jonathan Robie is a software engineer at Biblica and a researcher
-          at the Nida Institute, focused on AI-assisted biblical scholarship and
+          at the Nida Institute._
+_He focuses on AI-assisted biblical scholarship and
           declarative pipeline systems for linguistic annotation._
 
 ## Abstract
