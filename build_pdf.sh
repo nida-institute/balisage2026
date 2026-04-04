@@ -17,6 +17,7 @@ pandoc \
   --from docbook \
   --to pdf \
   --pdf-engine=xelatex \
+  --include-in-header="$REPO_ROOT/latex-header.tex" \
   --output "$PDF_FILE" \
   robie-llmflow.xml 2>&1 | grep -v "Missing character" || true
 

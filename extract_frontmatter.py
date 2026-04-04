@@ -40,6 +40,15 @@ def extract_frontmatter(xml_file):
         if orgs:
             lines.append(f"_{', '.join(orgs)}_\n")
 
+    # Bio (personblurb)
+    bio_paras = root.findall('.//db:author/db:personblurb/db:para', ns)
+    if bio_paras:
+        lines.append("\n")
+        for para in bio_paras:
+            if para.text:
+                text = ''.join(para.itertext())
+                lines.append(f"_{text}_\n")
+
     # Abstract
     abstract_paras = root.findall('.//db:abstract/db:para', ns)
     if abstract_paras:
