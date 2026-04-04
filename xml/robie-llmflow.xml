@@ -3155,7 +3155,11 @@ training data (examples) in prompts. Period.
         server, no Node.js dependency for end users.</para>
       <figure xml:id="fig-gui-project-list">
         <title>GUI Project List View</title>
-        <para>[PLACEHOLDER: Screenshot of project list with pipeline discovery]</para>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/llmflow-gui-project-list.png"/>
+          </imageobject>
+        </mediaobject>
       </figure>
     </section>
 
@@ -3183,11 +3187,19 @@ training data (examples) in prompts. Period.
       </orderedlist>
       <figure xml:id="fig-gui-pipeline-execution">
         <title>Pipeline execution with real-time WebSocket output</title>
-        <para>[PLACEHOLDER: Screenshot of pipeline running, showing step progress]</para>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/llmflow-gui-pipeline-execution.png"/>
+          </imageobject>
+        </mediaobject>
       </figure>
       <figure xml:id="fig-gui-content-lifecycle">
         <title>Content Lifecycle dashboard showing stage transitions</title>
-        <para>[PLACEHOLDER: Screenshot of content stages with file cards]</para>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/llmflow-gui-content-lifecycle.png"/>
+          </imageobject>
+        </mediaobject>
       </figure>
     </section>
 
