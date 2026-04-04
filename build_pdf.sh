@@ -11,11 +11,13 @@ PDF_FILE="$PDF_DIR/robie-llmflow.pdf"
 mkdir -p "$PDF_DIR"
 
 echo "Building PDF from DocBook XML..."
+# Run pandoc from xml/ directory so relative image paths work
+cd "$REPO_ROOT/xml"
 pandoc \
   --from docbook \
   --to pdf \
   --pdf-engine=xelatex \
   --output "$PDF_FILE" \
-  "$XML_FILE" 2>&1 | grep -v "Missing character" || true
+  robie-llmflow.xml 2>&1 | grep -v "Missing character" || true
 
 echo "✅ PDF generated: $PDF_FILE"
