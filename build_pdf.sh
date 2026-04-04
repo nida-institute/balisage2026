@@ -13,13 +13,17 @@ mkdir -p "$PDF_DIR"
 echo "Building PDF from DocBook XML..."
 # Run pandoc from xml/ directory so relative image paths work
 cd "$REPO_ROOT/xml"
+
+# Create temp file without personblurb for PDF generation (keeps source clean)
+sed '/<personblurb>/,/<\/personblurb>/d' robie-llmflow.xml > /tmp/robie-llmflow-noblurb.xml
+
 pandoc \
   --from docbook \
   --to pdf \
   --pdf-engine=xelatex \
-  --lua-filter="$REPO_ROOT/fix-personblurb.lua" \
   --include-in-header="$REPO_ROOT/latex-header.tex" \
   --output "$PDF_FILE" \
-  robie-llmflow.xml 2>&1 | grep -v "Missing character" || true
+  /tmp/robie-llmflow-noblurb.xml 2>&1 | grep -v "Missing character" || true
 
+rm /tmp/robie-llmflow-noblurb.xml
 echo "✅ PDF generated: $PDF_FILE"
